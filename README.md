@@ -1,3 +1,3 @@
-# simplereader
+# SimpleReader
 
-A new Flutter project.
+Read, Modif, Dark Mode, coming soo...
