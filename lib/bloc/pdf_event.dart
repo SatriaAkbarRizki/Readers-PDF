@@ -7,8 +7,8 @@ class OnPdfSearch extends PdfEvent {}
 
 class OnUnPdfSearch extends PdfEvent {}
 
-class OnSearchText extends PdfEvent {
+class OnPdfSearchText extends PdfEvent {
   final String? text;
 
-  OnSearchText(this.text);
+  OnPdfSearchText(this.text);
 }

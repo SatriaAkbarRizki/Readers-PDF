@@ -9,8 +9,8 @@ final class PdfSearch extends PdfState {}
 
 final class PdfNotSearch extends PdfState {}
 
-final class SearchText extends PdfState {
+final class PdfSearchText extends PdfState {
   final String? text;
 
-  SearchText(this.text);
+  PdfSearchText(this.text);
 }

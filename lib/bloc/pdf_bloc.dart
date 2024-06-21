@@ -14,8 +14,8 @@ class PdfBloc extends Bloc<PdfEvent, PdfState> {
       emit(PdfNotSearch());
     });
 
-    on<OnSearchText>((event, emit) {
-      emit(SearchText(event.text));
+    on<OnPdfSearchText>((event, emit) {
+      emit(PdfSearchText(event.text));
     });
   }
 }
