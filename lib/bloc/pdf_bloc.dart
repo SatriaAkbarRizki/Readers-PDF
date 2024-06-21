@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -6,16 +8,16 @@ part 'pdf_state.dart';
 
 class PdfBloc extends Bloc<PdfEvent, PdfState> {
   PdfBloc() : super(PdfInitial()) {
-    on<OnPdfSearch>((event, emit) {
-      emit(PdfSearch());
+    on<OnPdfOpenSearch>((event, emit) {
+      emit(PdfOpenSearch());
     });
 
-    on<OnUnPdfSearch>((event, emit) {
-      emit(PdfNotSearch());
+    on<OnPdfCloseSearch>((event, emit) {
+      emit(PdfCloseSearch());
     });
 
-    on<OnPdfSearchText>((event, emit) {
-      emit(PdfSearchText(event.text));
+    on<OnPdfSearchingText>((event, emit) {
+      emit(PdfSearchingText(event.text));
     });
   }
 }

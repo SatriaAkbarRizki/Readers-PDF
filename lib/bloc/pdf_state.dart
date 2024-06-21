@@ -5,12 +5,12 @@ sealed class PdfState {}
 
 final class PdfInitial extends PdfState {}
 
-final class PdfSearch extends PdfState {}
+final class PdfOpenSearch extends PdfState {}
 
-final class PdfNotSearch extends PdfState {}
+final class PdfCloseSearch extends PdfState {}
 
-final class PdfSearchText extends PdfState {
+final class PdfSearchingText extends PdfState {
   final String? text;
 
-  PdfSearchText(this.text);
+  PdfSearchingText(this.text);
 }

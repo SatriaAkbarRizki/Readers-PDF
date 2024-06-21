@@ -3,12 +3,12 @@ part of 'pdf_bloc.dart';
 @immutable
 sealed class PdfEvent {}
 
-class OnPdfSearch extends PdfEvent {}
+class OnPdfOpenSearch extends PdfEvent {}
 
-class OnUnPdfSearch extends PdfEvent {}
+class OnPdfCloseSearch extends PdfEvent {}
 
-class OnPdfSearchText extends PdfEvent {
+class OnPdfSearchingText extends PdfEvent {
   final String? text;
 
-  OnPdfSearchText(this.text);
+  OnPdfSearchingText(this.text);
 }
