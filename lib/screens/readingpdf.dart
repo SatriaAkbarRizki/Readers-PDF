@@ -1,11 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdfrx/pdfrx.dart';
 import 'package:simplereader/bloc/pdf_bloc.dart';
-import 'package:simplereader/cubit/search_cubit.dart';
 
 class ReadPDFScreens extends StatefulWidget {
   const ReadPDFScreens({super.key});
@@ -23,7 +20,7 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback(
-        (_) => context.read<PdfBloc>().add(OnUnPdfSearch()));
+        (_) => context.read<PdfBloc>().add(OnPdfCloseSearch()));
     pdfTextSearcher = PdfTextSearcher(pdfViewerController);
     super.initState();
   }
@@ -42,26 +39,31 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
       appBar: AppBar(
         backgroundColor: const Color(0xffFDFCFA),
         title: Visibility(
-            visible: context.watch<PdfBloc>().state is PdfSearch ? false : true,
+            visible:
+                context.watch<PdfBloc>().state is PdfOpenSearch ? false : true,
             child: const Text('Read PDF')),
         leading: Visibility(
-            visible: context.watch<PdfBloc>().state is PdfSearch ? false : true,
+            visible:
+                context.watch<PdfBloc>().state is PdfCloseSearch ? true : false,
             child: IconButton(
                 onPressed: () {
                   pdfTextSearcher.goToNextMatch();
-                  // log(pdfViewerController.pageNumber.toString());
                 },
                 icon: const Icon(Icons.arrow_back))),
         actions: [
           BlocBuilder<PdfBloc, PdfState>(
+            buildWhen: (previous, current) =>
+                (previous is PdfInitial) && (current is PdfCloseSearch) ||
+                (previous is PdfCloseSearch) && (current is PdfOpenSearch) ||
+                (previous is PdfOpenSearch) && (current is PdfCloseSearch) ||
+                (previous is PdfSearchingText) && (current is PdfCloseSearch),
             builder: (context, state) {
-              if (state is PdfNotSearch) {
+              if (state is PdfCloseSearch) {
                 return Row(
                   children: [
                     IconButton(
                         onPressed: () => {
-                              context.read<PdfBloc>().add(OnPdfSearch()),
-                              // log('Open Search: ${context.read<PdfBloc>().state}'),
+                              context.read<PdfBloc>().add(OnPdfOpenSearch()),
                             },
                         icon: const Icon(Icons.search)),
                     PopupMenuButton(
@@ -73,13 +75,13 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
                     )
                   ],
                 );
-              } else if (state is PdfSearch) {
+              } else if (state is PdfOpenSearch) {
                 return Expanded(
                   child: Row(
                     children: [
                       IconButton(
                           onPressed: () {
-                            context.read<PdfBloc>().add(OnUnPdfSearch());
+                            context.read<PdfBloc>().add(OnPdfCloseSearch());
 
                             textEditingController.clear();
                             pdfTextSearcher.resetTextSearch();
@@ -96,19 +98,19 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
                                 controller: textEditingController,
                                 onChanged: (value) {
                                   context
-                                      .read<SearchCubit>()
-                                      .searchingText(value);
+                                      .read<PdfBloc>()
+                                      .add(OnPdfSearchingText(value));
 
-                                  if (value.isNotEmpty) {
-                                    pdfTextSearcher.startTextSearch(
-                                        context
-                                            .read<SearchCubit>()
-                                            .state
-                                            .toString(),
-                                        caseInsensitive: true,
-                                        goToFirstMatch: true);
-                                  } else {
-                                    pdfTextSearcher.resetTextSearch();
+                                  final myState = context.read<PdfBloc>().state;
+                                  if (myState is PdfSearchingText) {
+                                    if (value.isNotEmpty) {
+                                      pdfTextSearcher.startTextSearch(
+                                          myState.text.toString(),
+                                          caseInsensitive: true,
+                                          goToFirstMatch: true);
+                                    } else {
+                                      pdfTextSearcher.resetTextSearch();
+                                    }
                                   }
                                 },
                               )),
@@ -150,15 +152,6 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: Colors.black54),
-                      // child: Center(
-                      //   child: Text(
-                      //     pageNumber.toString(),
-                      //     style: Theme.of(context)
-                      //         .textTheme
-                      //         .labelSmall!
-                      //         .copyWith(color: Colors.white),
-                      //   ),
-                      // ),
                     ),
                   ),
                 ],
@@ -169,13 +162,6 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
             onPageChanged: (pageNumber) => Center(
                   child: Text(pageNumber.toString()),
                 ),
-
-            // pageOverlaysBuilder: (context, pageRect, page) => [
-            //       Align(
-            //         alignment: Alignment.bottomCenter,
-            //         child: Text(page.pageNumber.toString()),
-            //       )
-            //     ],
             pagePaintCallbacks: [pdfTextSearcher.pageTextMatchPaintCallback]),
       ),
     );
