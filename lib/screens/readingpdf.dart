@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdfrx/pdfrx.dart';
 import 'package:simplereader/bloc/pdf_bloc.dart';
@@ -14,6 +17,7 @@ class ReadPDFScreens extends StatefulWidget {
 class _ReadPDFScreensState extends State<ReadPDFScreens> {
   TextEditingController textEditingController = TextEditingController();
   PdfViewerController pdfViewerController = PdfViewerController();
+  int nextSearch = 0;
   late final PdfTextSearcher pdfTextSearcher;
 
   @override
@@ -43,7 +47,11 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
         leading: Visibility(
             visible: context.watch<PdfBloc>().state is PdfSearch ? false : true,
             child: IconButton(
-                onPressed: () {}, icon: const Icon(Icons.arrow_back))),
+                onPressed: () {
+                  pdfTextSearcher.goToNextMatch();
+                  // log(pdfViewerController.pageNumber.toString());
+                },
+                icon: const Icon(Icons.arrow_back))),
         actions: [
           BlocBuilder<PdfBloc, PdfState>(
             builder: (context, state) {
@@ -92,10 +100,13 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
                                       .searchingText(value);
 
                                   if (value.isNotEmpty) {
-                                    pdfTextSearcher.startTextSearch(context
-                                        .read<SearchCubit>()
-                                        .state
-                                        .toString());
+                                    pdfTextSearcher.startTextSearch(
+                                        context
+                                            .read<SearchCubit>()
+                                            .state
+                                            .toString(),
+                                        caseInsensitive: true,
+                                        goToFirstMatch: true);
                                   } else {
                                     pdfTextSearcher.resetTextSearch();
                                   }
@@ -103,6 +114,18 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
                               )),
                         ),
                       ),
+                      IconButton(
+                          onPressed: () {
+                            pdfTextSearcher.goToMatchOfIndex(nextSearch);
+                            nextSearch--;
+                          },
+                          icon: Icon(Icons.next_plan)),
+                      IconButton(
+                          onPressed: () {
+                            pdfTextSearcher.goToMatchOfIndex(nextSearch);
+                            nextSearch++;
+                          },
+                          icon: Icon(Icons.next_plan))
                     ],
                   ),
                 );
@@ -117,11 +140,42 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
         controller: pdfViewerController,
         params: PdfViewerParams(
             enableTextSelection: true,
-            backgroundColor: const Color(0xffFDFCFA),
+            backgroundColor: Color.fromARGB(255, 253, 252, 250),
+            viewerOverlayBuilder: (context, size) => [
+                  PdfViewerScrollThumb(
+                    controller: pdfViewerController,
+                    thumbBuilder:
+                        (context, thumbSize, pageNumber, controller) =>
+                            Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.black54),
+                      // child: Center(
+                      //   child: Text(
+                      //     pageNumber.toString(),
+                      //     style: Theme.of(context)
+                      //         .textTheme
+                      //         .labelSmall!
+                      //         .copyWith(color: Colors.white),
+                      //   ),
+                      // ),
+                    ),
+                  ),
+                ],
             loadingBannerBuilder: (context, bytesDownloaded, totalBytes) =>
                 const Center(
                   child: CircularProgressIndicator(),
                 ),
+            onPageChanged: (pageNumber) => Center(
+                  child: Text(pageNumber.toString()),
+                ),
+
+            // pageOverlaysBuilder: (context, pageRect, page) => [
+            //       Align(
+            //         alignment: Alignment.bottomCenter,
+            //         child: Text(page.pageNumber.toString()),
+            //       )
+            //     ],
             pagePaintCallbacks: [pdfTextSearcher.pageTextMatchPaintCallback]),
       ),
     );
