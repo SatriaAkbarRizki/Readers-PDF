@@ -13,5 +13,9 @@ class MyTheme {
               fontFamily: 'PublicSans',
               fontWeight: FontWeight.w600),
           labelMedium: TextStyle(fontSize: 14)),
-      popupMenuTheme: const PopupMenuThemeData(color: Color(0xffFDFCFA)));
+      popupMenuTheme: const PopupMenuThemeData(color: Color(0xffFDFCFA)),
+      dialogTheme: const DialogTheme(
+          backgroundColor: Color(0xffFDFCFA),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20)))));
 }
