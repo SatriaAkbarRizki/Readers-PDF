@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdfrx/pdfrx.dart';
 import 'package:simplereader/bloc/pdf_bloc.dart';
+import 'package:simplereader/widget/appbar_pdf.dart';
+import 'package:simplereader/widget/appbar_search.dart';
 
 class ReadPDFScreens extends StatefulWidget {
   const ReadPDFScreens({super.key});
@@ -59,78 +60,13 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
                 (previous is PdfSearchingText) && (current is PdfCloseSearch),
             builder: (context, state) {
               if (state is PdfCloseSearch) {
-                return Row(
-                  children: [
-                    IconButton(
-                        onPressed: () => {
-                              context.read<PdfBloc>().add(OnPdfOpenSearch()),
-                            },
-                        icon: const Icon(Icons.search)),
-                    PopupMenuButton(
-                      itemBuilder: (context) => [
-                        const PopupMenuItem(child: Text('Rename Pdf 1')),
-                        const PopupMenuItem(child: Text('Go To Page')),
-                        const PopupMenuItem(child: Text('Dark Mode')),
-                      ],
-                    )
-                  ],
+                return AppBarPDF(
+                  pdfViewerController: pdfViewerController,
                 );
               } else if (state is PdfOpenSearch) {
-                return Expanded(
-                  child: Row(
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            context.read<PdfBloc>().add(OnPdfCloseSearch());
-
-                            textEditingController.clear();
-                            pdfTextSearcher.resetTextSearch();
-                          },
-                          icon: const Icon(Icons.arrow_back)),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10, right: 10, top: 10, bottom: 20),
-                          child: SizedBox(
-                              height: 50,
-                              width: 50,
-                              child: TextFormField(
-                                controller: textEditingController,
-                                onChanged: (value) {
-                                  context
-                                      .read<PdfBloc>()
-                                      .add(OnPdfSearchingText(value));
-
-                                  final myState = context.read<PdfBloc>().state;
-                                  if (myState is PdfSearchingText) {
-                                    if (value.isNotEmpty) {
-                                      pdfTextSearcher.startTextSearch(
-                                          myState.text.toString(),
-                                          caseInsensitive: true,
-                                          goToFirstMatch: true);
-                                    } else {
-                                      pdfTextSearcher.resetTextSearch();
-                                    }
-                                  }
-                                },
-                              )),
-                        ),
-                      ),
-                      IconButton(
-                          onPressed: () {
-                            pdfTextSearcher.goToMatchOfIndex(nextSearch);
-                            nextSearch--;
-                          },
-                          icon: Icon(Icons.next_plan)),
-                      IconButton(
-                          onPressed: () {
-                            pdfTextSearcher.goToMatchOfIndex(nextSearch);
-                            nextSearch++;
-                          },
-                          icon: Icon(Icons.next_plan))
-                    ],
-                  ),
-                );
+                return AppBarSearch(
+                    pdfTextSearcher: pdfTextSearcher,
+                    textEditingController: textEditingController);
               }
               return const SizedBox();
             },
@@ -142,7 +78,7 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
         controller: pdfViewerController,
         params: PdfViewerParams(
             enableTextSelection: true,
-            backgroundColor: Color.fromARGB(255, 253, 252, 250),
+            backgroundColor: const Color.fromARGB(255, 253, 252, 250),
             viewerOverlayBuilder: (context, size) => [
                   PdfViewerScrollThumb(
                     controller: pdfViewerController,
