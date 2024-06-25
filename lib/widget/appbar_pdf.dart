@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdfrx/pdfrx.dart';
 
-import 'package:simplereader/bloc/pdf_bloc.dart';
+import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 
 class AppBarPDF extends StatelessWidget {
   final TextEditingController _textEditingController = TextEditingController();
