@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
+import 'package:simplereader/bloc/switch_mode/switch_mode_bloc.dart';
 import 'package:simplereader/cubit/file_cubit.dart';
 import 'package:simplereader/pdfbloc_observer.dart';
 import 'package:simplereader/screens/readingpdf.dart';
@@ -20,9 +21,11 @@ class MainApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => PdfBloc()),
         BlocProvider(
+          create: (context) => SwitchModeBloc(),
+        ),
+        BlocProvider(
           create: (context) => FileCubit(),
         ),
-
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
