@@ -13,6 +13,7 @@ dependencies:
   flutter_bloc: ^8.1.5
   flutter_svg: ^2.0.10+1
   pdfrx: ^1.0.67
+  share_plus: ^9.0.0
 
 
 dev_dependencies:
