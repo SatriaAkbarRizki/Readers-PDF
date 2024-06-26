@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdfrx/pdfrx.dart';
 import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
+import 'package:simplereader/bloc/switch_mode/switch_mode_bloc.dart';
+
 import 'package:simplereader/widget/appbar_pdf.dart';
 import 'package:simplereader/widget/appbar_search.dart';
 
@@ -73,32 +75,42 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
           )
         ],
       ),
-      body: PdfViewer.asset(
-        'assets/example.pdf',
-        controller: pdfViewerController,
-        params: PdfViewerParams(
-            enableTextSelection: true,
-            backgroundColor: const Color.fromARGB(255, 253, 252, 250),
-            viewerOverlayBuilder: (context, size) => [
-                  PdfViewerScrollThumb(
-                    controller: pdfViewerController,
-                    thumbBuilder:
-                        (context, thumbSize, pageNumber, controller) =>
-                            Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.black54),
-                    ),
-                  ),
-                ],
-            loadingBannerBuilder: (context, bytesDownloaded, totalBytes) =>
-                const Center(
-                  child: CircularProgressIndicator(),
-                ),
-            onPageChanged: (pageNumber) => Center(
-                  child: Text(pageNumber.toString()),
-                ),
-            pagePaintCallbacks: [pdfTextSearcher.pageTextMatchPaintCallback]),
+      body: BlocBuilder<SwitchModeBloc, SwitchModeState>(
+        builder: (context, state) {
+          return ColorFiltered(
+            colorFilter: ColorFilter.mode(Colors.grey,
+                state is ReaderMode ? BlendMode.saturation : BlendMode.dst),
+            child: PdfViewer.asset(
+              'assets/example.pdf',
+              controller: pdfViewerController,
+              params: PdfViewerParams(
+                  enableTextSelection: true,
+                  backgroundColor: const Color.fromARGB(255, 253, 252, 250),
+                  viewerOverlayBuilder: (context, size) => [
+                        PdfViewerScrollThumb(
+                          controller: pdfViewerController,
+                          thumbBuilder:
+                              (context, thumbSize, pageNumber, controller) =>
+                                  Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.black54),
+                          ),
+                        ),
+                      ],
+                  loadingBannerBuilder:
+                      (context, bytesDownloaded, totalBytes) => const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                  onPageChanged: (pageNumber) => Center(
+                        child: Text(pageNumber.toString()),
+                      ),
+                  pagePaintCallbacks: [
+                    pdfTextSearcher.pageTextMatchPaintCallback
+                  ]),
+            ),
+          );
+        },
       ),
     );
   }

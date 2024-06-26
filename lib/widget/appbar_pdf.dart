@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdfrx/pdfrx.dart';
 
 import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
+import 'package:simplereader/bloc/switch_mode/switch_mode_bloc.dart';
 
 class AppBarPDF extends StatelessWidget {
   final TextEditingController _textEditingController = TextEditingController();
@@ -25,7 +26,11 @@ class AppBarPDF extends StatelessWidget {
           itemBuilder: (context) => [
             _dialogRenamePDF(context),
             _dialogGotoPage(context),
-            const PopupMenuItem(child: Text('Dark Mode')),
+            PopupMenuItem(
+              child: const Text('Reader Mode'),
+              onTap: () =>
+                  context.read<SwitchModeBloc>().add(ToggleReaderEvent()),
+            )
           ],
         )
       ],
