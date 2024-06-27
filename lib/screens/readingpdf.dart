@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pdfrx/pdfrx.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 import 'package:simplereader/bloc/switch_mode/switch_mode_bloc.dart';
 
@@ -49,8 +54,17 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
             visible:
                 context.watch<PdfBloc>().state is PdfCloseSearch ? true : false,
             child: IconButton(
-                onPressed: () {
-                  pdfTextSearcher.goToNextMatch();
+                onPressed: () async {
+                  // TODO
+                  // final bytes = await rootBundle.load('assets/example.pdf');
+                  // final list = bytes.buffer.asUint8List();
+                  // final tempDir = await getTemporaryDirectory();
+                  // final file =
+                  //     await File('${tempDir.path}/example.pdf').create();
+                  // file.writeAsBytesSync(list);
+
+                  // Share.shareXFiles([XFile('${file.path}')],
+                  //     text: 'Great picture');
                 },
                 icon: const Icon(Icons.arrow_back))),
         actions: [

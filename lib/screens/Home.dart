@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:simplereader/screens/empty.dart';
 
 import 'package:simplereader/widget/currentpdf.dart';
 
 class HomeScreens extends StatelessWidget {
   const HomeScreens({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -22,17 +22,21 @@ class HomeScreens extends StatelessWidget {
               child: CircleAvatar(),
             )
           ]),
-      body: NestedScrollView(
-          headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                SliverAppBar(
-                  forceMaterialTransparency: true,
-                  title: Text(
-                    'Good Morning 🌄',
-                    style: Theme.of(context).textTheme.labelMedium,
-                  ),
-                )
-              ],
-          body: const CurrentPDF()),
+      body: EmptyScreens(),
     );
   }
 }
+
+
+
+// body: NestedScrollView(
+//           headerSliverBuilder: (context, innerBoxIsScrolled) => [
+//                 SliverAppBar(
+//                   forceMaterialTransparency: true,
+//                   title: Text(
+//                     'Good Morning 🌄',
+//                     style: Theme.of(context).textTheme.labelMedium,
+//                   ),
+//                 )
+//               ],
+//           body: const CurrentPDF())
