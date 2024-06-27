@@ -1,0 +1,1 @@
+enum TypeEmpty { emptyPdf, emptyAudio }

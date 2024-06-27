@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:simplereader/screens/empty.dart';
+import 'package:simplereader/type/empty_type.dart';
 
 import 'package:simplereader/widget/currentpdf.dart';
 
@@ -22,7 +23,9 @@ class HomeScreens extends StatelessWidget {
               child: CircleAvatar(),
             )
           ]),
-      body: EmptyScreens(),
+      body: const EmptyScreens(
+        type: TypeEmpty.emptyPdf,
+      ),
     );
   }
 }

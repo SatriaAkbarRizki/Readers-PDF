@@ -31,7 +31,7 @@ class MainApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: MyTheme().lightTheme,
-        home: const Navbar(),
+        home: Navbar(),
       ),
     );
   }
