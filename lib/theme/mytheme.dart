@@ -17,5 +17,7 @@ class MyTheme {
       dialogTheme: const DialogTheme(
           backgroundColor: Color(0xffFDFCFA),
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20)))));
+              borderRadius: BorderRadius.all(Radius.circular(20)))),
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          foregroundColor: Colors.white, backgroundColor: Color(0xff1b5ed1)));
 }
