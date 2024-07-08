@@ -1,19 +1,24 @@
-import 'dart:io';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pdfrx/pdfrx.dart';
-import 'package:share_plus/share_plus.dart';
+
 import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 import 'package:simplereader/bloc/switch_mode/switch_mode_bloc.dart';
-
 import 'package:simplereader/widget/appbar_pdf.dart';
 import 'package:simplereader/widget/appbar_search.dart';
 
 class ReadPDFScreens extends StatefulWidget {
-  const ReadPDFScreens({super.key});
+  FilePickerResult filePdf;
+  static String routeName = '/ScreenPDF';
+  ReadPDFScreens({
+    super.key,
+    required this.filePdf,
+  });
 
   @override
   State<ReadPDFScreens> createState() => _ReadPDFScreensState();
@@ -23,6 +28,8 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
   TextEditingController textEditingController = TextEditingController();
   PdfViewerController pdfViewerController = PdfViewerController();
   int nextSearch = 0;
+
+  late PlatformFile file;
   late final PdfTextSearcher pdfTextSearcher;
 
   @override
@@ -30,6 +37,7 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
     WidgetsBinding.instance.addPostFrameCallback(
         (_) => context.read<PdfBloc>().add(OnPdfCloseSearch()));
     pdfTextSearcher = PdfTextSearcher(pdfViewerController);
+    file = widget.filePdf.files.first;
     super.initState();
   }
 
@@ -55,6 +63,7 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
                 context.watch<PdfBloc>().state is PdfCloseSearch ? true : false,
             child: IconButton(
                 onPressed: () async {
+                  context.go('/');
                   // TODO
                   // final bytes = await rootBundle.load('assets/example.pdf');
                   // final list = bytes.buffer.asUint8List();
@@ -94,8 +103,8 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
           return ColorFiltered(
             colorFilter: ColorFilter.mode(Colors.grey,
                 state is ReaderMode ? BlendMode.saturation : BlendMode.dst),
-            child: PdfViewer.asset(
-              'assets/example.pdf',
+            child: PdfViewer.file(
+              file.path.toString(),
               controller: pdfViewerController,
               params: PdfViewerParams(
                   enableTextSelection: true,
