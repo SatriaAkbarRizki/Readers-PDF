@@ -19,5 +19,7 @@ class MyTheme {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20)))),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          foregroundColor: Colors.white, backgroundColor: Color(0xff1b5ed1)));
+          foregroundColor: Colors.white, backgroundColor: Color(0xff1b5ed1)),
+      snackBarTheme: const SnackBarThemeData(
+          backgroundColor: Color.fromARGB(255, 235, 57, 57)));
 }
