@@ -15,6 +15,7 @@ dependencies:
   flutter_document_picker: ^5.2.3
   flutter_svg: ^2.0.10+1
   go_router: ^14.2.0
+  path: ^1.9.0
   path_provider: ^2.1.3
   pdfrx: ^1.0.67
   permission_handler: ^11.3.1
