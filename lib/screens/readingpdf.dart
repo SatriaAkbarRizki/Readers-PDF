@@ -9,15 +9,16 @@ import 'package:pdfrx/pdfrx.dart';
 
 import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 import 'package:simplereader/bloc/switch_mode/switch_mode_bloc.dart';
+import 'package:simplereader/model/pdfmodel.dart';
 import 'package:simplereader/widget/appbar_pdf.dart';
 import 'package:simplereader/widget/appbar_search.dart';
 
 class ReadPDFScreens extends StatefulWidget {
-  FilePickerResult filePdf;
+  Pdfmodel pdf;
   static String routeName = '/ScreenPDF';
   ReadPDFScreens({
     super.key,
-    required this.filePdf,
+    required this.pdf,
   });
 
   @override
@@ -29,7 +30,6 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
   PdfViewerController pdfViewerController = PdfViewerController();
   int nextSearch = 0;
 
-  late PlatformFile file;
   late final PdfTextSearcher pdfTextSearcher;
 
   @override
@@ -37,7 +37,6 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
     WidgetsBinding.instance.addPostFrameCallback(
         (_) => context.read<PdfBloc>().add(OnPdfCloseSearch()));
     pdfTextSearcher = PdfTextSearcher(pdfViewerController);
-    file = widget.filePdf.files.first;
     super.initState();
   }
 
@@ -57,7 +56,7 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
         title: Visibility(
             visible:
                 context.watch<PdfBloc>().state is PdfOpenSearch ? false : true,
-            child: const Text('Read PDF')),
+            child: Text(widget.pdf.name)),
         leading: Visibility(
             visible:
                 context.watch<PdfBloc>().state is PdfCloseSearch ? true : false,
@@ -104,7 +103,7 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
             colorFilter: ColorFilter.mode(Colors.grey,
                 state is ReaderMode ? BlendMode.saturation : BlendMode.dst),
             child: PdfViewer.file(
-              file.path.toString(),
+              widget.pdf.path,
               controller: pdfViewerController,
               params: PdfViewerParams(
                   enableTextSelection: true,

@@ -1,7 +1,6 @@
 import 'dart:developer';
-import 'dart:io';
 import 'package:bloc/bloc.dart';
-import 'package:file_picker/file_picker.dart';
+import 'package:path/path.dart' as path;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simplereader/service/filedoc.dart';
@@ -16,7 +15,8 @@ class FileCubit extends Cubit<dynamic> {
       await serviceFile.getFileDoc().then(
         (results) {
           if (results != null) {
-            final isPdf = results.files.first.name.endsWith('pdf');
+            final isPdf = results.path.contains('.pdf');
+
             if (isPdf) {
               context.go(ReadPDFScreens.routeName, extra: results);
             } else {

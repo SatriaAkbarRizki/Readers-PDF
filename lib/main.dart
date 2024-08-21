@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 import 'package:simplereader/bloc/switch_mode/switch_mode_bloc.dart';
 import 'package:simplereader/cubit/file_cubit.dart';
+import 'package:simplereader/model/pdfmodel.dart';
 import 'package:simplereader/navigation/navbar.dart';
 import 'package:simplereader/pdfbloc_observer.dart';
 import 'package:simplereader/screens/readingpdf.dart';
@@ -51,7 +52,7 @@ final _route = GoRouter(initialLocation: '/', routes: [
   GoRoute(
     path: ReadPDFScreens.routeName,
     builder: (context, state) => ReadPDFScreens(
-      filePdf: state.extra as FilePickerResult,
+      pdf: state.extra as Pdfmodel,
     ),
   )
 ]);
