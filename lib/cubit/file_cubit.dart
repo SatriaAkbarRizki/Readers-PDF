@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
-import 'package:path/path.dart' as path;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simplereader/service/filedoc.dart';
@@ -14,7 +13,7 @@ class FileCubit extends Cubit<dynamic> {
   void getFile(BuildContext context) async =>
       await serviceFile.getFileDoc().then(
         (results) {
-          if (results != null) {
+          if (results != null && context.mounted) {
             final isPdf = results.path.contains('.pdf');
 
             if (isPdf) {

@@ -49,7 +49,7 @@ class Navbar extends StatelessWidget {
                   ))
             ]),
       ),
-      floatingActionButton: FloatingPdfAction(),
+      floatingActionButton: const FloatingPdfAction(),
     );
   }
 }

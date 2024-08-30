@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:simplereader/cubit/file_cubit.dart';
+import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 
 class FloatingPdfAction extends StatelessWidget {
   const FloatingPdfAction({super.key});
@@ -10,7 +10,9 @@ class FloatingPdfAction extends StatelessWidget {
     return FloatingActionButton(
       onPressed: () async {
         // context.read<FileCubit>().findPdf();
-        context.read<FileCubit>().getFile(context);
+        // context.read<FileCubit>().getFile(context);
+
+        context.read<PdfBloc>().add(OnPdfOpenFile(context: context));
       },
       child: const Icon(Icons.add),
     );

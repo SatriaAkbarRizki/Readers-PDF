@@ -1,8 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pdfrx/pdfrx.dart';
@@ -54,8 +51,10 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
       appBar: AppBar(
         backgroundColor: const Color(0xffFDFCFA),
         title: Visibility(
-            visible:
-                context.watch<PdfBloc>().state is PdfOpenSearch ? false : true,
+            visible: context.watch<PdfBloc>().state is PdfOpenSearch ||
+                    context.watch<PdfBloc>().state is PdfSearchingText
+                ? false
+                : true,
             child: Text(widget.pdf.name)),
         leading: Visibility(
             visible:

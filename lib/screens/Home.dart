@@ -20,7 +20,7 @@ class HomeScreens extends StatelessWidget {
               child: CircleAvatar(),
             )
           ]),
-      body: CurrentPDF(),
+      body: const CurrentPDF(),
     );
   }
 }
