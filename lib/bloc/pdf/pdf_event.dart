@@ -12,3 +12,11 @@ class OnPdfSearchingText extends PdfEvent {
 
   OnPdfSearchingText(this.text);
 }
+
+class OnPdfOpenFile extends PdfEvent {
+  final BuildContext context;
+
+  OnPdfOpenFile({required this.context});
+}
+
+class OnPdfShowingAll extends PdfEvent {}

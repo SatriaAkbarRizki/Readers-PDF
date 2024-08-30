@@ -1,24 +1,21 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:simplereader/cubit/file_cubit.dart';
+import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 import 'package:simplereader/screens/empty.dart';
 import 'package:simplereader/screens/readingpdf.dart';
 import 'package:simplereader/type/empty_type.dart';
 import 'package:simplereader/widget/dialog_doc.dart';
-
-import '../model/pdfmodel.dart';
 
 class CurrentPDF extends StatelessWidget {
   const CurrentPDF({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FileCubit, dynamic>(
-      builder: (context, state) {
-        if (state is List<Pdfmodel>) {
+    return Builder(
+      builder: (context) {
+        final listPdf = context.watch<PdfBloc>().listPdf;
+        if (listPdf.isNotEmpty) {
           return CustomScrollView(
             slivers: [
               SliverGrid(
@@ -28,10 +25,10 @@ class CurrentPDF extends StatelessWidget {
                     childAspectRatio: 0.7,
                     mainAxisSpacing: 2),
                 delegate: SliverChildBuilderDelegate(
-                  childCount: state.length,
+                  childCount: listPdf.length,
                   (context, index) => GestureDetector(
                     onTap: () => context.go(ReadPDFScreens.routeName,
-                        extra: state[index]),
+                        extra: listPdf[index]),
                     onLongPress: () => showDialog(
                       useSafeArea: true,
                       context: context,
@@ -71,7 +68,7 @@ class CurrentPDF extends StatelessWidget {
                               right: 10,
                             ),
                             child: Text(
-                              state[index].name,
+                              listPdf[index].name,
                               style: Theme.of(context).textTheme.labelSmall,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -84,8 +81,9 @@ class CurrentPDF extends StatelessWidget {
               )
             ],
           );
+        } else {
+          return const EmptyScreens(type: TypeEmpty.emptyPdf);
         }
-        return const EmptyScreens(type: TypeEmpty.emptyPdf);
       },
     );
   }

@@ -14,3 +14,13 @@ final class PdfSearchingText extends PdfState {
 
   PdfSearchingText(this.text);
 }
+
+final class PdfOpenFile extends PdfState {
+  final Pdfmodel? modelPDF;
+
+  PdfOpenFile({required this.modelPDF});
+}
+
+final class PdfShowingAll extends PdfState {
+  PdfShowingAll();
+}
