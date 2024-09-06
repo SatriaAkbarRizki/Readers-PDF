@@ -1,5 +1,6 @@
 import 'dart:developer';
-
+import 'dart:io';
+import 'package:simplereader/widget/scaffold_messeger.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -41,9 +42,7 @@ class PdfBloc extends Bloc<PdfEvent, PdfState> {
             if (isPdf) {
               event.context.go(ReadPDFScreens.routeName, extra: results);
             } else {
-              SnackBar snackBar =
-                  const SnackBar(content: Text('This not documents'));
-              ScaffoldMessenger.of(event.context).showSnackBar(snackBar);
+              ShowSnackBar().showSnackBar(event.context, 'This not documents');
               log('Not Pdf');
             }
           }
@@ -53,6 +52,11 @@ class PdfBloc extends Bloc<PdfEvent, PdfState> {
 
     on<OnPdfShowingAll>((event, emit) {
       emit(PdfShowingAll());
+    });
+
+    on<OnPdfDeleted>((event, emit) async {
+      await serviceFile.deleteFile(event.filePdf);
+      _fetchAllPdfs();
     });
   }
 

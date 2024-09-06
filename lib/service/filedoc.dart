@@ -17,8 +17,6 @@ class ServiceFile {
       final modelPDF =
           Pdfmodel(name: namePdf, path: result.files.first.path.toString());
       log('Name PDF: ${modelPDF.name} and Path PDF: ${modelPDF.path}');
-
-      // TODO CHANGE CONSTRUCTOR CLASS USING MODEL NOT FilePickerResult
       return modelPDF;
     }
     return null;
@@ -49,5 +47,10 @@ class ServiceFile {
       }
     }
     return listPDF;
+  }
+
+  Future<void> deleteFile(FileSystemEntity filePdf) async {
+    final file = File(filePdf.path);
+    await file.delete();
   }
 }

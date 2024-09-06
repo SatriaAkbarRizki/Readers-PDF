@@ -20,3 +20,10 @@ class OnPdfOpenFile extends PdfEvent {
 }
 
 class OnPdfShowingAll extends PdfEvent {}
+
+
+class OnPdfDeleted extends PdfEvent {
+  final FileSystemEntity filePdf;
+
+  OnPdfDeleted({required this.filePdf});
+}
