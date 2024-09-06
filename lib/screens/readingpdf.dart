@@ -62,16 +62,6 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
             child: IconButton(
                 onPressed: () async {
                   context.go('/');
-                  // TODO
-                  // final bytes = await rootBundle.load('assets/example.pdf');
-                  // final list = bytes.buffer.asUint8List();
-                  // final tempDir = await getTemporaryDirectory();
-                  // final file =
-                  //     await File('${tempDir.path}/example.pdf').create();
-                  // file.writeAsBytesSync(list);
-
-                  // Share.shareXFiles([XFile('${file.path}')],
-                  //     text: 'Great picture');
                 },
                 icon: const Icon(Icons.arrow_back))),
         actions: [

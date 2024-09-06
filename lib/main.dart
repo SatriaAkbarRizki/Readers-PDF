@@ -23,6 +23,8 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+
+
         BlocProvider(create: (context) => PdfBloc()),
         BlocProvider(
           create: (context) => SwitchModeBloc(),
@@ -45,6 +47,7 @@ class MainApp extends StatelessWidget {
 
 final _route = GoRouter(initialLocation: '/', routes: [
   GoRoute(
+
     path: '/',
     builder: (context, state) => Navbar(),
   ),

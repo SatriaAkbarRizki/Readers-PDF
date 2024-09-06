@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -29,10 +30,11 @@ class CurrentPDF extends StatelessWidget {
                   (context, index) => GestureDetector(
                     onTap: () => context.go(ReadPDFScreens.routeName,
                         extra: listPdf[index]),
+
                     onLongPress: () => showDialog(
                       useSafeArea: true,
                       context: context,
-                      builder: (context) => const DialogDoc(),
+                      builder: (context) =>  DialogDoc(pdf: listPdf[index],),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
