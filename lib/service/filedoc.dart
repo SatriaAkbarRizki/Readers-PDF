@@ -8,6 +8,7 @@ import 'package:simplereader/service/permission.dart';
 class ServiceFile {
   List<FileSystemEntity> rootDirectory = [];
   List<Pdfmodel> listPDF = [];
+
   Future<Pdfmodel?> getFileDoc() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
     if (result != null) {
@@ -52,5 +53,18 @@ class ServiceFile {
   Future<void> deleteFile(FileSystemEntity filePdf) async {
     final file = File(filePdf.path);
     await file.delete();
+  }
+
+  Future<void> renameFile(String newName, FileSystemEntity pathPdf) async {
+    log(pathPdf.path);
+    final dir = Directory(pathPdf.path);
+    final namePdf = dir.path.split('/').last;
+
+    final file = File(pathPdf.path);
+    String replacePdf = dir.path.replaceFirst(namePdf, '$newName.pdf');
+    log('New Name file: $replacePdf');
+    await file.rename(replacePdf);
+
+    // Sarani Members.pdf
   }
 }

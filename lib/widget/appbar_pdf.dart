@@ -26,7 +26,7 @@ class AppBarPDF extends StatelessWidget {
         PopupMenuButton(
           itemBuilder: (context) => [
             _dialogSharePDF(context),
-            _dialogRenamePDF(context),
+            // _dialogRenamePDF(context),
             _dialogGotoPage(context),
             PopupMenuItem(
               child: const Text('Reader Mode'),
@@ -48,25 +48,25 @@ class AppBarPDF extends StatelessWidget {
         },
       );
 
-  PopupMenuItem _dialogRenamePDF(context) => PopupMenuItem(
-        child: const Text('Rename Pdf'),
-        onTap: () => showDialog(
-          useSafeArea: true,
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text('Rename Pdf'),
-            content: TextFormField(
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10))),
-              controller: _textEditingController,
-            ),
-            actions: [
-              TextButton(onPressed: () {}, child: const Text('Rename'))
-            ],
-          ),
-        ),
-      );
+  // PopupMenuItem _dialogRenamePDF(context) => PopupMenuItem(
+  //       child: const Text('Rename Pdf'),
+  //       onTap: () => showDialog(
+  //         useSafeArea: true,
+  //         context: context,
+  //         builder: (context) => AlertDialog(
+  //           title: const Text('Rename Pdf'),
+  //           content: TextFormField(
+  //             decoration: InputDecoration(
+  //                 border: OutlineInputBorder(
+  //                     borderRadius: BorderRadius.circular(10))),
+  //             controller: _textEditingController,
+  //           ),
+  //           actions: [
+  //             TextButton(onPressed: () {}, child: const Text('Rename'))
+  //           ],
+  //         ),
+  //       ),
+  //     );
 
   PopupMenuItem _dialogGotoPage(context) => PopupMenuItem(
         child: const Text('Go To Page'),

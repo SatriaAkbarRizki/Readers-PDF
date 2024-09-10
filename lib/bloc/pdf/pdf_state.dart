@@ -24,3 +24,5 @@ final class PdfOpenFile extends PdfState {
 final class PdfShowingAll extends PdfState {
   PdfShowingAll();
 }
+
+final class PdfRenameFile extends PdfState{}

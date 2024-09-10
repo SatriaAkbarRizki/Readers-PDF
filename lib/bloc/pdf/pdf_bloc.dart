@@ -58,6 +58,12 @@ class PdfBloc extends Bloc<PdfEvent, PdfState> {
       await serviceFile.deleteFile(event.filePdf);
       _fetchAllPdfs();
     });
+
+    on<OnPdfRename>((event, emit) async {
+      await serviceFile.renameFile(event.newName, event.filePdf);
+      _fetchAllPdfs();
+      emit(PdfRenameFile());
+    });
   }
 
   void _fetchAllPdfs() async {

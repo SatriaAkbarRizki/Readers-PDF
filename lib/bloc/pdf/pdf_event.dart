@@ -21,9 +21,15 @@ class OnPdfOpenFile extends PdfEvent {
 
 class OnPdfShowingAll extends PdfEvent {}
 
-
 class OnPdfDeleted extends PdfEvent {
   final FileSystemEntity filePdf;
 
   OnPdfDeleted({required this.filePdf});
+}
+
+class OnPdfRename extends PdfEvent {
+  final String newName;
+  final FileSystemEntity filePdf;
+
+  OnPdfRename({required this.newName, required this.filePdf});
 }

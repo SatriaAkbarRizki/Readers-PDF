@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:simplereader/model/pdfmodel.dart';
 import 'package:simplereader/widget/scaffold_messeger.dart';
 
 class DialogDoc extends StatelessWidget {
+  TextEditingController renameController = TextEditingController();
   Pdfmodel pdf;
   DialogDoc({super.key, required this.pdf});
 
@@ -41,8 +43,6 @@ class DialogDoc extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () async {
-                    final bytes = await rootBundle.load('assets/example.pdf');
-                    final list = bytes.buffer.asUint8List();
                     Share.shareXFiles(
                       [XFile(pdf.path)],
                     );
@@ -75,7 +75,45 @@ class DialogDoc extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  // TODO: ADDING RENAME FILE PDF
+                  onTap: () {
+                    final dir = File(pdf.path);
+                    final namePdf = dir.path.split('/').last;
+                    renameController.text = namePdf.split('.pdf').first;
+                    showDialog(
+                      useSafeArea: true,
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text('Rename Pdf'),
+                        content: TextFormField(
+                          controller: renameController,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10))),
+                        ),
+                        actions: [
+                          BlocListener<PdfBloc, PdfState>(
+                            listener: (context, state) {
+                              if (state is PdfRenameFile) {
+                                context.pop();
+                                context.pop();
+                                ShowSnackBar()
+                                    .showSnackBar(context, 'Rename Succes');
+                              }
+                            },
+                            child: TextButton(
+                                onPressed: () {
+                                  log(renameController.text);
+
+                                  context.read<PdfBloc>().add(OnPdfRename(
+                                      newName: renameController.text,
+                                      filePdf: dir));
+                                },
+                                child: const Text('Rename')),
+                          )
+                        ],
+                      ),
+                    );
+                  },
                   child: Container(
                     margin: const EdgeInsets.only(top: 20),
                     height: 50,
