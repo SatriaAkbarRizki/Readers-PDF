@@ -74,6 +74,7 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
             builder: (context, state) {
               if (state is PdfCloseSearch) {
                 return AppBarPDF(
+                  pdf: widget.pdf,
                   pdfViewerController: pdfViewerController,
                 );
               } else if (state is PdfOpenSearch) {

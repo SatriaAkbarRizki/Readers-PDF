@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdfrx/pdfrx.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 import 'package:simplereader/bloc/switch_mode/switch_mode_bloc.dart';
 
+import '../model/pdfmodel.dart';
+
 class AppBarPDF extends StatelessWidget {
   final TextEditingController _textEditingController = TextEditingController();
   final PdfViewerController pdfViewerController;
-  AppBarPDF({
-    super.key,
-    required this.pdfViewerController,
-  });
+  Pdfmodel pdf;
+  AppBarPDF({super.key, required this.pdfViewerController, required this.pdf});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class AppBarPDF extends StatelessWidget {
             icon: const Icon(Icons.search)),
         PopupMenuButton(
           itemBuilder: (context) => [
+            _dialogSharePDF(context),
             _dialogRenamePDF(context),
             _dialogGotoPage(context),
             PopupMenuItem(
@@ -36,6 +38,15 @@ class AppBarPDF extends StatelessWidget {
       ],
     );
   }
+
+  PopupMenuItem _dialogSharePDF(context) => PopupMenuItem(
+        child: const Text('Share Pdf'),
+        onTap: () {
+          Share.shareXFiles(
+            [XFile(pdf.path)],
+          );
+        },
+      );
 
   PopupMenuItem _dialogRenamePDF(context) => PopupMenuItem(
         child: const Text('Rename Pdf'),
