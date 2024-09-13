@@ -63,21 +63,17 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
                 onPressed: () async {
                   context.go('/');
                 },
-                icon: const Icon(Icons.arrow_back))),
+                icon: Image.asset('assets/icons/left-arrow.png'))),
         actions: [
-          BlocBuilder<PdfBloc, PdfState>(
-            buildWhen: (previous, current) =>
-                (previous is PdfInitial) && (current is PdfCloseSearch) ||
-                (previous is PdfCloseSearch) && (current is PdfOpenSearch) ||
-                (previous is PdfOpenSearch) && (current is PdfCloseSearch) ||
-                (previous is PdfSearchingText) && (current is PdfCloseSearch),
-            builder: (context, state) {
-              if (state is PdfCloseSearch) {
+          Builder(
+            builder: (context) {
+              final status = context.watch<PdfBloc>();
+              if (!status.isOpen) {
                 return AppBarPDF(
                   pdf: widget.pdf,
                   pdfViewerController: pdfViewerController,
                 );
-              } else if (state is PdfOpenSearch) {
+              } else if (status.isOpen) {
                 return AppBarSearch(
                     pdfTextSearcher: pdfTextSearcher,
                     textEditingController: textEditingController);
@@ -127,3 +123,25 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
     );
   }
 }
+
+
+// BlocBuilder<PdfBloc, PdfState>(
+//             buildWhen: (previous, current) =>
+//                 (previous is PdfInitial) && (current is PdfCloseSearch) ||
+//                 (previous is PdfCloseSearch) && (current is PdfOpenSearch) ||
+//                 (previous is PdfOpenSearch) && (current is PdfCloseSearch) ||
+//                 (previous is PdfSearchingText) && (current is PdfCloseSearch),
+//             builder: (context, state) {
+//               if (state is PdfCloseSearch) {
+//                 return AppBarPDF(
+//                   pdf: widget.pdf,
+//                   pdfViewerController: pdfViewerController,
+//                 );
+//               } else if (state is PdfOpenSearch) {
+//                 return AppBarSearch(
+//                     pdfTextSearcher: pdfTextSearcher,
+//                     textEditingController: textEditingController);
+//               }
+//               return const SizedBox();
+//             },
+//           )

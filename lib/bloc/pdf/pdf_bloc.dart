@@ -16,16 +16,18 @@ part 'pdf_state.dart';
 class PdfBloc extends Bloc<PdfEvent, PdfState> {
   ServiceFile serviceFile = ServiceFile();
   List<Pdfmodel> listPdf = [];
+  bool isOpen = false;
 
   PdfBloc() : super(PdfInitial()) {
-    // Fetch the PDF list when the bloc is created
     _fetchAllPdfs();
 
     on<OnPdfOpenSearch>((event, emit) {
+      isOpen = true;
       emit(PdfOpenSearch());
     });
 
     on<OnPdfCloseSearch>((event, emit) {
+      isOpen = false;
       emit(PdfCloseSearch());
     });
 

@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pdfrx/pdfrx.dart';
@@ -22,19 +21,20 @@ class AppBarSearch extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
         child: Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         IconButton(
             onPressed: () {
               context.read<PdfBloc>().add(OnPdfCloseSearch());
-
               textEditingController.clear();
               pdfTextSearcher.resetTextSearch();
             },
-            icon: const Icon(Icons.arrow_back)),
+            icon: Image.asset(
+              'assets/icons/left-arrow.png',
+            )),
         Expanded(
           child: Padding(
-            padding:
-                const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 20),
+            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
             child: SizedBox(
               height: 50,
               width: 50,
@@ -48,11 +48,14 @@ class AppBarSearch extends StatelessWidget {
                     }
                   }
                 },
-                child: TextFormField(
-                  controller: textEditingController,
-                  onChanged: (value) {
-                    context.read<PdfBloc>().add(OnPdfSearchingText(value));
-                  },
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: TextFormField(
+                    controller: textEditingController,
+                    onChanged: (value) {
+                      context.read<PdfBloc>().add(OnPdfSearchingText(value));
+                    },
+                  ),
                 ),
               ),
             ),
@@ -64,16 +67,19 @@ class AppBarSearch extends StatelessWidget {
               nextSearch--;
               if (nextSearch < 0) nextSearch = 0;
             },
-            icon: const Icon(Icons.next_plan)),
-        IconButton(
-            onPressed: () {
-              pdfTextSearcher.goToMatchOfIndex(nextSearch);
-              nextSearch++;
-              if (nextSearch > pdfTextSearcher.matches.length) {
-                nextSearch = 0;
-              }
-            },
-            icon: const Icon(Icons.next_plan)),
+            icon: Image.asset('assets/icons/up-arrow.png')),
+        Padding(
+          padding: const EdgeInsets.only(right: 5),
+          child: IconButton(
+              onPressed: () {
+                pdfTextSearcher.goToMatchOfIndex(nextSearch);
+                nextSearch++;
+                if (nextSearch > pdfTextSearcher.matches.length) {
+                  nextSearch = 0;
+                }
+              },
+              icon: Image.asset('assets/icons/down_arrow.png')),
+        ),
       ],
     ));
   }

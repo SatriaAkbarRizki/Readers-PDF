@@ -66,7 +66,7 @@ class DialogDoc extends StatelessWidget {
                           width: 10,
                         ),
                         SvgPicture.asset(
-                          'assets/icons/Share.svg',
+                          'assets/icons/share.svg',
                           colorFilter: const ColorFilter.mode(
                               Colors.white, BlendMode.srcIn),
                         )
