@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -34,6 +36,7 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
     WidgetsBinding.instance.addPostFrameCallback(
         (_) => context.read<PdfBloc>().add(OnPdfCloseSearch()));
     pdfTextSearcher = PdfTextSearcher(pdfViewerController);
+
     super.initState();
   }
 
@@ -61,7 +64,7 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
                 context.watch<PdfBloc>().state is PdfCloseSearch ? true : false,
             child: IconButton(
                 onPressed: () async {
-                  context.go('/');
+                  context.pop();
                 },
                 icon: Image.asset('assets/icons/left-arrow.png'))),
         actions: [
@@ -125,23 +128,19 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
 }
 
 
-// BlocBuilder<PdfBloc, PdfState>(
-//             buildWhen: (previous, current) =>
-//                 (previous is PdfInitial) && (current is PdfCloseSearch) ||
-//                 (previous is PdfCloseSearch) && (current is PdfOpenSearch) ||
-//                 (previous is PdfOpenSearch) && (current is PdfCloseSearch) ||
-//                 (previous is PdfSearchingText) && (current is PdfCloseSearch),
-//             builder: (context, state) {
-//               if (state is PdfCloseSearch) {
-//                 return AppBarPDF(
-//                   pdf: widget.pdf,
-//                   pdfViewerController: pdfViewerController,
-//                 );
-//               } else if (state is PdfOpenSearch) {
-//                 return AppBarSearch(
-//                     pdfTextSearcher: pdfTextSearcher,
-//                     textEditingController: textEditingController);
-//               }
-//               return const SizedBox();
-//             },
-//           )
+
+
+
+// PdfDocumentViewBuilder.file(
+//               widget.pdf.path,
+//               builder: (context, document) => ListView.builder(
+//                 itemCount: 1,
+//                 itemBuilder: (context, index) {
+//                   return PdfPageView(
+//                     document: document,
+//                     pageNumber: index + 1,
+//                     alignment: Alignment.center,
+//                   );
+//                 },
+//               ),
+//             )
