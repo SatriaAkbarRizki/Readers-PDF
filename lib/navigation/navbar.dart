@@ -4,14 +4,20 @@ import 'package:flutter_svg/svg.dart';
 import 'package:simplereader/cubit/navbar_cubit.dart';
 import 'package:simplereader/screens/Home.dart';
 import 'package:simplereader/screens/audio.dart';
+import 'package:simplereader/screens/profile.dart';
 import 'package:simplereader/widget/floating_pdf.dart';
 
 class Navbar extends StatelessWidget {
-  final List listtNavBar = [const HomeScreens(), const AudioScreens()];
+  final List listtNavBar = [
+    const HomeScreens(),
+    // const AudioScreens(),
+    const ProfileScreen()
+  ];
   Navbar({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final navCubit = context.read<NavbarCubit>();
     return Scaffold(
       body: BlocBuilder<NavbarCubit, int>(
         builder: (context, state) {
@@ -22,8 +28,8 @@ class Navbar extends StatelessWidget {
         borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(10), topRight: Radius.circular(15)),
         child: BottomNavigationBar(
-            currentIndex: context.read<NavbarCubit>().state,
-            onTap: (value) => context.read<NavbarCubit>().switchNavBar(value),
+            currentIndex: navCubit.state,
+            onTap: (value) => navCubit.switchNavBar(value),
             backgroundColor: const Color(0xffF9F6EE),
             items: [
               BottomNavigationBarItem(
@@ -33,15 +39,15 @@ class Navbar extends StatelessWidget {
                     colorFilter: const ColorFilter.mode(
                         Color(0xff1b5ed1), BlendMode.srcIn),
                   )),
+              // BottomNavigationBarItem(
+              //     label: 'Listen',
+              //     icon: SvgPicture.asset(
+              //       'assets/icons/listen.svg',
+              //       colorFilter: const ColorFilter.mode(
+              //           Color(0xff1b5ed1), BlendMode.srcIn),
+              //     )),
               BottomNavigationBarItem(
-                  label: 'Listen',
-                  icon: SvgPicture.asset(
-                    'assets/icons/listen.svg',
-                    colorFilter: const ColorFilter.mode(
-                        Color(0xff1b5ed1), BlendMode.srcIn),
-                  )),
-              BottomNavigationBarItem(
-                  label: 'Listen',
+                  label: 'Profile',
                   icon: SvgPicture.asset(
                     'assets/icons/account.svg',
                     colorFilter: const ColorFilter.mode(
@@ -49,7 +55,9 @@ class Navbar extends StatelessWidget {
                   ))
             ]),
       ),
-      floatingActionButton: const FloatingPdfAction(),
+      floatingActionButton: context.watch<NavbarCubit>().state == 0
+          ? const FloatingPdfAction()
+          : null,
     );
   }
 }
