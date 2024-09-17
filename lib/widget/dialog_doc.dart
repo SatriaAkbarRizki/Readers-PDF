@@ -96,8 +96,8 @@ class DialogDoc extends StatelessWidget {
                               if (state is PdfRenameFile) {
                                 context.pop();
                                 context.pop();
-                                ShowSnackBar()
-                                    .showSnackBar(context, 'Rename Succes');
+                                ShowSnackBar(context, 'Rename Succes')
+                                    .showSnackBar(colors: Color(0xff4fc63b));
                               }
                             },
                             child: TextButton(
@@ -148,7 +148,7 @@ class DialogDoc extends StatelessWidget {
                     final dir = Directory(pdf.path);
 
                     context.read<PdfBloc>().add(OnPdfDeleted(filePdf: dir));
-                    ShowSnackBar().showSnackBar(context, 'Deleted Succes');
+                    ShowSnackBar(context, 'Deleted Succes').showSnackBar();
                     context.pop();
                   },
                   child: Container(
