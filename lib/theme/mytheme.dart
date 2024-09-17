@@ -9,7 +9,7 @@ class MyTheme {
               fontFamily: 'GideonRoman',
               fontWeight: FontWeight.w800),
           labelSmall: TextStyle(
-              fontSize: 12,
+              fontSize: 14,
               fontFamily: 'PublicSans',
               fontWeight: FontWeight.w600),
           labelMedium: TextStyle(fontSize: 14)),
