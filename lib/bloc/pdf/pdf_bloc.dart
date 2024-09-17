@@ -19,7 +19,9 @@ class PdfBloc extends Bloc<PdfEvent, PdfState> {
   bool isOpen = false;
 
   PdfBloc() : super(PdfInitial()) {
-    _fetchAllPdfs();
+    if (listPdf.isEmpty) {
+      _fetchAllPdfs();
+    }
 
     on<OnPdfOpenSearch>((event, emit) {
       isOpen = true;
@@ -44,7 +46,7 @@ class PdfBloc extends Bloc<PdfEvent, PdfState> {
             if (isPdf) {
               event.context.go(ReadPDFScreens.routeName, extra: results);
             } else {
-              ShowSnackBar().showSnackBar(event.context, 'This not documents');
+              ShowSnackBar(event.context, 'This not documents').showSnackBar();
               log('Not Pdf');
             }
           }

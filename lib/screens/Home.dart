@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simplereader/widget/currentpdf.dart';
+import 'package:simplereader/widget/listpdf.dart';
 
 class HomeScreens extends StatelessWidget {
   const HomeScreens({super.key});
@@ -20,7 +20,7 @@ class HomeScreens extends StatelessWidget {
               child: CircleAvatar(),
             )
           ]),
-      body: const CurrentPDF(),
+      body: const ListPDF(),
     );
   }
 }
