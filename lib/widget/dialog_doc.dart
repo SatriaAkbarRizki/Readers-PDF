@@ -97,7 +97,8 @@ class DialogDoc extends StatelessWidget {
                                 context.pop();
                                 context.pop();
                                 ShowSnackBar(context, 'Rename Succes')
-                                    .showSnackBar(colors: Color(0xff4fc63b));
+                                    .showSnackBar(
+                                        colors: const Color(0xff4fc63b));
                               }
                             },
                             child: TextButton(
@@ -127,9 +128,7 @@ class DialogDoc extends StatelessWidget {
                       children: [
                         const Text(
                           'Rename',
-                          style: TextStyle(
-                            fontSize: 18,
-                          ),
+                          style: TextStyle(fontSize: 18, color: Colors.white),
                         ),
                         const SizedBox(
                           width: 10,
@@ -137,7 +136,7 @@ class DialogDoc extends StatelessWidget {
                         SvgPicture.asset(
                           'assets/icons/Rename.svg',
                           colorFilter: const ColorFilter.mode(
-                              Colors.black, BlendMode.srcIn),
+                              Colors.white, BlendMode.srcIn),
                         )
                       ],
                     ),

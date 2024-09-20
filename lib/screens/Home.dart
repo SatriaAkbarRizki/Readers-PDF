@@ -12,7 +12,7 @@ class HomeScreens extends StatelessWidget {
           forceMaterialTransparency: true,
           title: Text(
             'Simple Reader',
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(context).textTheme.titleLarge,
           ),
           actions: const [
             Padding(

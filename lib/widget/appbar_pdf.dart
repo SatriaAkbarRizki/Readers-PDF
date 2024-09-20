@@ -5,7 +5,9 @@ import 'package:share_plus/share_plus.dart';
 
 import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 import 'package:simplereader/bloc/switch_mode/switch_mode_bloc.dart';
+import 'package:simplereader/model/thememodel.dart';
 
+import '../cubit/theme_cubit.dart';
 import '../model/pdfmodel.dart';
 
 class AppBarPDF extends StatelessWidget {
@@ -16,22 +18,31 @@ class AppBarPDF extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themes = context.read<ThemeCubit>().state;
     return Row(
       children: [
         IconButton(
             onPressed: () => {
                   context.read<PdfBloc>().add(OnPdfOpenSearch()),
                 },
-            icon: Image.asset('assets/icons/search.png')),
+            icon: Image.asset(
+              'assets/icons/search.png',
+              color: themes.widget,
+            )),
         Padding(
           padding: const EdgeInsets.only(right: 5),
           child: PopupMenuButton(
-            icon: Image.asset('assets/icons/menu-alt-right.png'),
+            color: themes.background,
+            icon: Image.asset(
+              'assets/icons/menu-alt-right.png',
+              color: themes.widget,
+            ),
             itemBuilder: (context) => [
-              _dialogSharePDF(context),
-              _dialogGotoPage(context),
+              _dialogSharePDF(context, themes),
+              _dialogGotoPage(context, themes),
               PopupMenuItem(
-                child: const Text('Reader Mode'),
+                child:
+                    Text('Reader Mode', style: TextStyle(color: themes.text)),
                 onTap: () =>
                     context.read<SwitchModeBloc>().add(ToggleReaderEvent()),
               )
@@ -42,8 +53,11 @@ class AppBarPDF extends StatelessWidget {
     );
   }
 
-  PopupMenuItem _dialogSharePDF(context) => PopupMenuItem(
-        child: const Text('Share Pdf'),
+  PopupMenuItem _dialogSharePDF(contex, Thememodel themes) => PopupMenuItem(
+        child: Text(
+          'Share Pdf',
+          style: TextStyle(color: themes.text),
+        ),
         onTap: () {
           Share.shareXFiles(
             [XFile(pdf.path)],
@@ -51,17 +65,28 @@ class AppBarPDF extends StatelessWidget {
         },
       );
 
-  PopupMenuItem _dialogGotoPage(context) => PopupMenuItem(
-        child: const Text('Go To Page'),
+  PopupMenuItem _dialogGotoPage(context, Thememodel themes) => PopupMenuItem(
+        child: Text(
+          'Go To Page',
+          style: TextStyle(color: themes.text),
+        ),
         onTap: () => showDialog(
           useSafeArea: true,
           context: context,
           builder: (context) => AlertDialog(
-            title: const Text('Go To Page Number'),
+            title:
+                Text('Go To Page Number', style: TextStyle(color: themes.text)),
+            backgroundColor: themes.background,
             content: TextFormField(
               decoration: InputDecoration(
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10))),
+                      borderRadius: BorderRadius.circular(10)),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: themes.widget, width: 1.5)),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: themes.widget, width: 1.5))),
+              style: TextStyle(color: themes.text),
               controller: _textEditingController,
               keyboardType: TextInputType.number,
             ),
@@ -76,7 +101,7 @@ class AppBarPDF extends StatelessWidget {
 
                     Navigator.pop(context);
                   },
-                  child: const Text('Go'))
+                  child: Text('Go', style: TextStyle(color: themes.text)))
             ],
           ),
         ),
