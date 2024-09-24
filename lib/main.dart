@@ -45,6 +45,7 @@ class MainApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: MyTheme().lightTheme.copyWith(
                   scaffoldBackgroundColor: state.background,
+                  
                 ),
             routerConfig: _route,
           );

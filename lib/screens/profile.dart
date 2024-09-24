@@ -1,8 +1,6 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:simplereader/cubit/navbar_cubit.dart';
 import 'package:simplereader/widget/title_profile.dart';
 import 'package:simplereader/widget/title_tools.dart';
 
@@ -32,8 +30,8 @@ class ProfileScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(22),
-                        border: Border.all(
-                            color: const Color(0xff1b5ed1), width: 2)),
+                        border:
+                            Border.all(color: themes.state.widget, width: 2)),
                     child: Padding(
                       padding:
                           const EdgeInsets.only(left: 10, right: 10, top: 20),
@@ -75,8 +73,8 @@ class ProfileScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                            color: const Color(0xff1b5ed1), width: 2)),
+                        border:
+                            Border.all(color: themes.state.widget, width: 2)),
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: ListView.builder(
@@ -117,12 +115,15 @@ class ProfileScreen extends StatelessWidget {
                     mainAxisSpacing: 12.0,
                     crossAxisSpacing: 12.0,
                   ),
-                  children: const [
-                    TitleTools('Merging', 'assets/icons/merge.png'),
+                  children: [
                     TitleTools(
-                        'Deleting Page ', 'assets/icons/delete_page.png'),
-                    TitleTools('Compressing', 'assets/icons/sort-down.png'),
-                    TitleTools('Watermark', 'assets/icons/face-mask.png')
+                        'Merging', 'assets/icons/merge.png', themes.state),
+                    TitleTools('Deleting Page ', 'assets/icons/delete_page.png',
+                        themes.state),
+                    TitleTools('Compressing', 'assets/icons/sort-down.png',
+                        themes.state),
+                    TitleTools(
+                        'Watermark', 'assets/icons/face-mask.png', themes.state)
                   ],
                 )
               ],

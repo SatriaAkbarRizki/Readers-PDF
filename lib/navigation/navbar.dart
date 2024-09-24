@@ -29,20 +29,20 @@ class Navbar extends StatelessWidget {
         borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(10), topRight: Radius.circular(15)),
         child: BlocBuilder<ThemeCubit, Thememodel>(
-          builder: (context, state) {
+          builder: (context, themes) {
             return BottomNavigationBar(
                 currentIndex: navCubit.state,
                 onTap: (value) => navCubit.switchNavBar(value),
-                backgroundColor: state.background,
-                selectedItemColor: state.text,
-                unselectedItemColor: state.widget,
+                backgroundColor: themes.background,
+                selectedItemColor: themes.text,
+                unselectedItemColor: themes.widget,
                 items: [
                   BottomNavigationBarItem(
                       label: 'Home',
                       icon: SvgPicture.asset(
                         'assets/icons/open-book.svg',
-                        colorFilter: const ColorFilter.mode(
-                            Color(0xff1b5ed1), BlendMode.srcIn),
+                        colorFilter:
+                            ColorFilter.mode(themes.widget, BlendMode.srcIn),
                       )),
                   // BottomNavigationBarItem(
                   //     label: 'Listen',
@@ -55,8 +55,8 @@ class Navbar extends StatelessWidget {
                       label: 'Profile',
                       icon: SvgPicture.asset(
                         'assets/icons/account.svg',
-                        colorFilter: const ColorFilter.mode(
-                            Color(0xff1b5ed1), BlendMode.srcIn),
+                        colorFilter:
+                            ColorFilter.mode(themes.widget, BlendMode.srcIn),
                       ))
                 ]);
           },
