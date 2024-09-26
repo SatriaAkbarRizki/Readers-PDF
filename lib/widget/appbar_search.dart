@@ -6,6 +6,8 @@ import 'package:pdfrx/pdfrx.dart';
 
 import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 
+import '../cubit/theme_cubit.dart';
+
 class AppBarSearch extends StatelessWidget {
   final TextEditingController textEditingController;
   final PdfTextSearcher pdfTextSearcher;
@@ -19,6 +21,7 @@ class AppBarSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themes = context.read<ThemeCubit>().state;
     return Expanded(
         child: Row(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -31,6 +34,7 @@ class AppBarSearch extends StatelessWidget {
             },
             icon: Image.asset(
               'assets/icons/left-arrow.png',
+              color: themes.widget,
             )),
         Expanded(
           child: Padding(
@@ -52,6 +56,14 @@ class AppBarSearch extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 10),
                   child: TextFormField(
                     controller: textEditingController,
+                    decoration: InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide:
+                                BorderSide(color: themes.widget, width: 1.5)),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide:
+                                BorderSide(color: themes.widget, width: 1.5))),
+                    style: TextStyle(color: themes.text),
                     onChanged: (value) {
                       context.read<PdfBloc>().add(OnPdfSearchingText(value));
                     },
@@ -67,7 +79,10 @@ class AppBarSearch extends StatelessWidget {
               nextSearch--;
               if (nextSearch < 0) nextSearch = 0;
             },
-            icon: Image.asset('assets/icons/up-arrow.png')),
+            icon: Image.asset(
+              'assets/icons/up-arrow.png',
+              color: themes.widget,
+            )),
         Padding(
           padding: const EdgeInsets.only(right: 5),
           child: IconButton(
@@ -78,7 +93,10 @@ class AppBarSearch extends StatelessWidget {
                   nextSearch = 0;
                 }
               },
-              icon: Image.asset('assets/icons/down_arrow.png')),
+              icon: Image.asset(
+                'assets/icons/down_arrow.png',
+                color: themes.widget,
+              )),
         ),
       ],
     ));

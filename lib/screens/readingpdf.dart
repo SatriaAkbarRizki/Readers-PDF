@@ -8,6 +8,7 @@ import 'package:pdfrx/pdfrx.dart';
 
 import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 import 'package:simplereader/bloc/switch_mode/switch_mode_bloc.dart';
+import 'package:simplereader/cubit/theme_cubit.dart';
 import 'package:simplereader/model/pdfmodel.dart';
 import 'package:simplereader/widget/appbar_pdf.dart';
 import 'package:simplereader/widget/appbar_search.dart';
@@ -50,23 +51,31 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
 
   @override
   Widget build(BuildContext context) {
+    final themes = context.read<ThemeCubit>().state;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xffFDFCFA),
+        backgroundColor: themes.background,
         title: Visibility(
             visible: context.watch<PdfBloc>().state is PdfOpenSearch ||
                     context.watch<PdfBloc>().state is PdfSearchingText
                 ? false
                 : true,
-            child: Text(widget.pdf.name)),
+            child: Text(
+              widget.pdf.name,
+              style: TextStyle(color: themes.text),
+            )),
         leading: Visibility(
             visible:
                 context.watch<PdfBloc>().state is PdfCloseSearch ? true : false,
             child: IconButton(
-                onPressed: () async {
-                  context.pop();
-                },
-                icon: Image.asset('assets/icons/left-arrow.png'))),
+              onPressed: () async {
+                context.pop();
+              },
+              icon: Image.asset(
+                'assets/icons/left-arrow.png',
+                color: themes.widget,
+              ),
+            )),
         actions: [
           Builder(
             builder: (context) {

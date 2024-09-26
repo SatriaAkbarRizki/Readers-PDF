@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pdfrx/pdfrx.dart';
 import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
+import 'package:simplereader/cubit/theme_cubit.dart';
 import 'package:simplereader/screens/empty.dart';
 import 'package:simplereader/screens/readingpdf.dart';
 import 'package:simplereader/type/empty_type.dart';
@@ -14,6 +15,7 @@ class ListPDF extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final listPdf = context.watch<PdfBloc>().listPdf;
+    final themes = context.watch<ThemeCubit>().state;
     return Builder(
       builder: (context) {
         if (listPdf.isNotEmpty) {
@@ -80,7 +82,10 @@ class ListPDF extends StatelessWidget {
                             ),
                             child: Text(
                               listPdf[index].name,
-                              style: Theme.of(context).textTheme.labelSmall,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelSmall!
+                                  .copyWith(color: themes.text),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),

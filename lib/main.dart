@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 import 'package:simplereader/bloc/switch_mode/switch_mode_bloc.dart';
 import 'package:simplereader/cubit/file_cubit.dart';
+import 'package:simplereader/cubit/theme_cubit.dart';
 import 'package:simplereader/model/pdfmodel.dart';
+import 'package:simplereader/model/thememodel.dart';
 import 'package:simplereader/navigation/navbar.dart';
 import 'package:simplereader/pdfbloc_observer.dart';
 import 'package:simplereader/screens/readingpdf.dart';
@@ -23,8 +25,6 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-
-
         BlocProvider(create: (context) => PdfBloc()),
         BlocProvider(
           create: (context) => SwitchModeBloc(),
@@ -35,11 +35,21 @@ class MainApp extends StatelessWidget {
         BlocProvider(
           create: (context) => NavbarCubit(),
         ),
+        BlocProvider(
+          create: (context) => ThemeCubit(),
+        )
       ],
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        theme: MyTheme().lightTheme,
-        routerConfig: _route,
+      child: BlocBuilder<ThemeCubit, Thememodel>(
+        builder: (context, state) {
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            theme: MyTheme().lightTheme.copyWith(
+                  scaffoldBackgroundColor: state.background,
+                  
+                ),
+            routerConfig: _route,
+          );
+        },
       ),
     );
   }
@@ -47,7 +57,6 @@ class MainApp extends StatelessWidget {
 
 final _route = GoRouter(initialLocation: '/', routes: [
   GoRoute(
-
     path: '/',
     builder: (context, state) => Navbar(),
   ),

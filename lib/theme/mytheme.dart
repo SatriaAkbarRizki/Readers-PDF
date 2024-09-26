@@ -5,14 +5,25 @@ class MyTheme {
       scaffoldBackgroundColor: const Color(0xffFDFCFA),
       textTheme: const TextTheme(
           titleMedium: TextStyle(
+              fontSize: 18,
+              color: Color(0xff1b5ed1),
+              fontWeight: FontWeight.bold),
+          titleLarge: TextStyle(
               fontSize: 26,
               fontFamily: 'GideonRoman',
+              color: Color(0xffFDFCFA),
               fontWeight: FontWeight.w800),
           labelSmall: TextStyle(
               fontSize: 14,
               fontFamily: 'PublicSans',
+              color: Color(0xffFDFCFA),
               fontWeight: FontWeight.w600),
-          labelMedium: TextStyle(fontSize: 14)),
+          labelMedium: TextStyle(
+            fontSize: 14,
+            color: Color(0xffFDFCFA),
+            fontWeight: FontWeight.w800,
+            fontFamily: 'PublicSans',
+          )),
       popupMenuTheme: const PopupMenuThemeData(color: Color(0xffFDFCFA)),
       dialogTheme: const DialogTheme(
           backgroundColor: Color(0xffFDFCFA),
