@@ -44,7 +44,7 @@ class PdfBloc extends Bloc<PdfEvent, PdfState> {
             final isPdf = results.path.contains('.pdf');
 
             if (isPdf) {
-              event.context.go(ReadPDFScreens.routeName, extra: results);
+              event.context.push(ReadPDFScreens.routeName, extra: results);
             } else {
               ShowSnackBar(event.context, 'This not documents').showSnackBar();
               log('Not Pdf');
