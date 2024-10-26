@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:path/path.dart' as path;
 import 'package:file_picker/file_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:simplereader/model/pdfmodel.dart';
 import 'package:simplereader/service/permission.dart';
 
@@ -55,7 +56,7 @@ class ServiceFile {
     await file.delete();
   }
 
-  Future<void> renameFile(String newName, FileSystemEntity pathPdf) async {
+  Future<String> renameFile(String newName, FileSystemEntity pathPdf) async {
     log(pathPdf.path);
     final dir = Directory(pathPdf.path);
     final namePdf = dir.path.split('/').last;
@@ -65,6 +66,19 @@ class ServiceFile {
     log('New Name file: $replacePdf');
     await file.rename(replacePdf);
 
-    // Sarani Members.pdf
+    return replacePdf;
+  }
+
+  Future<File> movingFile(String pdf) async {
+    log(pdf);
+    final namePdf = pdf.split('/').last;
+    final sourceFile = File(pdf);
+
+    final destinationPath = "/storage/emulated/0/Documents/$namePdf";
+    final newFile = await sourceFile.copy(destinationPath);
+    await sourceFile.delete();
+
+    log('Results Move: ${newFile.path}');
+    return newFile;
   }
 }
