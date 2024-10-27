@@ -56,11 +56,6 @@ class ToolsPdfBloc extends Bloc<ToolsPdfEvent, ToolsPdfState> {
               },
             ),
           );
-      // log('Final Results: $pathMergePDF');
-
-      // await serviceFile.movingFile(pathMergePDF!).then(
-      //       (value) => emit(ToolsSucces()),
-      //     );
     });
 
     on<OnCancelMerge>((event, emit) {
