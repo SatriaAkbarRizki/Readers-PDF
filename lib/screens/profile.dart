@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simplereader/bloc/tools_pdf/tools_pdf_bloc.dart';
 import 'package:simplereader/cubit/file_cubit.dart';
+import 'package:simplereader/screens/tools/delete.dart';
 import 'package:simplereader/screens/tools/merge.dart';
 import 'package:simplereader/widget/title_profile.dart';
 import 'package:simplereader/widget/title_tools.dart';
@@ -126,8 +127,13 @@ class ProfileScreen extends StatelessWidget {
                       child: TitleTools(
                           'Merging', 'assets/icons/merge.png', themes.state),
                     ),
-                    TitleTools('Deleting Page ', 'assets/icons/delete_page.png',
-                        themes.state),
+                    InkWell(
+                      onTap: () => context.push(DeleteScreen.routeName),
+                      overlayColor:
+                          const WidgetStatePropertyAll(Colors.transparent),
+                      child: TitleTools('Deleting Page ',
+                          'assets/icons/delete_page.png', themes.state),
+                    ),
                     TitleTools('Compressing', 'assets/icons/sort-down.png',
                         themes.state),
                     TitleTools(
