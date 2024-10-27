@@ -30,7 +30,7 @@ class MergeScreen extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          backgroundColor: themes.background,
+    
           title: Text(
             'Merge PDF',
             style: TextStyle(color: themes.text),

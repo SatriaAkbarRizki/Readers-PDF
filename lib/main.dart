@@ -12,6 +12,7 @@ import 'package:simplereader/model/thememodel.dart';
 import 'package:simplereader/navigation/navbar.dart';
 import 'package:simplereader/pdfbloc_observer.dart';
 import 'package:simplereader/screens/readingpdf.dart';
+import 'package:simplereader/screens/tools/delete.dart';
 import 'package:simplereader/screens/tools/merge.dart';
 import 'package:simplereader/theme/mytheme.dart';
 import 'cubit/navbar_cubit.dart';
@@ -50,6 +51,9 @@ class MainApp extends StatelessWidget {
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             theme: MyTheme().lightTheme.copyWith(
+                  appBarTheme: AppBarTheme(
+                    backgroundColor: state.background,
+                  ),
                   scaffoldBackgroundColor: state.background,
                 ),
             routerConfig: _route,
@@ -74,5 +78,10 @@ final _route = GoRouter(initialLocation: '/', routes: [
   GoRoute(
     path: MergeScreen.routeName,
     builder: (context, state) => MergeScreen(),
+  ),
+
+  GoRoute(
+    path: DeleteScreen.routeName,
+    builder: (context, state) => DeleteScreen(),
   )
 ]);
