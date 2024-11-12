@@ -9,7 +9,7 @@ import 'package:pdfrx/pdfrx.dart';
 import 'package:simplereader/bloc/tools_pdf/cubit/channel_merge_cubit.dart';
 import 'package:simplereader/bloc/tools_pdf/tools_pdf_bloc.dart';
 import 'package:simplereader/widget/form_dialog.dart';
-import 'package:simplereader/widget/preview_merge.dart';
+import 'package:simplereader/widget/preview_pdf.dart';
 import 'package:simplereader/widget/scaffold_messeger.dart';
 
 import '../../cubit/theme_cubit.dart';
@@ -30,7 +30,6 @@ class MergeScreen extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-    
           title: Text(
             'Merge PDF',
             style: TextStyle(color: themes.text),
@@ -75,7 +74,7 @@ class MergeScreen extends StatelessWidget {
                                   return Expanded(
                                       child: Stack(
                                     children: [
-                                      PreviewMerge(themes, state.pdf!.name,
+                                      PreviewPDF(themes, state.pdf!.name,
                                           state.pdf!.path),
                                       Align(
                                         alignment: Alignment.topRight,
@@ -106,7 +105,7 @@ class MergeScreen extends StatelessWidget {
                                           .read<ToolsPdfBloc>()
                                           .add(OnPickPDFMerge(context));
                                     },
-                                    child: PreviewMerge(themes, null, null)),
+                                    child: PreviewPDF(themes, null, null)),
                               );
                             },
                           ),
@@ -130,7 +129,7 @@ class MergeScreen extends StatelessWidget {
                                   return Expanded(
                                       child: Stack(
                                     children: [
-                                      PreviewMerge(themes, state.pdf!.name,
+                                      PreviewPDF(themes, state.pdf!.name,
                                           state.pdf!.path),
                                       Align(
                                         alignment: Alignment.topRight,
@@ -160,7 +159,7 @@ class MergeScreen extends StatelessWidget {
                                           .read<ToolsPdfBloc>()
                                           .add(OnPickPDFMerge(context));
                                     },
-                                    child: PreviewMerge(themes, null, null)),
+                                    child: PreviewPDF(themes, null, null)),
                               );
                             },
                           ),

@@ -5,10 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simplereader/model/pdfmodel.dart';
+import 'package:simplereader/widget/preview_pdf_grid.dart';
 
 import '../../bloc/tools_pdf/tools_pdf_bloc.dart';
+import '../../cubit/click_delete.dart';
 import '../../cubit/theme_cubit.dart';
-import '../../widget/preview_merge.dart';
+import '../../widget/preview_pdf.dart';
 import '../../widget/scaffold_messeger.dart';
 
 class DeleteScreen extends StatelessWidget {
@@ -34,22 +36,28 @@ class DeleteScreen extends StatelessWidget {
               color: themes.widget,
             ),
           )),
-      body: BlocProvider(
-        create: (context) => ToolsPdfBloc(),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => ToolsPdfBloc(),
+          ),
+          BlocProvider(
+            create: (context) => ClickOrderDelete(),
+          ),
+        ],
         child: Stack(
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                BlocBuilder<ToolsPdfBloc, ToolsPdfState>(
-                  builder: (context, state) {
-                    if (state is ToolsPickPdfMerge) {
-                      if (state.pdf != null) {
-                        return Padding(
-                          padding: const EdgeInsets.all(30),
-                          child: Stack(
+            SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  BlocBuilder<ToolsPdfBloc, ToolsPdfState>(
+                    builder: (context, state) {
+                      if (state is ToolsPickPdfMerge) {
+                        if (state.pdf != null) {
+                          return Stack(
                             children: [
-                              PreviewMerge(
+                              PreviewPDFGrid(
                                   themes, state.pdf!.name, state.pdf!.path),
                               Align(
                                 alignment: Alignment.topRight,
@@ -69,24 +77,24 @@ class DeleteScreen extends StatelessWidget {
                                     )),
                               )
                             ],
-                          ),
-                        );
+                          );
+                        }
                       }
-                    }
 
-                    return GestureDetector(
-                        onTap: () {
-                          context
-                              .read<ToolsPdfBloc>()
-                              .add(OnPickPDFMerge(context));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(30),
-                          child: PreviewMerge(themes, 'Click Here..', null),
-                        ));
-                  },
-                )
-              ],
+                      return GestureDetector(
+                          onTap: () {
+                            context
+                                .read<ToolsPdfBloc>()
+                                .add(OnPickPDFMerge(context));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(30),
+                            child: PreviewPDF(themes, 'Click Here..', null),
+                          ));
+                    },
+                  )
+                ],
+              ),
             ),
             Align(
               alignment: Alignment.bottomCenter,
