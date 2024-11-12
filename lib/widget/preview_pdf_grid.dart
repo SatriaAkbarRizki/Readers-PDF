@@ -51,13 +51,12 @@ class PreviewPDFGrid extends StatelessWidget {
                             pageNumber: index + 1,
                           ),
                         ),
-                        // Overlay color container
                         Positioned.fill(
                           child: Container(
                             decoration: BoxDecoration(
                               color: state?.contains(index) == true
                                   ? Colors.red.withOpacity(0.2)
-                                  : null, // Adjust opacity as needed
+                                  : null,
                             ),
                           ),
                         ),

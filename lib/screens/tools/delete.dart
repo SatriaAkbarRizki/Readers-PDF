@@ -68,6 +68,8 @@ class DeleteScreen extends StatelessWidget {
                                       context
                                           .read<ToolsPdfBloc>()
                                           .add(OnCancelMerge(context, 0));
+
+                                      context.read<ClickOrderDelete>().clear();
                                     },
                                     icon: SvgPicture.asset(
                                       'assets/icons/Delete.svg',

@@ -15,4 +15,6 @@ class ClickOrderDelete extends Cubit<List<int>> {
         : clickOrder.add(index);
     emit(clickOrder);
   }
+
+  void clear() => emit([]);
 }
