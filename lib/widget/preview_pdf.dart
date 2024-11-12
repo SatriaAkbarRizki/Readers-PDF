@@ -3,10 +3,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:pdfrx/pdfrx.dart';
 import 'package:simplereader/model/thememodel.dart';
 
-class PreviewMerge extends StatelessWidget {
+class PreviewPDF extends StatelessWidget {
   final Thememodel themes;
   String? title, path;
-  PreviewMerge(this.themes, this.title, this.path, {super.key});
+  PreviewPDF(this.themes, this.title, this.path, {super.key});
 
   @override
   Widget build(BuildContext context) {
