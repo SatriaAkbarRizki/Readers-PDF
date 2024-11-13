@@ -68,7 +68,7 @@ class MergeScreen extends StatelessWidget {
                                     .read<ChannelMergeCubit>()
                                     .changeStatus(false);
                               }
-                              if (state is ToolsPickPdfMerge) {
+                              if (state is ToolsPickPdfTools) {
                                 if (state.pdf != null) {
                                   pdfs.add(state.pdf!);
                                   return Expanded(
@@ -123,7 +123,7 @@ class MergeScreen extends StatelessWidget {
                                     .read<ChannelMergeCubit>()
                                     .changeStatus(false);
                               }
-                              if (state is ToolsPickPdfMerge) {
+                              if (state is ToolsPickPdfTools) {
                                 if (state.pdf != null) {
                                   pdfs.add(state.pdf!);
                                   return Expanded(
