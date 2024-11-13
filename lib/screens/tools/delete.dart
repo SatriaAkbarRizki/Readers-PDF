@@ -10,13 +10,15 @@ import 'package:simplereader/widget/preview_pdf_grid.dart';
 import '../../bloc/tools_pdf/tools_pdf_bloc.dart';
 import '../../cubit/click_delete.dart';
 import '../../cubit/theme_cubit.dart';
+import '../../widget/form_dialog.dart';
 import '../../widget/preview_pdf.dart';
 import '../../widget/scaffold_messeger.dart';
 
 class DeleteScreen extends StatelessWidget {
   static String routeName = '/delete-page';
+  String? pdfPath;
 
-  const DeleteScreen({super.key});
+  DeleteScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +53,16 @@ class DeleteScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  BlocBuilder<ToolsPdfBloc, ToolsPdfState>(
+                  BlocConsumer<ToolsPdfBloc, ToolsPdfState>(
+                    listener: (context, state) {
+                      if (state is ToolsSucces) {
+                        context.read<ClickOrderDelete>().clear();
+                      }
+                    },
                     builder: (context, state) {
-                      if (state is ToolsPickPdfMerge) {
+                      if (state is ToolsPickPdfTools) {
                         if (state.pdf != null) {
+                          pdfPath = state.pdf!.path;
                           return Stack(
                             children: [
                               PreviewPDFGrid(
@@ -103,12 +111,12 @@ class DeleteScreen extends StatelessWidget {
               child: BlocConsumer<ToolsPdfBloc, ToolsPdfState>(
                 listener: (context, state) {
                   if (state is ToolsSucces) {
-                    ShowSnackBar(context, 'Succes Merge PDF')
+                    ShowSnackBar(context, 'Succes Delete PDF')
                         .showSnackBar(colors: const Color(0xff4fc63b));
                   }
                 },
                 builder: (context, state) {
-                  final pdfBloc = context.read<ToolsPdfBloc>();
+                  final toolsPdfBloc = context.read<ToolsPdfBloc>();
                   return Padding(
                     padding:
                         const EdgeInsets.only(left: 10, right: 10, bottom: 10),
@@ -120,8 +128,15 @@ class DeleteScreen extends StatelessWidget {
                             shape: ContinuousRectangleBorder(
                                 borderRadius: BorderRadius.circular(15))),
                         onPressed: () {
-                          if (pdfBloc.state is ToolsPickPdfMerge) {
-                            log('Yes is Picck');
+                          if (toolsPdfBloc.state is ToolsPickPdfTools) {
+                            final dataOrder = context
+                                .read<ClickOrderDelete>()
+                                .listOrderDelete;
+                            FormDialog(context)
+                                .formDelete(dataOrder, pdfPath!, toolsPdfBloc);
+                          } else {
+                            ShowSnackBar(context, 'Please Pick PDF')
+                                .showSnackBar();
                           }
                         },
                         child: BlocBuilder<ToolsPdfBloc, ToolsPdfState>(

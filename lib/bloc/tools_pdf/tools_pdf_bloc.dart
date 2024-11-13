@@ -3,7 +3,10 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
+import 'package:pdf_manipulator/pdf_manipulator.dart';
+import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 import 'package:simplereader/model/pdfmodel.dart';
+import 'package:simplereader/service/deletepdf.dart';
 import 'package:simplereader/service/mergepdf.dart';
 import 'package:simplereader/widget/scaffold_messeger.dart';
 
@@ -14,6 +17,8 @@ part 'tools_pdf_state.dart';
 
 class ToolsPdfBloc extends Bloc<ToolsPdfEvent, ToolsPdfState> {
   final List<Pdfmodel> listMerge = [];
+  
+
 
   late BuildContext context;
 
@@ -30,7 +35,7 @@ class ToolsPdfBloc extends Bloc<ToolsPdfEvent, ToolsPdfState> {
           final isPdf = results.path.contains('.pdf');
 
           if (isPdf) {
-            emit(ToolsPickPdfMerge(results));
+            emit(ToolsPickPdfTools(results));
 
             listMerge.add(results);
           } else {
@@ -48,8 +53,8 @@ class ToolsPdfBloc extends Bloc<ToolsPdfEvent, ToolsPdfState> {
       //   log('List name pdf merge: ${element.name}');
       // }
 
-      final toolsmerge = Mergepdf(event.nameMergePdf, event.pdfs);
-        await toolsmerge.merge().then(
+      final toolsMergePDF = Mergepdf(event.nameMergePdf, event.pdfs);
+      await toolsMergePDF.merge().then(
             (value) async => await serviceFile.movingFile(value!).then(
               (value) {
                 emit(ToolsSucces());
@@ -61,6 +66,21 @@ class ToolsPdfBloc extends Bloc<ToolsPdfEvent, ToolsPdfState> {
     on<OnCancelMerge>((event, emit) {
       log('IS CLICK CANCEL');
       emit(ToolsCancelMerge());
+    });
+
+    on<OnPDFDeletingPage>((event, emit) async {
+      emit(ToolsRunning());
+      final toolsDeletePDF =
+          Deletepdf(event.nameMergePdf, event.pdfPath, event.pageNumbers);
+
+      await toolsDeletePDF
+          .delete()
+          .then(
+            (value) async => await serviceFile.movingFile(value!),
+          )
+          .then(
+            (value) => emit(ToolsSucces()),
+          );
     });
   }
 }

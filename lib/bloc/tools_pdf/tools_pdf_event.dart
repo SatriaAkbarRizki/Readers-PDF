@@ -14,7 +14,7 @@ class OnPickPDFMerge extends ToolsPdfEvent {
 class OnPDFMerge extends ToolsPdfEvent {
   final List<Pdfmodel> pdfs;
   final String nameMergePdf;
-  const OnPDFMerge(this.nameMergePdf,this.pdfs, super.context);
+  const OnPDFMerge(this.nameMergePdf, this.pdfs, super.context);
 }
 
 class OnCancelMerge extends ToolsPdfEvent {
@@ -23,7 +23,11 @@ class OnCancelMerge extends ToolsPdfEvent {
 }
 
 class OnPDFDeletingPage extends ToolsPdfEvent {
-  const OnPDFDeletingPage(super.context);
+
+  final String nameMergePdf;
+  final String pdfPath;
+  final List<int> pageNumbers;
+  const OnPDFDeletingPage(this.nameMergePdf, this.pdfPath, this.pageNumbers,super.context);
 }
 
 class OnPDFComprerssing extends ToolsPdfEvent {
