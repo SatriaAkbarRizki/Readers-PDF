@@ -146,4 +146,69 @@ class FormDialog {
           ),
         ),
       );
+
+  void formCompress(String path, double valueQuality, double valueScale,
+          ToolsPdfBloc toolsPdfBloc) =>
+      showDialog(
+        useSafeArea: true,
+        context: context,
+        builder: (context) => BlocProvider.value(
+          value: toolsPdfBloc,
+          child: BlocBuilder<ToolsPdfBloc, ToolsPdfState>(
+            builder: (context, state) {
+              return AlertDialog(
+                title: Text(
+                  'Compress Pdf',
+                  style: TextStyle(color: themes.text),
+                ),
+                backgroundColor: themes.widget,
+                content: TextFormField(
+                  controller: nameMergePdf,
+                  focusNode: focusNode,
+                  style: TextStyle(color: themes.text),
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                            color: themes.text,
+                            width: 1.5,
+                          )),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                            color: themes.text,
+                            width: 1.5,
+                          )),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                ),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        if (nameMergePdf.text.isNotEmpty) {
+                          log("${nameMergePdf.text} & $path, & $valueQuality & $valueScale");
+                          focusNode.unfocus();
+                          context.read<ToolsPdfBloc>().add(OnPDFComprerssing(
+                              nameMergePdf.text,
+                              path,
+                              valueQuality,
+                              valueScale,
+                              context));
+                        } else {
+                          ShowSnackBar(
+                                  context, 'Please give name for compress pdf')
+                              .showSnackBar();
+                        }
+                        context.pop();
+                      },
+                      child: Text(
+                        'Compress',
+                        style: TextStyle(color: themes.text),
+                      ))
+                ],
+              );
+            },
+          ),
+        ),
+      );
 }

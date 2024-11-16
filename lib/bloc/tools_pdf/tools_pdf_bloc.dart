@@ -6,6 +6,7 @@ import 'package:meta/meta.dart';
 import 'package:pdf_manipulator/pdf_manipulator.dart';
 import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 import 'package:simplereader/model/pdfmodel.dart';
+import 'package:simplereader/service/compress.dart';
 import 'package:simplereader/service/deletepdf.dart';
 import 'package:simplereader/service/mergepdf.dart';
 import 'package:simplereader/widget/scaffold_messeger.dart';
@@ -17,8 +18,6 @@ part 'tools_pdf_state.dart';
 
 class ToolsPdfBloc extends Bloc<ToolsPdfEvent, ToolsPdfState> {
   final List<Pdfmodel> listMerge = [];
-  
-
 
   late BuildContext context;
 
@@ -49,10 +48,6 @@ class ToolsPdfBloc extends Bloc<ToolsPdfEvent, ToolsPdfState> {
     on<OnPDFMerge>((event, emit) async {
       emit(ToolsRunning());
       log('Name Merge: ${event.nameMergePdf}');
-      // for (var element in event.pdfs) {
-      //   log('List name pdf merge: ${element.name}');
-      // }
-
       final toolsMergePDF = Mergepdf(event.nameMergePdf, event.pdfs);
       await toolsMergePDF.merge().then(
             (value) async => await serviceFile.movingFile(value!).then(
@@ -78,6 +73,19 @@ class ToolsPdfBloc extends Bloc<ToolsPdfEvent, ToolsPdfState> {
           .then(
             (value) async => await serviceFile.movingFile(value!),
           )
+          .then(
+            (value) => emit(ToolsSucces()),
+          );
+    });
+
+    on<OnPDFComprerssing>((event, emit) async {
+      emit(ToolsRunning());
+      final toolCompressPDF = CompressPDF(
+          event.name, event.path, event.valueQuality, event.valueScale);
+
+      await toolCompressPDF
+          .compress()
+          .then((value) async => await serviceFile.movingFile(value!))
           .then(
             (value) => emit(ToolsSucces()),
           );

@@ -23,15 +23,25 @@ class OnCancelMerge extends ToolsPdfEvent {
 }
 
 class OnPDFDeletingPage extends ToolsPdfEvent {
-
   final String nameMergePdf;
   final String pdfPath;
   final List<int> pageNumbers;
-  const OnPDFDeletingPage(this.nameMergePdf, this.pdfPath, this.pageNumbers,super.context);
+  const OnPDFDeletingPage(
+      this.nameMergePdf, this.pdfPath, this.pageNumbers, super.context);
 }
 
 class OnPDFComprerssing extends ToolsPdfEvent {
-  const OnPDFComprerssing(super.context);
+  final String name;
+  final String path;
+  final double valueQuality;
+  final double valueScale;
+  const OnPDFComprerssing(
+    this.name,
+    this.path,
+    this.valueQuality,
+    this.valueScale,
+    super.context,
+  );
 }
 
 class OnPDFWatermark extends ToolsPdfEvent {
