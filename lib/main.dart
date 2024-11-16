@@ -12,6 +12,7 @@ import 'package:simplereader/model/thememodel.dart';
 import 'package:simplereader/navigation/navbar.dart';
 import 'package:simplereader/pdfbloc_observer.dart';
 import 'package:simplereader/screens/readingpdf.dart';
+import 'package:simplereader/screens/tools/compress.dart';
 import 'package:simplereader/screens/tools/delete.dart';
 import 'package:simplereader/screens/tools/merge.dart';
 import 'package:simplereader/theme/mytheme.dart';
@@ -83,5 +84,6 @@ final _route = GoRouter(initialLocation: '/', routes: [
   GoRoute(
     path: DeleteScreen.routeName,
     builder: (context, state) => DeleteScreen(),
-  )
+  ),
+  GoRoute(path: CompressScreen.routeName, builder: (context, state) => CompressScreen(),)
 ]);
