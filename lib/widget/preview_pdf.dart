@@ -50,7 +50,7 @@ class PreviewPDF extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 10),
             child: SizedBox(
-              height: 150,
+              height: 50,
               child: Text(
                 title ?? '...',
                 style: Theme.of(context)
