@@ -6,6 +6,7 @@ import 'package:simplereader/cubit/file_cubit.dart';
 import 'package:simplereader/screens/tools/compress.dart';
 import 'package:simplereader/screens/tools/delete.dart';
 import 'package:simplereader/screens/tools/merge.dart';
+import 'package:simplereader/screens/tools/watermark.dart';
 import 'package:simplereader/widget/title_profile.dart';
 import 'package:simplereader/widget/title_tools.dart';
 
@@ -142,8 +143,13 @@ class ProfileScreen extends StatelessWidget {
                       child: TitleTools('Compressing',
                           'assets/icons/sort-down.png', themes.state),
                     ),
-                    TitleTools(
-                        'Watermark', 'assets/icons/face-mask.png', themes.state)
+                    InkWell(
+                      onTap: () => context.push(WatermarkScreen.routeName),
+                      overlayColor:
+                          const WidgetStatePropertyAll(Colors.transparent),
+                      child: TitleTools('Watermark',
+                          'assets/icons/face-mask.png', themes.state),
+                    )
                   ],
                 )
               ],

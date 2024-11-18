@@ -15,6 +15,7 @@ import 'package:simplereader/screens/readingpdf.dart';
 import 'package:simplereader/screens/tools/compress.dart';
 import 'package:simplereader/screens/tools/delete.dart';
 import 'package:simplereader/screens/tools/merge.dart';
+import 'package:simplereader/screens/tools/watermark.dart';
 import 'package:simplereader/theme/mytheme.dart';
 import 'cubit/navbar_cubit.dart';
 
@@ -80,10 +81,16 @@ final _route = GoRouter(initialLocation: '/', routes: [
     path: MergeScreen.routeName,
     builder: (context, state) => MergeScreen(),
   ),
-
   GoRoute(
     path: DeleteScreen.routeName,
     builder: (context, state) => DeleteScreen(),
   ),
-  GoRoute(path: CompressScreen.routeName, builder: (context, state) => CompressScreen(),)
+  GoRoute(
+    path: CompressScreen.routeName,
+    builder: (context, state) => CompressScreen(),
+  ),
+  GoRoute(
+    path: WatermarkScreen.routeName,
+    builder: (context, state) => WatermarkScreen(),
+  ),
 ]);
