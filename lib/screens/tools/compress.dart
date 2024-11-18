@@ -15,7 +15,7 @@ import '../../widget/preview_pdf_grid.dart';
 import '../../widget/scaffold_messeger.dart';
 
 class CompressScreen extends StatelessWidget {
-  static String routeName = '/compress-delete';
+  static String routeName = '/compress-screen';
   String? pdfPath;
   CompressScreen({super.key});
 

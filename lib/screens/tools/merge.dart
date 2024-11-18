@@ -16,7 +16,7 @@ import '../../cubit/theme_cubit.dart';
 import '../../model/pdfmodel.dart';
 
 class MergeScreen extends StatelessWidget {
-  static String routeName = '/MergePDF';
+  static String routeName = '/merge-screen';
   List<Pdfmodel> pdfs = [];
 
   MergeScreen({super.key});
