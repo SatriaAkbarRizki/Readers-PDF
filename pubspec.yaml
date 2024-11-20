@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.5
+  flutter_colorpicker: ^1.1.0
   flutter_document_picker: ^5.2.3
   flutter_svg: ^2.0.10+1
   go_router: ^14.2.0
