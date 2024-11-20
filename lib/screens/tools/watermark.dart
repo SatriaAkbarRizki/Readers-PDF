@@ -2,8 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:simplereader/cubit/color_picker.dart';
 import 'package:simplereader/cubit/slider_level.dart';
 
 import '../../bloc/tools_pdf/tools_pdf_bloc.dart';
@@ -49,7 +51,10 @@ class WatermarkScreen extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => SliderCubit(0.0),
-          )
+          ),
+          BlocProvider(
+            create: (context) => ColorPickerCubit(),
+          ),
         ],
         child: Stack(
           children: [
@@ -67,6 +72,7 @@ class WatermarkScreen extends StatelessWidget {
                     },
                     builder: (context, state) {
                       final _value = context.watch<SliderCubit>();
+                      final colors = context.watch<ColorPickerCubit>();
                       if (state is ToolsPickPdfTools) {
                         if (state.pdf != null) {
                           pdfPath = state.pdf!.path;
@@ -113,23 +119,64 @@ class WatermarkScreen extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(
                                       top: 10, bottom: 10),
-                                  child: TextFormField(
-                                    style: TextStyle(
-                                        color: themes.text, fontSize: 12),
-                                    decoration: InputDecoration(
-                                        hintText: 'Watermark',
-                                        hintStyle:
-                                            TextStyle(color: themes.text),
-                                        border: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: themes.widget),
-                                            borderRadius:
-                                                BorderRadius.circular(20)),
-                                        enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: themes.widget),
-                                            borderRadius:
-                                                BorderRadius.circular(20))),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: TextFormField(
+                                          style: TextStyle(
+                                              color: themes.text, fontSize: 12),
+                                          decoration: InputDecoration(
+                                              hintText: 'Click To Edit',
+                                              hintStyle:
+                                                  TextStyle(color: themes.text),
+                                              border: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: themes.widget),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20)),
+                                              enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: themes.widget),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          20))),
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 80,
+                                        height: 50,
+                                        margin: EdgeInsets.only(left: 10),
+                                        child: Center(
+                                          child: TextFormField(
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: themes.text,
+                                                fontSize: 12),
+                                            decoration: InputDecoration(
+                                                hintText: '12',
+                                                hintStyle: TextStyle(
+                                                    color: themes.text),
+                                                border: OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: themes.widget),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color:
+                                                                themes.widget),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20))),
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
                                 ),
                                 Align(
@@ -150,8 +197,10 @@ class WatermarkScreen extends StatelessWidget {
                                   itemBuilder: (context, index) => Container(
                                     width: 50,
                                     margin: const EdgeInsets.all(5),
-                                    decoration:
-                                        BoxDecoration(color: themes.widget),
+                                    decoration: BoxDecoration(
+                                        color: index == 4
+                                            ? Colors.red
+                                            : themes.widget),
                                   ),
                                 ),
                                 Align(
@@ -161,19 +210,33 @@ class WatermarkScreen extends StatelessWidget {
                                     style: TextStyle(color: themes.text),
                                   ),
                                 ),
-                                // TODO: INTEGRATE CUBIT OPACITY
                                 SliderTheme(
                                     data: const SliderThemeData(
                                         showValueIndicator:
                                             ShowValueIndicator.always),
                                     child: Slider(
-                                      value: _value.valueScale,
-                                      label:
-                                          _value.valueScale.toStringAsFixed(1),
+                                      value: _value.valueOpacity,
+                                      label: _value.valueOpacity
+                                          .toStringAsFixed(1),
                                       onChanged: (value) {
-                                        _value.changeValueScale(value);
+                                        _value.changeValueOpacity(value);
                                       },
                                     )),
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    'Color Watermark',
+                                    style: TextStyle(color: themes.text),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(12),
+                                  child: ColorPicker(
+                                    pickerColor: colors.pickerColor,
+                                    onColorChanged: (value) =>
+                                        colors.changeColor(value),
+                                  ),
+                                ),
                                 const SizedBox(
                                   height: 100,
                                 )
