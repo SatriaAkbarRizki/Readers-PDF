@@ -6,6 +6,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simplereader/cubit/color_picker.dart';
+import 'package:simplereader/cubit/edit_watermark.dart';
 import 'package:simplereader/cubit/slider_level.dart';
 
 import '../../bloc/tools_pdf/tools_pdf_bloc.dart';
@@ -55,6 +56,9 @@ class WatermarkScreen extends StatelessWidget {
           BlocProvider(
             create: (context) => ColorPickerCubit(),
           ),
+          BlocProvider(
+            create: (context) => EditWatermark(),
+          ),
         ],
         child: Stack(
           children: [
@@ -73,6 +77,8 @@ class WatermarkScreen extends StatelessWidget {
                     builder: (context, state) {
                       final _value = context.watch<SliderCubit>();
                       final colors = context.watch<ColorPickerCubit>();
+                      final watermark = context.watch<EditWatermark>();
+
                       if (state is ToolsPickPdfTools) {
                         if (state.pdf != null) {
                           pdfPath = state.pdf!.path;
@@ -84,6 +90,20 @@ class WatermarkScreen extends StatelessWidget {
                                   children: [
                                     PreviewPDF(themes, state.pdf!.name,
                                         state.pdf!.path),
+                                    Container(
+                                      height: 260,
+                                      width: double.infinity,
+                                      padding: const EdgeInsets.only(
+                                          left: 12, right: 12),
+                                      alignment: watermark.postionWatermark,
+                                      child: Text(
+                                        watermark.nameWatermark,
+                                        style: TextStyle(
+                                            color: colors.pickerColor,
+                                            fontSize: double.parse(
+                                                watermark.fontSize)),
+                                      ),
+                                    ),
                                     Align(
                                       alignment: Alignment.topRight,
                                       child: IconButton.filled(
@@ -125,10 +145,19 @@ class WatermarkScreen extends StatelessWidget {
                                     children: [
                                       Expanded(
                                         child: TextFormField(
+                                          controller:
+                                              watermark.watermarkNameController,
+                                          onEditingComplete: () {
+                                            watermark.changeWatermark(watermark
+                                                .watermarkNameController.text);
+
+                                            FocusScope.of(context).unfocus();
+                                          },
                                           style: TextStyle(
                                               color: themes.text, fontSize: 12),
                                           decoration: InputDecoration(
-                                              hintText: 'Click To Edit',
+                                              hintText:
+                                                  watermark.hintnameWatermark,
                                               hintStyle:
                                                   TextStyle(color: themes.text),
                                               border: OutlineInputBorder(
@@ -148,15 +177,24 @@ class WatermarkScreen extends StatelessWidget {
                                       Container(
                                         width: 80,
                                         height: 50,
-                                        margin: EdgeInsets.only(left: 10),
+                                        margin: const EdgeInsets.only(left: 10),
                                         child: Center(
                                           child: TextFormField(
+                                            controller:
+                                                watermark.fontSizeController,
+                                            keyboardType: TextInputType.number,
+                                            onEditingComplete: () {
+                                              watermark.changeFontSize(watermark
+                                                  .fontSizeController.text);
+
+                                              FocusScope.of(context).unfocus();
+                                            },
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 color: themes.text,
                                                 fontSize: 12),
                                             decoration: InputDecoration(
-                                                hintText: '12',
+                                                hintText: watermark.fontSize,
                                                 hintStyle: TextStyle(
                                                     color: themes.text),
                                                 border: OutlineInputBorder(
@@ -194,13 +232,18 @@ class WatermarkScreen extends StatelessWidget {
                                           childAspectRatio: 1.5,
                                           crossAxisCount: 3),
                                   shrinkWrap: true,
-                                  itemBuilder: (context, index) => Container(
-                                    width: 50,
-                                    margin: const EdgeInsets.all(5),
-                                    decoration: BoxDecoration(
-                                        color: index == 4
-                                            ? Colors.red
-                                            : themes.widget),
+                                  itemBuilder: (context, index) => InkWell(
+                                    onTap: () =>
+                                        watermark.changePosition(index),
+                                    child: Container(
+                                      width: 50,
+                                      margin: const EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                          color:
+                                              index == watermark.indexPosition
+                                                  ? Colors.red
+                                                  : themes.widget),
+                                    ),
                                   ),
                                 ),
                                 Align(
