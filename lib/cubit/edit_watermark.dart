@@ -6,8 +6,8 @@ class EditWatermark extends Cubit<dynamic> {
 
   String nameWatermark = 'Watermark';
   String hintnameWatermark = 'Click To Edit';
-  String fontSize = '12';
-  Alignment postionWatermark = Alignment.bottomLeft;
+  String fontSize = '24';
+  Alignment postionWatermark = Alignment.center;
 
   int indexPosition = 4;
 

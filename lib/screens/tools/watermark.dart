@@ -25,7 +25,6 @@ class WatermarkScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themes = context.read<ThemeCubit>().state;
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -60,141 +59,109 @@ class WatermarkScreen extends StatelessWidget {
             create: (context) => EditWatermark(),
           ),
         ],
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  BlocConsumer<ToolsPdfBloc, ToolsPdfState>(
-                    listener: (context, state) {
-                      if (state is ToolsSucces) {
-                        context.read<ClickOrderDelete>().clear();
-                        context.read<SliderCubit>().reset();
-                      }
-                    },
-                    builder: (context, state) {
-                      final _value = context.watch<SliderCubit>();
-                      final colors = context.watch<ColorPickerCubit>();
-                      final watermark = context.watch<EditWatermark>();
-
-                      if (state is ToolsPickPdfTools) {
-                        if (state.pdf != null) {
-                          pdfPath = state.pdf!.path;
-                          return Padding(
-                            padding: const EdgeInsets.only(left: 20, right: 20),
-                            child: Column(
-                              children: [
-                                Stack(
-                                  children: [
-                                    PreviewPDF(themes, state.pdf!.name,
-                                        state.pdf!.path),
-                                    Container(
-                                      height: 260,
-                                      width: double.infinity,
-                                      padding: const EdgeInsets.only(
-                                          left: 12, right: 12),
-                                      alignment: watermark.postionWatermark,
-                                      child: Text(
-                                        watermark.nameWatermark,
-                                        style: TextStyle(
-                                            color: colors.pickerColor,
-                                            fontSize: double.parse(
-                                                watermark.fontSize)),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.topRight,
-                                      child: IconButton.filled(
-                                          style: ElevatedButton.styleFrom(
-                                              backgroundColor: Colors.red),
-                                          onPressed: () {
-                                            context
-                                                .read<ToolsPdfBloc>()
-                                                .add(OnCancelMerge(context, 0));
-
-                                            context
-                                                .read<ClickOrderDelete>()
-                                                .clear();
-
-                                            context.read<SliderCubit>().reset();
-                                          },
-                                          icon: SvgPicture.asset(
-                                            'assets/icons/Delete.svg',
-                                            height: 30,
-                                            colorFilter: ColorFilter.mode(
-                                                themes.text, BlendMode.srcIn),
-                                          )),
-                                    )
-                                  ],
-                                ),
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    'Name Watermark',
-                                    style: TextStyle(color: themes.text),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 10, bottom: 10),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+        child: Builder(builder: (context) {
+          final _value = context.watch<SliderCubit>();
+          final colors = context.watch<ColorPickerCubit>();
+          final watermark = context.watch<EditWatermark>();
+          return Stack(
+            children: [
+              SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BlocConsumer<ToolsPdfBloc, ToolsPdfState>(
+                      listener: (context, state) {
+                        if (state is ToolsSucces) {
+                          context.read<ClickOrderDelete>().clear();
+                          context.read<SliderCubit>().reset();
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is ToolsPickPdfTools) {
+                          if (state.pdf != null) {
+                            pdfPath = state.pdf!.path;
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 20, right: 20),
+                              child: Column(
+                                children: [
+                                  Stack(
                                     children: [
-                                      Expanded(
-                                        child: TextFormField(
-                                          controller:
-                                              watermark.watermarkNameController,
-                                          onEditingComplete: () {
-                                            watermark.changeWatermark(watermark
-                                                .watermarkNameController.text);
-
-                                            FocusScope.of(context).unfocus();
-                                          },
+                                      PreviewPDF(themes, state.pdf!.name,
+                                          state.pdf!.path),
+                                      Container(
+                                        height: 260,
+                                        width: double.infinity,
+                                        padding: const EdgeInsets.only(
+                                            left: 12, right: 12),
+                                        alignment: watermark.postionWatermark,
+                                        child: Text(
+                                          watermark.nameWatermark,
                                           style: TextStyle(
-                                              color: themes.text, fontSize: 12),
-                                          decoration: InputDecoration(
-                                              hintText:
-                                                  watermark.hintnameWatermark,
-                                              hintStyle:
-                                                  TextStyle(color: themes.text),
-                                              border: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: themes.widget),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20)),
-                                              enabledBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: themes.widget),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20))),
+                                              color: colors.pickerColor,
+                                              fontSize: double.parse(
+                                                  watermark.fontSize)),
                                         ),
                                       ),
-                                      Container(
-                                        width: 80,
-                                        height: 50,
-                                        margin: const EdgeInsets.only(left: 10),
-                                        child: Center(
+                                      Align(
+                                        alignment: Alignment.topRight,
+                                        child: IconButton.filled(
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.red),
+                                            onPressed: () {
+                                              context.read<ToolsPdfBloc>().add(
+                                                  OnCancelMerge(context, 0));
+
+                                              context
+                                                  .read<ClickOrderDelete>()
+                                                  .clear();
+
+                                              context
+                                                  .read<SliderCubit>()
+                                                  .reset();
+                                            },
+                                            icon: SvgPicture.asset(
+                                              'assets/icons/Delete.svg',
+                                              height: 30,
+                                              colorFilter: ColorFilter.mode(
+                                                  themes.text, BlendMode.srcIn),
+                                            )),
+                                      )
+                                    ],
+                                  ),
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      'Name Watermark',
+                                      style: TextStyle(color: themes.text),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10, bottom: 10),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
                                           child: TextFormField(
-                                            controller:
-                                                watermark.fontSizeController,
-                                            keyboardType: TextInputType.number,
+                                            controller: watermark
+                                                .watermarkNameController,
                                             onEditingComplete: () {
-                                              watermark.changeFontSize(watermark
-                                                  .fontSizeController.text);
+                                              watermark.changeWatermark(
+                                                  watermark
+                                                      .watermarkNameController
+                                                      .text);
 
                                               FocusScope.of(context).unfocus();
                                             },
-                                            textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 color: themes.text,
                                                 fontSize: 12),
                                             decoration: InputDecoration(
-                                                hintText: watermark.fontSize,
+                                                hintText:
+                                                    watermark.hintnameWatermark,
                                                 hintStyle: TextStyle(
                                                     color: themes.text),
                                                 border: OutlineInputBorder(
@@ -213,146 +180,195 @@ class WatermarkScreen extends StatelessWidget {
                                                                 .circular(20))),
                                           ),
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    'Position Watermark',
-                                    style: TextStyle(color: themes.text),
-                                  ),
-                                ),
-                                GridView.builder(
-                                  itemCount: 9,
-                                  padding: const EdgeInsets.all(20),
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                          childAspectRatio: 1.5,
-                                          crossAxisCount: 3),
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) => InkWell(
-                                    onTap: () =>
-                                        watermark.changePosition(index),
-                                    child: Container(
-                                      width: 50,
-                                      margin: const EdgeInsets.all(5),
-                                      decoration: BoxDecoration(
-                                          color:
-                                              index == watermark.indexPosition
-                                                  ? Colors.red
-                                                  : themes.widget),
+                                        Container(
+                                          width: 80,
+                                          height: 50,
+                                          margin:
+                                              const EdgeInsets.only(left: 10),
+                                          child: Center(
+                                            child: TextFormField(
+                                              controller:
+                                                  watermark.fontSizeController,
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              onEditingComplete: () {
+                                                watermark.changeFontSize(
+                                                    watermark.fontSizeController
+                                                        .text);
+
+                                                FocusScope.of(context)
+                                                    .unfocus();
+                                              },
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: themes.text,
+                                                  fontSize: 12),
+                                              decoration: InputDecoration(
+                                                  hintText: watermark.fontSize,
+                                                  hintStyle: TextStyle(
+                                                      color: themes.text),
+                                                  border: OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                          color: themes.widget),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20)),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                          borderSide: BorderSide(
+                                                              color: themes
+                                                                  .widget),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      20))),
+                                            ),
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   ),
-                                ),
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    'Opacity',
-                                    style: TextStyle(color: themes.text),
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      'Position Watermark',
+                                      style: TextStyle(color: themes.text),
+                                    ),
                                   ),
-                                ),
-                                SliderTheme(
-                                    data: const SliderThemeData(
-                                        showValueIndicator:
-                                            ShowValueIndicator.always),
-                                    child: Slider(
-                                      value: _value.valueOpacity,
-                                      label: _value.valueOpacity
-                                          .toStringAsFixed(1),
-                                      onChanged: (value) {
-                                        _value.changeValueOpacity(value);
-                                      },
-                                    )),
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    'Color Watermark',
-                                    style: TextStyle(color: themes.text),
+                                  GridView.builder(
+                                    itemCount: 9,
+                                    padding: const EdgeInsets.all(20),
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            childAspectRatio: 1.5,
+                                            crossAxisCount: 3),
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, index) => InkWell(
+                                      onTap: () =>
+                                          watermark.changePosition(index),
+                                      child: Container(
+                                        width: 50,
+                                        margin: const EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                            color:
+                                                index == watermark.indexPosition
+                                                    ? Colors.red
+                                                    : themes.widget),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(12),
-                                  child: ColorPicker(
-                                    pickerColor: colors.pickerColor,
-                                    onColorChanged: (value) =>
-                                        colors.changeColor(value),
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      'Opacity',
+                                      style: TextStyle(color: themes.text),
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 100,
-                                )
-                              ],
-                            ),
-                          );
-                        }
-                      }
+                                  SliderTheme(
+                                      data: const SliderThemeData(
+                                          showValueIndicator:
+                                              ShowValueIndicator.always),
+                                      child: Slider(
+                                        value: _value.valueOpacity,
+                                        label: _value.valueOpacity
+                                            .toStringAsFixed(1),
+                                        onChanged: (value) {
+                                          _value.changeValueOpacity(value);
+                                        },
+                                      )),
 
-                      return GestureDetector(
-                          onTap: () {
-                            context
-                                .read<ToolsPdfBloc>()
-                                .add(OnPickPDFMerge(context));
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(30),
-                            child: PreviewPDF(themes, 'Click Here..', null),
-                          ));
-                    },
-                  )
-                ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: BlocConsumer<ToolsPdfBloc, ToolsPdfState>(
-                listener: (context, state) {
-                  if (state is ToolsSucces) {
-                    ShowSnackBar(context, 'Succes Watermark PDF')
-                        .showSnackBar(colors: const Color(0xff4fc63b));
-                  }
-                },
-                builder: (context, state) {
-                  final toolsPdfBloc = context.read<ToolsPdfBloc>();
-                  final slider = context.watch<SliderCubit>();
-                  return Padding(
-                    padding:
-                        const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-                    child: TextButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: themes.widget,
-                            foregroundColor: themes.text,
-                            minimumSize: const Size(double.infinity, 50),
-                            shape: ContinuousRectangleBorder(
-                                borderRadius: BorderRadius.circular(15))),
-                        onPressed: () {
-                          if (toolsPdfBloc.state is ToolsPickPdfTools) {
-                            FormDialog(context).formCompress(
-                                pdfPath!,
-                                slider.valueQuality,
-                                slider.valueScale,
-                                toolsPdfBloc);
-                          } else {
-                            ShowSnackBar(context, 'Please Pick PDF')
-                                .showSnackBar();
+                                  // TODO: ADD SLIDER ROTATION WATERMARK
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      'Color Watermark',
+                                      style: TextStyle(color: themes.text),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(12),
+                                    child: ColorPicker(
+                                      pickerColor: colors.pickerColor,
+                                      onColorChanged: (value) =>
+                                          colors.changeColor(value),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 100,
+                                  )
+                                ],
+                              ),
+                            );
                           }
-                        },
-                        child: BlocBuilder<ToolsPdfBloc, ToolsPdfState>(
-                          builder: (context, state) {
-                            if (state is ToolsRunning) {
-                              return CircularProgressIndicator(
-                                  color: themes.text);
-                            }
-                            return const Text('Watermark Pages Pdf');
-                          },
-                        )),
-                  );
-                },
+                        }
+
+                        return GestureDetector(
+                            onTap: () {
+                              context
+                                  .read<ToolsPdfBloc>()
+                                  .add(OnPickPDFMerge(context));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(30),
+                              child: PreviewPDF(themes, 'Click Here..', null),
+                            ));
+                      },
+                    )
+                  ],
+                ),
               ),
-            )
-          ],
-        ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: BlocConsumer<ToolsPdfBloc, ToolsPdfState>(
+                  listener: (context, state) {
+                    if (state is ToolsSucces) {
+                      ShowSnackBar(context, 'Succes Watermark PDF')
+                          .showSnackBar(colors: const Color(0xff4fc63b));
+                    }
+                  },
+                  builder: (context, state) {
+                    final toolsPdfBloc = context.read<ToolsPdfBloc>();
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                          left: 10, right: 10, bottom: 10),
+                      child: TextButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: themes.widget,
+                              foregroundColor: themes.text,
+                              minimumSize: const Size(double.infinity, 50),
+                              shape: ContinuousRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15))),
+                          onPressed: () {
+                            if (toolsPdfBloc.state is ToolsPickPdfTools) {
+                              FormDialog(context).formWatermark(
+                                  watermark.nameWatermark,
+                                  watermark.fontSize,
+                                  watermark.postionWatermark,
+                                  colors.pickerColor,
+                                  _value.valueOpacity,
+                                  pdfPath!,
+                                  toolsPdfBloc);
+                            } else {
+                              ShowSnackBar(context, 'Please Pick PDF')
+                                  .showSnackBar();
+                            }
+                          },
+                          child: BlocBuilder<ToolsPdfBloc, ToolsPdfState>(
+                            builder: (context, state) {
+                              if (state is ToolsRunning) {
+                                return CircularProgressIndicator(
+                                    color: themes.text);
+                              }
+                              return const Text('Watermark Pages Pdf');
+                            },
+                          )),
+                    );
+                  },
+                ),
+              )
+            ],
+          );
+        }),
       ),
     );
   }

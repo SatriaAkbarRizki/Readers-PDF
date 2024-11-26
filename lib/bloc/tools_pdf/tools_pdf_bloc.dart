@@ -9,6 +9,7 @@ import 'package:simplereader/model/pdfmodel.dart';
 import 'package:simplereader/service/compress.dart';
 import 'package:simplereader/service/deletepdf.dart';
 import 'package:simplereader/service/mergepdf.dart';
+import 'package:simplereader/service/watermark.dart';
 import 'package:simplereader/widget/scaffold_messeger.dart';
 
 import '../../service/filedoc.dart';
@@ -86,6 +87,26 @@ class ToolsPdfBloc extends Bloc<ToolsPdfEvent, ToolsPdfState> {
       await toolCompressPDF
           .compress()
           .then((value) async => await serviceFile.movingFile(value!))
+          .then(
+            (value) => emit(ToolsSucces()),
+          );
+    });
+
+    on<OnPDFWatermark>((event, emit) async {
+      final watermarkTool = WatermarkPDF(
+          event.namePDF,
+          event.nameWatermark,
+          event.path,
+          event.fontSize,
+          event.postionWatermark,
+          event.colors,
+          event.valueOpacity);
+
+      await watermarkTool
+          .watermark()
+          .then(
+            (value) async => await serviceFile.movingFile(value!),
+          )
           .then(
             (value) => emit(ToolsSucces()),
           );

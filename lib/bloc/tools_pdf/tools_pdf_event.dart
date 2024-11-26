@@ -45,5 +45,13 @@ class OnPDFComprerssing extends ToolsPdfEvent {
 }
 
 class OnPDFWatermark extends ToolsPdfEvent {
-  const OnPDFWatermark(super.context);
+  final String namePDF;
+  final String nameWatermark;
+  final String path;
+  final String fontSize;
+  final Alignment postionWatermark;
+  final Color colors;
+  final double valueOpacity;
+
+  const OnPDFWatermark(this.namePDF, this.nameWatermark, this.path, this.fontSize, this.postionWatermark, this.colors, this.valueOpacity,super.context);
 }

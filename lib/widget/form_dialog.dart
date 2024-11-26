@@ -14,7 +14,7 @@ import '../model/thememodel.dart';
 
 class FormDialog {
   FocusNode focusNode = FocusNode();
-  final nameMergePdf = TextEditingController();
+  final nameFileController = TextEditingController();
   BuildContext context;
   FormDialog(this.context);
 
@@ -34,7 +34,7 @@ class FormDialog {
                 ),
                 backgroundColor: themes.widget,
                 content: TextFormField(
-                  controller: nameMergePdf,
+                  controller: nameFileController,
                   focusNode: focusNode,
                   style: TextStyle(color: themes.text),
                   decoration: InputDecoration(
@@ -56,11 +56,11 @@ class FormDialog {
                 actions: [
                   TextButton(
                       onPressed: () {
-                        if (nameMergePdf.text.isNotEmpty) {
+                        if (nameFileController.text.isNotEmpty) {
                           focusNode.unfocus();
 
-                          context.read<ToolsPdfBloc>().add(
-                              OnPDFMerge(nameMergePdf.text, pdfs, context));
+                          context.read<ToolsPdfBloc>().add(OnPDFMerge(
+                              nameFileController.text, pdfs, context));
                         } else {
                           ShowSnackBar(context, 'Please give name file merge')
                               .showSnackBar();
@@ -94,7 +94,7 @@ class FormDialog {
                 ),
                 backgroundColor: themes.widget,
                 content: TextFormField(
-                  controller: nameMergePdf,
+                  controller: nameFileController,
                   focusNode: focusNode,
                   style: TextStyle(color: themes.text),
                   decoration: InputDecoration(
@@ -116,7 +116,7 @@ class FormDialog {
                 actions: [
                   TextButton(
                       onPressed: () {
-                        if (nameMergePdf.text.isNotEmpty) {
+                        if (nameFileController.text.isNotEmpty) {
                           focusNode.unfocus();
                           pageNumbers.sort();
                           List<int> incrementValue = pageNumbers
@@ -124,9 +124,9 @@ class FormDialog {
                                 (e) => e + 1,
                               )
                               .toList();
-                          log('VALUE ORDER TO DELETE: ${incrementValue}');
+                          log('VALUE ORDER TO DELETE: $incrementValue');
                           context.read<ToolsPdfBloc>().add(OnPDFDeletingPage(
-                              nameMergePdf.text,
+                              nameFileController.text,
                               pdfPath,
                               incrementValue,
                               context));
@@ -163,7 +163,7 @@ class FormDialog {
                 ),
                 backgroundColor: themes.widget,
                 content: TextFormField(
-                  controller: nameMergePdf,
+                  controller: nameFileController,
                   focusNode: focusNode,
                   style: TextStyle(color: themes.text),
                   decoration: InputDecoration(
@@ -185,11 +185,11 @@ class FormDialog {
                 actions: [
                   TextButton(
                       onPressed: () {
-                        if (nameMergePdf.text.isNotEmpty) {
-                          log("${nameMergePdf.text} & $path, & $valueQuality & $valueScale");
+                        if (nameFileController.text.isNotEmpty) {
+                          log("${nameFileController.text} & $path, & $valueQuality & $valueScale");
                           focusNode.unfocus();
                           context.read<ToolsPdfBloc>().add(OnPDFComprerssing(
-                              nameMergePdf.text,
+                              nameFileController.text,
                               path,
                               valueQuality,
                               valueScale,
@@ -203,6 +203,82 @@ class FormDialog {
                       },
                       child: Text(
                         'Compress',
+                        style: TextStyle(color: themes.text),
+                      ))
+                ],
+              );
+            },
+          ),
+        ),
+      );
+
+// TODO CREATE PARAMETE FUNCTION ON BLOC PDF TOOL INCLUDE NAMEPDF
+  void formWatermark(
+          String nameWatermark,
+          String fontSize,
+          Alignment postionWatermark,
+          Color colors,
+          double valueOpacity,
+          String path,
+          ToolsPdfBloc toolsPdfBloc) =>
+      showDialog(
+        useSafeArea: true,
+        context: context,
+        builder: (context) => BlocProvider.value(
+          value: toolsPdfBloc,
+          child: BlocBuilder<ToolsPdfBloc, ToolsPdfState>(
+            builder: (context, state) {
+              log('nameWatermark: $nameWatermark, fontSize: $fontSize postionWatermark $postionWatermark colors: $colors');
+              return AlertDialog(
+                title: Text(
+                  'Watermark Pdf',
+                  style: TextStyle(color: themes.text),
+                ),
+                backgroundColor: themes.widget,
+                content: TextFormField(
+                  controller: nameFileController,
+                  focusNode: focusNode,
+                  style: TextStyle(color: themes.text),
+                  decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                            color: themes.text,
+                            width: 1.5,
+                          )),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                            color: themes.text,
+                            width: 1.5,
+                          )),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10))),
+                ),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        if (nameFileController.text.isNotEmpty) {
+                          // log("${nameMergePdf.text} & $path, & $valueQuality & $valueScale");
+                          focusNode.unfocus();
+                          context.read<ToolsPdfBloc>().add(OnPDFWatermark(
+                              nameFileController.text,
+                              nameWatermark,
+                              path,
+                              fontSize,
+                              postionWatermark,
+                              colors,
+                              valueOpacity,
+                              context));
+                        } else {
+                          ShowSnackBar(
+                                  context, 'Please give name for compress pdf')
+                              .showSnackBar();
+                        }
+                        context.pop();
+                      },
+                      child: Text(
+                        'Watermark',
                         style: TextStyle(color: themes.text),
                       ))
                 ],
