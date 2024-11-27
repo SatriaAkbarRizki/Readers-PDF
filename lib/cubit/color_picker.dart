@@ -5,7 +5,7 @@ class ColorPickerCubit extends Cubit<Color> {
   ColorPickerCubit() : super(Colors.red);
 
   Color pickerColor = Colors.red;
-  Color currentColor = Color(0xff443a49);
+  Color currentColor = const Color(0xff443a49);
 
   void changeColor(Color colors) {
     pickerColor = colors;

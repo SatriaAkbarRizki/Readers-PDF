@@ -3,9 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 import 'package:simplereader/bloc/tools_pdf/tools_pdf_bloc.dart';
-import 'package:simplereader/cubit/file_cubit.dart';
 import 'package:simplereader/cubit/theme_cubit.dart';
 import 'package:simplereader/widget/scaffold_messeger.dart';
 
@@ -211,8 +209,7 @@ class FormDialog {
           ),
         ),
       );
-
-// TODO CREATE PARAMETE FUNCTION ON BLOC PDF TOOL INCLUDE NAMEPDF
+      
   void formWatermark(
           String nameWatermark,
           String fontSize,

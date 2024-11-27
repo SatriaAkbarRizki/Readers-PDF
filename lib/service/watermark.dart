@@ -1,7 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-import 'dart:ui';
-import 'dart:math' as math;
 
 import 'package:flutter/widgets.dart';
 import 'package:pdf_manipulator/pdf_manipulator.dart';

@@ -4,7 +4,6 @@ import 'package:simplereader/widget/scaffold_messeger.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:meta/meta.dart';
 
 import '../../model/pdfmodel.dart';
 import '../../screens/readingpdf.dart';

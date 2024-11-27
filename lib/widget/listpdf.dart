@@ -59,21 +59,21 @@ class ListPDF extends StatelessWidget {
                               offset: Offset(0, 5),
                             ),
                           ], borderRadius: BorderRadius.circular(12)),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: PdfDocumentViewBuilder.file(
-                              listPdf[index].path,
-                              builder: (context, document) => ListView.builder(
-                                itemCount: 1,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemBuilder: (context, index) {
-                                  return PdfPageView(
+                          child: PdfDocumentViewBuilder.file(
+                            listPdf[index].path,
+                            builder: (context, document) => ListView.builder(
+                              itemCount: 1,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: PdfPageView(
                                     document: document,
                                     pageNumber: index + 1,
                                     alignment: Alignment.center,
-                                  );
-                                },
-                              ),
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ),

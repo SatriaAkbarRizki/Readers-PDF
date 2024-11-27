@@ -1,5 +1,3 @@
-import 'dart:developer';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +9,7 @@ import 'package:simplereader/model/thememodel.dart';
 class PreviewPDFGrid extends StatelessWidget {
   final Thememodel themes;
   final String? title, path;
-  PreviewPDFGrid(this.themes, this.title, this.path, {super.key});
+  const PreviewPDFGrid(this.themes, this.title, this.path, {super.key});
 
   @override
   Widget build(BuildContext context) {

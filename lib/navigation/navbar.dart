@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:simplereader/cubit/navbar_cubit.dart';
 import 'package:simplereader/cubit/theme_cubit.dart';
 import 'package:simplereader/model/thememodel.dart';
-import 'package:simplereader/screens/Home.dart';
+import 'package:simplereader/screens/home.dart';
 import 'package:simplereader/screens/profile.dart';
 import 'package:simplereader/widget/floating_pdf.dart';
 

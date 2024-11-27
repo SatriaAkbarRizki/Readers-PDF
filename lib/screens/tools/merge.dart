@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:pdf_manipulator/pdf_manipulator.dart';
-import 'package:pdfrx/pdfrx.dart';
 import 'package:simplereader/bloc/tools_pdf/cubit/channel_merge_cubit.dart';
 import 'package:simplereader/bloc/tools_pdf/tools_pdf_bloc.dart';
 import 'package:simplereader/widget/form_dialog.dart';

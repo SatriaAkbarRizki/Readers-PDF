@@ -1,10 +1,8 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:simplereader/model/pdfmodel.dart';
 import 'package:simplereader/widget/preview_pdf_grid.dart';
 
 import '../../bloc/tools_pdf/tools_pdf_bloc.dart';

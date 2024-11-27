@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:simplereader/bloc/tools_pdf/tools_pdf_bloc.dart';
-import 'package:simplereader/cubit/file_cubit.dart';
 import 'package:simplereader/screens/tools/compress.dart';
 import 'package:simplereader/screens/tools/delete.dart';
 import 'package:simplereader/screens/tools/merge.dart';
@@ -84,7 +82,6 @@ class ProfileScreen extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(10),
                       child: ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
                         scrollDirection: Axis.horizontal,
                         itemCount: themes.listColorTheme.length,
                         itemBuilder: (context, index) => Column(
@@ -92,6 +89,8 @@ class ProfileScreen extends StatelessWidget {
                           children: [
                             InkWell(
                               onTap: () => themes.chanetTheme(index),
+                              overlayColor: const WidgetStatePropertyAll(
+                                  Colors.transparent),
                               child: Container(
                                 height: 35,
                                 width: 35,
@@ -116,6 +115,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 GridView(
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 12.0,

@@ -11,7 +11,6 @@ import '../../cubit/click_delete.dart';
 import '../../cubit/theme_cubit.dart';
 import '../../widget/form_dialog.dart';
 import '../../widget/preview_pdf.dart';
-import '../../widget/preview_pdf_grid.dart';
 import '../../widget/scaffold_messeger.dart';
 
 class CompressScreen extends StatelessWidget {

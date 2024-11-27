@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 import 'package:simplereader/bloc/switch_mode/switch_mode_bloc.dart';
 import 'package:simplereader/bloc/tools_pdf/cubit/channel_merge_cubit.dart';
-import 'package:simplereader/bloc/tools_pdf/tools_pdf_bloc.dart';
 import 'package:simplereader/cubit/file_cubit.dart';
 import 'package:simplereader/cubit/theme_cubit.dart';
 import 'package:simplereader/model/pdfmodel.dart';

@@ -3,8 +3,6 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
-import 'package:pdf_manipulator/pdf_manipulator.dart';
-import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 import 'package:simplereader/model/pdfmodel.dart';
 import 'package:simplereader/service/compress.dart';
 import 'package:simplereader/service/deletepdf.dart';

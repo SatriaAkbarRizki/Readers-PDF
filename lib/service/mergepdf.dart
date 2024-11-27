@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:pdf_manipulator/pdf_manipulator.dart';
