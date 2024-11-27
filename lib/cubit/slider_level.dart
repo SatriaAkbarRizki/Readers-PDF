@@ -15,5 +15,9 @@ class SliderCubit extends Cubit<double> {
   void changeValueOpacity(double valueSlider) =>
       {valueOpacity = valueSlider, emit(valueSlider)};
 
-  void reset() => {emit(valueQuality = 100.0), emit(valueScale = 1.0)};
+  void reset() => {
+        emit(valueQuality = 100.0),
+        emit(valueScale = 1.0),
+        emit(valueOpacity = 0.7)
+      };
 }

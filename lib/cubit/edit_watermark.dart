@@ -5,14 +5,37 @@ class EditWatermark extends Cubit<dynamic> {
   EditWatermark() : super(());
 
   String nameWatermark = 'Watermark';
-  String hintnameWatermark = 'Click To Edit';
   String fontSize = '24';
   Alignment postionWatermark = Alignment.center;
 
   int indexPosition = 4;
+  double rotateValue = 0;
 
   TextEditingController watermarkNameController = TextEditingController();
   TextEditingController fontSizeController = TextEditingController();
+
+  List<DropdownMenuItem<double>> dropMenuItem = [
+    const DropdownMenuItem(
+      value: 0,
+      child: Text('Do not rotate'),
+    ),
+    const DropdownMenuItem(
+      value: -45,
+      child: Text('45 degress'),
+    ),
+    const DropdownMenuItem(
+      value: 90,
+      child: Text('90 degress'),
+    ),
+    const DropdownMenuItem(
+      value: 180,
+      child: Text('180 degress'),
+    ),
+    const DropdownMenuItem(
+      value: 270,
+      child: Text('270 degress'),
+    ),
+  ];
 
   void changeWatermark(String value) {
     nameWatermark = value;
@@ -55,5 +78,22 @@ class EditWatermark extends Cubit<dynamic> {
     }
 
     emit(postionWatermark);
+  }
+
+  void changeRotate(double value) {
+    rotateValue = value;
+    emit(value);
+  }
+
+  void resetWatermark() {
+    watermarkNameController.clear();
+    fontSizeController.clear();
+
+    
+    emit(fontSize = '24');
+    emit(indexPosition = 4);
+    emit(rotateValue = 0);
+    emit(nameWatermark = 'Watermark');
+    emit(postionWatermark = Alignment.center);
   }
 }

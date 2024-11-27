@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
+import 'dart:math' as math;
 
 import 'package:flutter/widgets.dart';
 import 'package:pdf_manipulator/pdf_manipulator.dart';
@@ -11,12 +12,13 @@ class WatermarkPDF {
   String nameWatermark;
   String path;
   String fontSize;
+  double rotate;
   Alignment postionWatermark;
   Color colors;
   double valueOpacity;
 
   WatermarkPDF(this.namePDF, this.nameWatermark, this.path, this.fontSize,
-      this.postionWatermark, this.colors, this.valueOpacity);
+      this.rotate, this.postionWatermark, this.colors, this.valueOpacity);
 
   ServiceFile serviceFile = ServiceFile();
 
@@ -26,8 +28,7 @@ class WatermarkPDF {
     const listPositionType = PositionType.values;
 
     for (var element in listPositionType) {
-      if (element.name.contains(toStringPosition)) {
-        log(element.toString());
+      if (element.name == toStringPosition) {
         position = element;
       }
     }
@@ -40,7 +41,8 @@ class WatermarkPDF {
           fontSize: double.parse(fontSize),
           watermarkLayer: WatermarkLayer.overContent,
           opacity: valueOpacity,
-          positionType: position),
+          positionType: position,
+          rotationAngle: rotate),
     );
     if (watermarkedPdfPath != null) {
       await serviceFile

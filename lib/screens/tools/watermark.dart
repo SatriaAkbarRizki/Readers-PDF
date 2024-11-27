@@ -75,6 +75,7 @@ class WatermarkScreen extends StatelessWidget {
                         if (state is ToolsSucces) {
                           context.read<ClickOrderDelete>().clear();
                           context.read<SliderCubit>().reset();
+                          context.read<EditWatermark>().resetWatermark();
                         }
                       },
                       builder: (context, state) {
@@ -96,12 +97,15 @@ class WatermarkScreen extends StatelessWidget {
                                         padding: const EdgeInsets.only(
                                             left: 12, right: 12),
                                         alignment: watermark.postionWatermark,
-                                        child: Text(
-                                          watermark.nameWatermark,
-                                          style: TextStyle(
-                                              color: colors.pickerColor,
-                                              fontSize: double.parse(
-                                                  watermark.fontSize)),
+                                        child: Transform.rotate(
+                                          angle: watermark.rotateValue,
+                                          child: Text(
+                                            watermark.nameWatermark,
+                                            style: TextStyle(
+                                                color: colors.pickerColor,
+                                                fontSize: double.parse(
+                                                    watermark.fontSize)),
+                                          ),
                                         ),
                                       ),
                                       Align(
@@ -109,7 +113,7 @@ class WatermarkScreen extends StatelessWidget {
                                         child: IconButton.filled(
                                             style: ElevatedButton.styleFrom(
                                                 backgroundColor: Colors.red),
-                                            onPressed: () {
+                                            onPressed: () async {
                                               context.read<ToolsPdfBloc>().add(
                                                   OnCancelMerge(context, 0));
 
@@ -120,6 +124,9 @@ class WatermarkScreen extends StatelessWidget {
                                               context
                                                   .read<SliderCubit>()
                                                   .reset();
+                                              context
+                                                  .read<EditWatermark>()
+                                                  .resetWatermark();
                                             },
                                             icon: SvgPicture.asset(
                                               'assets/icons/Delete.svg',
@@ -160,8 +167,7 @@ class WatermarkScreen extends StatelessWidget {
                                                 color: themes.text,
                                                 fontSize: 12),
                                             decoration: InputDecoration(
-                                                hintText:
-                                                    watermark.hintnameWatermark,
+                                                hintText: 'Click To Edit',
                                                 hintStyle: TextStyle(
                                                     color: themes.text),
                                                 border: OutlineInputBorder(
@@ -204,7 +210,7 @@ class WatermarkScreen extends StatelessWidget {
                                                   color: themes.text,
                                                   fontSize: 12),
                                               decoration: InputDecoration(
-                                                  hintText: watermark.fontSize,
+                                                  hintText: '24',
                                                   hintStyle: TextStyle(
                                                       color: themes.text),
                                                   border: OutlineInputBorder(
@@ -276,8 +282,34 @@ class WatermarkScreen extends StatelessWidget {
                                           _value.changeValueOpacity(value);
                                         },
                                       )),
-
-                                  // TODO: ADD SLIDER ROTATION WATERMARK
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      'Rotate',
+                                      style: TextStyle(color: themes.text),
+                                    ),
+                                  ),
+                                  DropdownButtonFormField(
+                                    value: watermark.rotateValue,
+                                    items: watermark.dropMenuItem,
+                                    onChanged: (value) =>
+                                        watermark.changeRotate(value!),
+                                    decoration: InputDecoration(
+                                        enabled: true,
+                                        border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: BorderSide(
+                                                color: themes.widget,
+                                                width: 2)),
+                                        enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            borderSide: BorderSide(
+                                                color: themes.widget))),
+                                    dropdownColor: themes.widget,
+                                    style: TextStyle(color: themes.text),
+                                  ),
                                   Align(
                                     alignment: Alignment.topLeft,
                                     child: Text(
@@ -343,6 +375,7 @@ class WatermarkScreen extends StatelessWidget {
                               FormDialog(context).formWatermark(
                                   watermark.nameWatermark,
                                   watermark.fontSize,
+                                  watermark.rotateValue,
                                   watermark.postionWatermark,
                                   colors.pickerColor,
                                   _value.valueOpacity,

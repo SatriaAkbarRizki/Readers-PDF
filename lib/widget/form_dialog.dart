@@ -216,6 +216,7 @@ class FormDialog {
   void formWatermark(
           String nameWatermark,
           String fontSize,
+          double rotate,
           Alignment postionWatermark,
           Color colors,
           double valueOpacity,
@@ -266,6 +267,7 @@ class FormDialog {
                               nameWatermark,
                               path,
                               fontSize,
+                              rotate,
                               postionWatermark,
                               colors,
                               valueOpacity,

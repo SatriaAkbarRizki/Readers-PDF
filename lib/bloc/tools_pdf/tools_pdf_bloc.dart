@@ -93,11 +93,13 @@ class ToolsPdfBloc extends Bloc<ToolsPdfEvent, ToolsPdfState> {
     });
 
     on<OnPDFWatermark>((event, emit) async {
+      emit(ToolsRunning());
       final watermarkTool = WatermarkPDF(
           event.namePDF,
           event.nameWatermark,
           event.path,
           event.fontSize,
+          event.rotate,
           event.postionWatermark,
           event.colors,
           event.valueOpacity);
