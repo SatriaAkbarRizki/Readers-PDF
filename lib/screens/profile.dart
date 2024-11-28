@@ -151,6 +151,9 @@ class ProfileScreen extends StatelessWidget {
                           'assets/icons/face-mask.png', themes.state),
                     )
                   ],
+                ),
+                const SizedBox(
+                  height: 10,
                 )
               ],
             ),
