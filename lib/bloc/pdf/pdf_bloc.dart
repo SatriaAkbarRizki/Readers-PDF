@@ -22,6 +22,10 @@ class PdfBloc extends Bloc<PdfEvent, PdfState> {
       _fetchAllPdfs();
     }
 
+    on<OnPdfInitial>((event, emit) {
+      _fetchAllPdfs();
+    });
+
     on<OnPdfOpenSearch>((event, emit) {
       isOpen = true;
       emit(PdfOpenSearch());
