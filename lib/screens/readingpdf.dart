@@ -13,9 +13,9 @@ import 'package:simplereader/widget/appbar_pdf.dart';
 import 'package:simplereader/widget/appbar_search.dart';
 
 class ReadPDFScreens extends StatefulWidget {
-  Pdfmodel pdf;
+  final Pdfmodel pdf;
   static String routeName = '/ScreenPDF';
-  ReadPDFScreens({
+  const ReadPDFScreens({
     super.key,
     required this.pdf,
   });

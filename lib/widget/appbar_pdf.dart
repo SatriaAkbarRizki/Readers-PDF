@@ -37,6 +37,7 @@ class AppBarPDF extends StatelessWidget {
               'assets/icons/menu-alt-right.png',
               color: themes.widget,
             ),
+            offset: const Offset(50, 55),
             itemBuilder: (context) => [
               _dialogSharePDF(context, themes),
               _dialogGotoPage(context, themes),
@@ -54,9 +55,13 @@ class AppBarPDF extends StatelessWidget {
   }
 
   PopupMenuItem _dialogSharePDF(contex, Thememodel themes) => PopupMenuItem(
-        child: Text(
-          'Share Pdf',
-          style: TextStyle(color: themes.text),
+        child: SizedBox(
+          width: 100,
+          height: 20,
+          child: Text(
+            'Share Pdf',
+            style: TextStyle(color: themes.text),
+          ),
         ),
         onTap: () {
           Share.shareXFiles(
