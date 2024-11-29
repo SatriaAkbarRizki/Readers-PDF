@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -81,22 +80,21 @@ class SearchScreen extends StatelessWidget {
                         width: 120,
                         height: 150,
                         margin: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(color: themes.widget),
-                        child: PdfDocumentViewBuilder.file(
-                          state.pdf[index].path,
-                          builder: (context, document) => ListView.builder(
-                            itemCount: 1,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: PdfPageView(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: PdfDocumentViewBuilder.file(
+                            state.pdf[index].path,
+                            builder: (context, document) => ListView.builder(
+                              itemCount: 1,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return PdfPageView(
                                   document: document,
                                   pageNumber: index + 1,
                                   alignment: Alignment.center,
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ),
