@@ -82,7 +82,8 @@ class ServiceFile {
   }
 
   Future<List<Pdfmodel>> searchFile(String name) async {
-    listPDF.clear();
+    final List<Pdfmodel> listSearch = [];
+    listSearch.clear();
     if (await requestPermission()) {
       try {
         Directory dir = Directory('/storage/emulated/0');
@@ -96,7 +97,7 @@ class ServiceFile {
                 namePdf = namePdf.replaceAll('.pdf', '');
 
                 if (namePdf.toLowerCase().contains(name.toLowerCase())) {
-                  listPDF.add(
+                  listSearch.add(
                       Pdfmodel(name: namePdf, path: elementDirInside.path));
                 }
               }
@@ -107,6 +108,6 @@ class ServiceFile {
         log('Error: $e');
       }
     }
-    return listPDF;
+    return listSearch;
   }
 }
