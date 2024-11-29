@@ -3,7 +3,7 @@ part of 'pdf_bloc.dart';
 @immutable
 sealed class PdfEvent {}
 
-class OnPdfInitial extends PdfEvent{}
+class OnPdfInitial extends PdfEvent {}
 
 class OnPdfOpenSearch extends PdfEvent {}
 
@@ -34,4 +34,11 @@ class OnPdfRename extends PdfEvent {
   final FileSystemEntity filePdf;
 
   OnPdfRename({required this.newName, required this.filePdf});
+}
+
+class OnPDFSearchFile extends PdfEvent {
+  final String name;
+
+  OnPDFSearchFile(this.name);
+  
 }

@@ -11,6 +11,7 @@ import 'package:simplereader/model/thememodel.dart';
 import 'package:simplereader/navigation/navbar.dart';
 import 'package:simplereader/pdfbloc_observer.dart';
 import 'package:simplereader/screens/readingpdf.dart';
+import 'package:simplereader/screens/search.dart';
 import 'package:simplereader/screens/tools/compress.dart';
 import 'package:simplereader/screens/tools/delete.dart';
 import 'package:simplereader/screens/tools/merge.dart';
@@ -91,5 +92,7 @@ final _route = GoRouter(initialLocation: '/', routes: [
   GoRoute(
     path: WatermarkScreen.routeName,
     builder: (context, state) => WatermarkScreen(),
+    
   ),
+  GoRoute(path: SearchScreen.routeName, builder: (context, state) => SearchScreen(state.extra as Thememodel), )
 ]);

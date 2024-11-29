@@ -58,7 +58,7 @@ class DialogDoc extends StatelessWidget {
                     child: SizedBox.fromSize(
                       size: const Size.fromRadius(144),
                       child: PdfDocumentViewBuilder.file(
-                        pdf.path!,
+                        pdf.path,
                         autoDispose: true,
                         builder: (context, document) => ListView.builder(
                           itemCount: 1,

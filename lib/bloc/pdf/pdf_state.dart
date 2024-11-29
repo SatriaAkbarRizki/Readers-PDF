@@ -25,4 +25,11 @@ final class PdfShowingAll extends PdfState {
   PdfShowingAll();
 }
 
-final class PdfRenameFile extends PdfState{}
+final class PdfRenameFile extends PdfState {}
+
+final class PdfSearchFile extends PdfState {
+  final List<Pdfmodel> pdf;
+
+  PdfSearchFile(this.pdf);
+  
+}

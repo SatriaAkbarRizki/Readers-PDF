@@ -14,6 +14,7 @@ part 'pdf_state.dart';
 
 class PdfBloc extends Bloc<PdfEvent, PdfState> {
   ServiceFile serviceFile = ServiceFile();
+
   List<Pdfmodel> listPdf = [];
   bool isOpen = false;
 
@@ -70,6 +71,15 @@ class PdfBloc extends Bloc<PdfEvent, PdfState> {
       await serviceFile.renameFile(event.newName, event.filePdf);
       _fetchAllPdfs();
       emit(PdfRenameFile());
+    });
+
+    on<OnPDFSearchFile>((event, emit) async {
+      await serviceFile.searchFile(event.name).then(
+            (value) =>
+                Future.delayed(const Duration(milliseconds: 200)).whenComplete(
+              () => emit(PdfSearchFile(value)),
+            ),
+          );
     });
   }
 

@@ -80,4 +80,33 @@ class ServiceFile {
     log('Results Move: ${newFile.path}');
     return newFile;
   }
+
+  Future<List<Pdfmodel>> searchFile(String name) async {
+    listPDF.clear();
+    if (await requestPermission()) {
+      try {
+        Directory dir = Directory('/storage/emulated/0');
+        rootDirectory = dir.listSync();
+
+        for (var elementDir in rootDirectory) {
+          if (FileSystemEntity.isDirectorySync(elementDir.path)) {
+            Directory(elementDir.path).listSync().forEach((elementDirInside) {
+              if (elementDirInside.path.endsWith('.pdf')) {
+                String namePdf = path.basename(elementDirInside.path);
+                namePdf = namePdf.replaceAll('.pdf', '');
+
+                if (namePdf.toLowerCase().contains(name.toLowerCase())) {
+                  listPDF.add(
+                      Pdfmodel(name: namePdf, path: elementDirInside.path));
+                }
+              }
+            });
+          }
+        }
+      } catch (e) {
+        log('Error: $e');
+      }
+    }
+    return listPDF;
+  }
 }
