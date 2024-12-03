@@ -109,7 +109,7 @@ class ListPDF extends StatelessWidget {
             ],
           );
         } else {
-          return const EmptyScreens(type: TypeEmpty.emptyPdf);
+          return EmptyScreens(type: TypeEmpty.emptyPdf);
         }
       },
     );

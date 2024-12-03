@@ -6,11 +6,12 @@ import 'package:simplereader/cubit/theme_cubit.dart';
 import 'package:simplereader/model/thememodel.dart';
 
 import 'package:simplereader/type/empty_type.dart';
+import 'package:simplereader/widget/bottomsheet.dart';
 
 class EmptyScreens extends StatelessWidget {
   final TypeEmpty type;
 
-  const EmptyScreens({
+  EmptyScreens({
     super.key,
     required this.type,
   });
@@ -24,6 +25,9 @@ class EmptyScreens extends StatelessWidget {
             emptyWidget('No Pdf Here', 'assets/image/documentempty.svg'),
           TypeEmpty.emptyAudio =>
             emptyWidget('No Audio Here', 'assets/image/audioempty.svg'),
+          TypeEmpty.noPermission => emptyWidget(
+              'No Have Files, Please allow permission',
+              'assets/image/documentempty.svg')
         },
       ),
     );
@@ -48,7 +52,21 @@ class EmptyScreens extends StatelessWidget {
               style: TextStyle(color: state.text),
             );
           },
-        )
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        BlocBuilder<ThemeCubit, Thememodel>(
+            builder: (context, state) => type == TypeEmpty.noPermission
+                ? ElevatedButton(
+                    onPressed: () => showBottomSheetPermission(context, state),
+                    style: ElevatedButton.styleFrom(
+                        fixedSize: const Size(250, 50)),
+                    child: const Text(
+                      'Allow',
+                    ),
+                  )
+                : const SizedBox())
       ],
     );
   }

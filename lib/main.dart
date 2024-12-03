@@ -5,6 +5,7 @@ import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 import 'package:simplereader/bloc/switch_mode/switch_mode_bloc.dart';
 import 'package:simplereader/bloc/tools_pdf/cubit/channel_merge_cubit.dart';
 import 'package:simplereader/cubit/file_cubit.dart';
+import 'package:simplereader/cubit/status_permission.dart';
 import 'package:simplereader/cubit/theme_cubit.dart';
 import 'package:simplereader/model/pdfmodel.dart';
 import 'package:simplereader/model/thememodel.dart';
@@ -47,6 +48,10 @@ class MainApp extends StatelessWidget {
         BlocProvider(
           create: (context) => ThemeCubit(),
         ),
+        BlocProvider(
+          create: (context) =>
+              StatusPermissionCubit()..listenStatusPermission() ,
+        )
       ],
       child: BlocBuilder<ThemeCubit, Thememodel>(
         builder: (context, state) {
@@ -92,7 +97,9 @@ final _route = GoRouter(initialLocation: '/', routes: [
   GoRoute(
     path: WatermarkScreen.routeName,
     builder: (context, state) => WatermarkScreen(),
-    
   ),
-  GoRoute(path: SearchScreen.routeName, builder: (context, state) => SearchScreen(state.extra as Thememodel), )
+  GoRoute(
+    path: SearchScreen.routeName,
+    builder: (context, state) => SearchScreen(state.extra as Thememodel),
+  )
 ]);

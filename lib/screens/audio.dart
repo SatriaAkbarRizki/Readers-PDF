@@ -17,7 +17,7 @@ class AudioScreens extends StatelessWidget {
           style: Theme.of(context).textTheme.titleMedium,
         ),
       ),
-      body: const EmptyScreens(
+      body: EmptyScreens(
         type: TypeEmpty.emptyAudio,
       ),
     );
