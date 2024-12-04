@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:simplereader/database/theme.dart';
 import 'package:simplereader/model/thememodel.dart';
 
 class ThemeCubit extends Cubit<Thememodel> {
@@ -21,18 +22,20 @@ class ThemeCubit extends Cubit<Thememodel> {
     Thememodel(const Color(0xfffea64e), const Color(0xfff1521c),
         const Color(0xfffefffe)), // Done
     Thememodel(const Color(0xff9b84b4), const Color(0xff1a0e21), Colors.white),
-Thememodel(
-              const Color(0xff303138), const Color(0xfff3c0c5), Colors.white)
+    Thememodel(const Color(0xff303138), const Color(0xfff3c0c5), Colors.white)
   ];
-  ThemeCubit()
-      : super(
-          Thememodel(
-        const Color(0xff1d1d1d),
-        const Color(0xff1b5ed1), // Done
-        const Color(0xffFDFCFA)),
-        );
 
-  void chanetTheme(int index) {
-    emit(listColorTheme[index]);
+  ThemeCubit()
+      : super(Thememodel(const Color(0xff1d1d1d), const Color(0xff1b5ed1),
+            const Color(0xffFDFCFA)));
+
+  void getCurretTheme() async {
+    final current = await DatabasesTheme.getHiveTheme();
+    emit(current ?? listColorTheme[0]);
+  }
+
+  void chanetTheme(Thememodel themes) async {
+    await DatabasesTheme.putHiveTheme(themes);
+    emit(themes);
   }
 }

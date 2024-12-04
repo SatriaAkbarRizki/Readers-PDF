@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simplereader/cubit/status_date.dart';
+import 'package:simplereader/database/theme.dart';
 import 'package:simplereader/screens/tools/compress.dart';
 import 'package:simplereader/screens/tools/delete.dart';
 import 'package:simplereader/screens/tools/merge.dart';
@@ -96,7 +97,8 @@ class ProfileScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               InkWell(
-                                onTap: () => themes.chanetTheme(index),
+                                onTap: () => themes
+                                    .chanetTheme(themes.listColorTheme[index]),
                                 overlayColor: const WidgetStatePropertyAll(
                                     Colors.transparent),
                                 child: Container(

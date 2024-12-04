@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 import 'package:simplereader/bloc/switch_mode/switch_mode_bloc.dart';
 import 'package:simplereader/bloc/tools_pdf/cubit/channel_merge_cubit.dart';
 import 'package:simplereader/cubit/file_cubit.dart';
 import 'package:simplereader/cubit/status_permission.dart';
 import 'package:simplereader/cubit/theme_cubit.dart';
+import 'package:simplereader/database/theme.dart';
 import 'package:simplereader/model/pdfmodel.dart';
 import 'package:simplereader/model/thememodel.dart';
 import 'package:simplereader/navigation/navbar.dart';
@@ -20,7 +22,10 @@ import 'package:simplereader/screens/tools/watermark.dart';
 import 'package:simplereader/theme/mytheme.dart';
 import 'cubit/navbar_cubit.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(ThememodelAdapter());
   Bloc.observer = PdfBlocObserver();
   runApp(const MainApp());
 }
@@ -46,11 +51,11 @@ class MainApp extends StatelessWidget {
           create: (context) => NavbarCubit(),
         ),
         BlocProvider(
-          create: (context) => ThemeCubit(),
+          create: (context) => ThemeCubit()..getCurretTheme(),
         ),
         BlocProvider(
           create: (context) =>
-              StatusPermissionCubit()..listenStatusPermission() ,
+              StatusPermissionCubit()..listenStatusPermission(),
         )
       ],
       child: BlocBuilder<ThemeCubit, Thememodel>(

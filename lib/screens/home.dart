@@ -2,8 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:simplereader/cubit/status_permission.dart';
+import 'package:simplereader/database/theme.dart';
 import 'package:simplereader/screens/empty.dart';
+import 'package:simplereader/screens/search.dart';
 import 'package:simplereader/type/empty_type.dart';
 import 'package:simplereader/widget/listpdf.dart';
 import 'package:simplereader/widget/bottomsheet.dart';
@@ -29,7 +32,8 @@ class HomeScreens extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () => showBottomSheetPermission(context, themes),
+            onPressed: () =>
+                context.push(SearchScreen.routeName, extra: themes),
             icon: const Icon(Icons.search),
             color: themes.widget,
           )
