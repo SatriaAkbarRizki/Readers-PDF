@@ -16,7 +16,6 @@ class DatabasesTheme {
     await createBox();
 
     final value = box.get(1);
-    log('Value Database: ${value!.background}');
     return value;
   }
 
