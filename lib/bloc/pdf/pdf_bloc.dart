@@ -58,6 +58,23 @@ class PdfBloc extends Bloc<PdfEvent, PdfState> {
       );
     });
 
+    on<OnPdfOpenFileIntent>((event, emit) async {
+      await serviceFile.getFileDocCustom(event.path).then(
+        (results) {
+          if (results != null && event.context.mounted) {
+            final isPdf = results.path.contains('.pdf');
+
+            if (isPdf) {
+              event.context.push(ReadPDFScreens.routeName, extra: results);
+            } else {
+              ShowSnackBar(event.context, 'This not documents').showSnackBar();
+              log('Not Pdf');
+            }
+          }
+        },
+      );
+    });
+
     on<OnPdfShowingAll>((event, emit) {
       emit(PdfShowingAll());
     });

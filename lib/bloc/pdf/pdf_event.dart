@@ -21,6 +21,13 @@ class OnPdfOpenFile extends PdfEvent {
   OnPdfOpenFile({required this.context});
 }
 
+class OnPdfOpenFileIntent extends PdfEvent {
+  final String path;
+  final BuildContext context;
+
+  OnPdfOpenFileIntent({required this.path, required this.context});
+}
+
 class OnPdfShowingAll extends PdfEvent {}
 
 class OnPdfDeleted extends PdfEvent {
@@ -40,5 +47,4 @@ class OnPDFSearchFile extends PdfEvent {
   final String name;
 
   OnPDFSearchFile(this.name);
-  
 }
