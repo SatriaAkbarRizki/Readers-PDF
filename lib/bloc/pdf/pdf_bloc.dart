@@ -63,7 +63,7 @@ class PdfBloc extends Bloc<PdfEvent, PdfState> {
         (results) {
           if (results != null && event.context.mounted) {
             final isPdf = results.path.contains('.pdf');
-
+            
             if (isPdf) {
               event.context.push(ReadPDFScreens.routeName, extra: results);
             } else {

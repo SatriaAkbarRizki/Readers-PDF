@@ -9,7 +9,6 @@ import 'package:simplereader/cubit/file_cubit.dart';
 import 'package:simplereader/cubit/splash.dart';
 import 'package:simplereader/cubit/status_permission.dart';
 import 'package:simplereader/cubit/theme_cubit.dart';
-import 'package:simplereader/database/theme.dart';
 import 'package:simplereader/model/pdfmodel.dart';
 import 'package:simplereader/model/thememodel.dart';
 import 'package:simplereader/navigation/navbar.dart';

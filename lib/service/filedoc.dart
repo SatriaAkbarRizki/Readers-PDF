@@ -24,10 +24,10 @@ class ServiceFile {
   }
 
   Future<Pdfmodel?> getFileDocCustom(String value) async {
-    String namePdf = path.basename(value);
-    namePdf = namePdf.replaceAll('.pdf', '');
+    String pdfPath = Uri.decodeFull(value);
+    String namePdf = pdfPath.split("/").last;
 
-    final modelPDF = Pdfmodel(name: namePdf, path: value);
+    final modelPDF = Pdfmodel(name: namePdf, path: pdfPath);
     log('Name PDF: ${modelPDF.name} and Path PDF: ${modelPDF.path}');
     return modelPDF;
   }

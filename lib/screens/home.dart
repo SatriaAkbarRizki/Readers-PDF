@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 import 'package:simplereader/cubit/status_permission.dart';
-import 'package:simplereader/database/theme.dart';
 import 'package:simplereader/screens/empty.dart';
 import 'package:simplereader/screens/search.dart';
 import 'package:simplereader/type/empty_type.dart';
@@ -30,15 +28,17 @@ class _HomeScreensState extends State<HomeScreens> {
   Future<void> getSharedData() async {
     try {
       final sharedData = await _methodChannel.invokeMethod('getSharedText');
+
       if (sharedData is String) {
-          if (mounted){
-                context
-            .read<PdfBloc>()
-            .add(OnPdfOpenFileIntent(path: sharedData, context: context));
-          }
+        final results = Uri.parse(sharedData);
+        if (mounted) {
+          context
+              .read<PdfBloc>()
+              .add(OnPdfOpenFileIntent(path: results.path, context: context));
+        }
       }
     } catch (e) {
-      print("Error fetching shared data: $e");
+      log("Error fetching shared data: $e");
     }
   }
 
@@ -77,7 +77,10 @@ class _HomeScreensState extends State<HomeScreens> {
             log("Not have permission");
             Future.delayed(
               Duration.zero,
-              () => showBottomSheetPermission(context, themes),
+              () => {
+                if (context.mounted)
+                  {showBottomSheetPermission(context, themes)}
+              },
             );
           }
         },
@@ -85,7 +88,7 @@ class _HomeScreensState extends State<HomeScreens> {
           if (state == true) {
             return const ListPDF();
           } else {
-            return EmptyScreens(
+            return const EmptyScreens(
               type: TypeEmpty.noPermission,
             );
           }
