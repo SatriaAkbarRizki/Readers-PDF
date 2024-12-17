@@ -23,8 +23,7 @@ class EmptyScreens extends StatelessWidget {
         child: switch (type) {
           TypeEmpty.emptyPdf =>
             emptyWidget('No Pdf Here', 'assets/image/documentempty.svg'),
-          TypeEmpty.emptyAudio =>
-            emptyWidget('No Audio Here', 'assets/image/audioempty.svg'),
+
           TypeEmpty.noPermission => emptyWidget(
               'No Have Files, Please allow permission',
               'assets/image/documentempty.svg')

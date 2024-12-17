@@ -1,1 +1,1 @@
-enum TypeEmpty { emptyPdf, emptyAudio, noPermission }
+enum TypeEmpty { emptyPdf, noPermission }

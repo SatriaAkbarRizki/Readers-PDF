@@ -12,7 +12,6 @@ import 'package:simplereader/widget/floating_pdf.dart';
 class Navbar extends StatelessWidget {
   final List listtNavBar = [
     const HomeScreens(),
-    // const AudioScreens(),
     const ProfileScreen()
   ];
   Navbar({super.key});
@@ -58,13 +57,7 @@ class Navbar extends StatelessWidget {
                             colorFilter: ColorFilter.mode(
                                 themes.widget, BlendMode.srcIn),
                           )),
-                      // BottomNavigationBarItem(
-                      //     label: 'Listen',
-                      //     icon: SvgPicture.asset(
-                      //       'assets/icons/listen.svg',
-                      //       colorFilter: const ColorFilter.mode(
-                      //           Color(0xff1b5ed1), BlendMode.srcIn),
-                      //     )),
+
                       BottomNavigationBarItem(
                           label: 'Profile',
                           icon: SvgPicture.asset(
