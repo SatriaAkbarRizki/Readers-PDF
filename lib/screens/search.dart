@@ -116,7 +116,7 @@ class SearchScreen extends StatelessWidget {
                 ),
               );
             }
-            return EmptyScreens(type: TypeEmpty.emptyPdf);
+            return const EmptyScreens(type: TypeEmpty.emptyPdf);
           },
         ));
   }

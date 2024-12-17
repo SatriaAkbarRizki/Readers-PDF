@@ -11,7 +11,7 @@ import 'package:simplereader/widget/bottomsheet.dart';
 class EmptyScreens extends StatelessWidget {
   final TypeEmpty type;
 
-  EmptyScreens({
+  const EmptyScreens({
     super.key,
     required this.type,
   });

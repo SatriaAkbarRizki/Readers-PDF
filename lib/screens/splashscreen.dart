@@ -4,10 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simplereader/cubit/splash.dart';
-import 'package:simplereader/database/splash.dart';
-import 'package:simplereader/database/theme.dart';
-import 'package:simplereader/navigation/navbar.dart';
-import 'package:simplereader/screens/home.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
