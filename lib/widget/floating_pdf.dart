@@ -14,14 +14,26 @@ class FloatingPdfAction extends StatelessWidget {
         return FloatingActionButton(
           backgroundColor: state.widget,
           onPressed: () async {
-            // context.read<FileCubit>().findPdf();
-            // context.read<FileCubit>().getFile(context);
-
             context.read<PdfBloc>().add(OnPdfOpenFile(context: context));
           },
-          child: Icon(
-            Icons.add,
-            color: state.text,
+          child: Builder(
+            builder: (context) {
+              if (state.indexTheme == 2) {
+                return Icon(
+                  Icons.add,
+                  color: state.background,
+                );
+              } else if (state.indexTheme == 6) {
+                return Icon(
+                  Icons.add,
+                  color: state.background,
+                );
+              }
+              return Icon(
+                Icons.add,
+                color: state.text,
+              );
+            },
           ),
         );
       },

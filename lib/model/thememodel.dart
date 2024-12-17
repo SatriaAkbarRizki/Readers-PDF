@@ -6,15 +6,19 @@ part 'thememodel.g.dart';
 @HiveType(typeId: 1)
 class Thememodel {
   @HiveField(0)
-  Color background; 
+  int indexTheme;
 
   @HiveField(1)
-  Color widget; 
+  Color background;
 
   @HiveField(2)
-  Color text; 
+  Color widget;
+
+  @HiveField(3)
+  Color text;
 
   Thememodel(
+    this.indexTheme,
     this.background,
     this.widget,
     this.text,

@@ -18,12 +18,33 @@ class TitleTools extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              title,
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                  color: themes.text == Colors.white
-                      ? themes.background
-                      : themes.text),
+            Builder(
+              builder: (context) {
+                if (themes.indexTheme == 2) {
+                  return Text(
+                    title,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(color: themes.background),
+                  );
+                } else if (themes.indexTheme == 5) {
+                  return Text(
+                    title,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium!
+                        .copyWith(color: themes.text),
+                  );
+                }
+                return Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: themes.text == Colors.white
+                          ? themes.background
+                          : themes.text),
+                );
+              },
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10),

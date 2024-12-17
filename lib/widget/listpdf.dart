@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -59,7 +58,8 @@ class ListPDF extends StatelessWidget {
                             right: 15,
                             bottom: 10,
                           ),
-                          height: 220,
+                          clipBehavior: Clip.hardEdge,
+                          height: 200,
                           decoration: BoxDecoration(boxShadow: const [
                             BoxShadow(
                               color: Colors.black38,

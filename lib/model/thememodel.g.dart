@@ -12,33 +12,30 @@ class ThememodelAdapter extends TypeAdapter<Thememodel> {
 
   @override
   Thememodel read(BinaryReader reader) {
-    // Read the number of fields
     final numOfFields = reader.readByte();
-
-    // Read each field as dynamic and store it in a map
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-
-    // Convert the stored int values back to Color objects
     return Thememodel(
-      Color(fields[0] as int), // Convert to Color
-      Color(fields[1] as int), // Convert to Color
-      Color(fields[2] as int), // Convert to Color
+      fields[0] as int,
+      Color(fields[1] as int),
+      Color(fields[2] as int),
+      Color(fields[3] as int)
     );
   }
 
   @override
   void write(BinaryWriter writer, Thememodel obj) {
-    // Write the number of fields (3 for background, widget, and text)
     writer
+      ..writeByte(4)
+      ..writeByte(0)
+      ..write(obj.indexTheme)
+      ..writeByte(1)
+      ..write(obj.background.value)
+      ..writeByte(2)
+      ..write(obj.widget.value)
       ..writeByte(3)
-      ..writeByte(0) // Write background color as int
-      ..write(obj.background.value) // Store as int (ARGB)
-      ..writeByte(1) // Write widget color as int
-      ..write(obj.widget.value) // Store as int (ARGB)
-      ..writeByte(2) // Write text color as int
-      ..write(obj.text.value); // Store as int (ARGB)
+      ..write(obj.text.value);
   }
 
   @override

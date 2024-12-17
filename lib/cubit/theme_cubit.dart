@@ -5,28 +5,21 @@ import 'package:simplereader/model/thememodel.dart';
 
 class ThemeCubit extends Cubit<Thememodel> {
   List<Thememodel> listColorTheme = [
-    Thememodel(
-        const Color(0xff1d1d1d),
-        const Color(0xff1b5ed1), // Done
+    Thememodel(0,const Color(0xff1d1d1d), const Color(0xff1b5ed1),
         const Color(0xffFDFCFA)),
-    Thememodel(
-        const Color(0xff214f44),
-        const Color.fromARGB(255, 117, 163, 133),
-        const Color(0xffFDFCFA)), // Done
-    Thememodel(
-        const Color(0xffFDFCFA), const Color(0xfff9e069), Colors.black), // Done
-    Thememodel(
-        const Color(0xff071432),
-        const Color(0xff1b5ed1), // Done
+    Thememodel(1,const Color(0xff214f44),
+        const Color.fromARGB(255, 117, 163, 133), const Color(0xffFDFCFA)),
+    Thememodel(2,const Color(0xffFDFCFA), const Color(0xff1b5ed1), Colors.black),
+    Thememodel(3,const Color(0xff071432), const Color(0xff1b5ed1),
         const Color(0xffFDFCFA)),
-    Thememodel(const Color(0xfffea64e), const Color(0xfff1521c),
-        const Color(0xfffefffe)), // Done
-    Thememodel(const Color(0xff9b84b4), const Color(0xff1a0e21), Colors.white),
-    Thememodel(const Color(0xff303138), const Color(0xfff3c0c5), Colors.white)
+    Thememodel(4,const Color(0xfffea64e), const Color(0xfff1521c),
+        const Color(0xfffefffe)),
+    Thememodel(5,const Color(0xff9b84b4), const Color(0xff1a0e21), Colors.white),
+    Thememodel(6,const Color(0xff303138), const Color(0xfff3c0c5), Colors.white)
   ];
 
   ThemeCubit()
-      : super(Thememodel(const Color(0xff1d1d1d), const Color(0xff1b5ed1),
+      : super(Thememodel(0, const Color(0xff1d1d1d), const Color(0xff1b5ed1),
             const Color(0xffFDFCFA)));
 
   void getCurretTheme() async {
