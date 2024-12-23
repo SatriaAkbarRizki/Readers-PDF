@@ -87,7 +87,6 @@ class _HomeScreensState extends State<HomeScreens> {
       body: BlocConsumer<StatusPermissionCubit, bool>(
         listener: (context, state) {
           if (state == false) {
-            log("Not have permission");
             Future.delayed(
               Duration.zero,
               () => {

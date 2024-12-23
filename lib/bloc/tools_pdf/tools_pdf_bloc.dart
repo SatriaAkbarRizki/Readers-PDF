@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
@@ -46,7 +45,6 @@ class ToolsPdfBloc extends Bloc<ToolsPdfEvent, ToolsPdfState> {
 
     on<OnPDFMerge>((event, emit) async {
       emit(ToolsRunning());
-      log('Name Merge: ${event.nameMergePdf}');
       final toolsMergePDF = Mergepdf(event.nameMergePdf, event.pdfs);
       await toolsMergePDF.merge().then(
             (value) async => await serviceFile.movingFile(value!).then(
@@ -58,7 +56,6 @@ class ToolsPdfBloc extends Bloc<ToolsPdfEvent, ToolsPdfState> {
     });
 
     on<OnCancelMerge>((event, emit) {
-      log('IS CLICK CANCEL');
       emit(ToolsCancelMerge());
     });
 

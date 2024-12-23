@@ -17,7 +17,6 @@ class ServiceFile {
 
       final modelPDF =
           Pdfmodel(name: namePdf, path: result.files.first.path.toString());
-      log('Name PDF: ${modelPDF.name} and Path PDF: ${modelPDF.path}');
       return modelPDF;
     }
     return null;
@@ -28,7 +27,6 @@ class ServiceFile {
     String namePdf = pdfPath.split("/").last;
 
     final modelPDF = Pdfmodel(name: namePdf, path: pdfPath);
-    log('Name PDF: ${modelPDF.name} and Path PDF: ${modelPDF.path}');
     return modelPDF;
   }
 
@@ -65,20 +63,17 @@ class ServiceFile {
   }
 
   Future<String> renameFile(String newName, FileSystemEntity pathPdf) async {
-    log(pathPdf.path);
     final dir = Directory(pathPdf.path);
     final namePdf = dir.path.split('/').last;
 
     final file = File(pathPdf.path);
     String replacePdf = dir.path.replaceFirst(namePdf, '$newName.pdf');
-    log('New Name file: $replacePdf');
     await file.rename(replacePdf);
 
     return replacePdf;
   }
 
   Future<File> movingFile(String pdf) async {
-    log(pdf);
     final namePdf = pdf.split('/').last;
     final sourceFile = File(pdf);
 
@@ -86,7 +81,6 @@ class ServiceFile {
     final newFile = await sourceFile.copy(destinationPath);
     await sourceFile.delete();
 
-    log('Results Move: ${newFile.path}');
     return newFile;
   }
 

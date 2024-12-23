@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -22,7 +21,7 @@ class FileCubit extends Cubit<dynamic> {
               SnackBar snackBar =
                   const SnackBar(content: Text('This not documents'));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              log('Not Pdf');
+
             }
           }
           emit(results);
@@ -31,9 +30,6 @@ class FileCubit extends Cubit<dynamic> {
 
   void findPdf() async => await serviceFile.findPDFAll().then(
         (value) {
-          for (var element in value) {
-            log('PDF found: $element');
-          }
           emit(value);
         },
       );

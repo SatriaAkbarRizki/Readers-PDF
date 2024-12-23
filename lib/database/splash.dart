@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -12,7 +11,6 @@ class DatabasesSplash {
   static Future<bool?> getSplashHive() async {
     await createBoxSplash();
     final value = boxSplash.get(1);
-    log('VALUE SPLASH: $value');
     return value;
   }
 

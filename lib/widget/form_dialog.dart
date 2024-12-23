@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -122,7 +121,6 @@ class FormDialog {
                                 (e) => e + 1,
                               )
                               .toList();
-                          log('VALUE ORDER TO DELETE: $incrementValue');
                           context.read<ToolsPdfBloc>().add(OnPDFDeletingPage(
                               nameFileController.text,
                               pdfPath,
@@ -184,7 +182,6 @@ class FormDialog {
                   TextButton(
                       onPressed: () {
                         if (nameFileController.text.isNotEmpty) {
-                          log("${nameFileController.text} & $path, & $valueQuality & $valueScale");
                           focusNode.unfocus();
                           context.read<ToolsPdfBloc>().add(OnPDFComprerssing(
                               nameFileController.text,
@@ -226,7 +223,7 @@ class FormDialog {
           value: toolsPdfBloc,
           child: BlocBuilder<ToolsPdfBloc, ToolsPdfState>(
             builder: (context, state) {
-              log('nameWatermark: $nameWatermark, fontSize: $fontSize postionWatermark $postionWatermark colors: $colors');
+              
               return AlertDialog(
                 title: Text(
                   'Watermark Pdf',
@@ -257,7 +254,6 @@ class FormDialog {
                   TextButton(
                       onPressed: () {
                         if (nameFileController.text.isNotEmpty) {
-                          // log("${nameMergePdf.text} & $path, & $valueQuality & $valueScale");
                           focusNode.unfocus();
                           context.read<ToolsPdfBloc>().add(OnPDFWatermark(
                               nameFileController.text,

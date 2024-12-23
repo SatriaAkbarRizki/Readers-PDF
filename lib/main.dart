@@ -12,7 +12,6 @@ import 'package:simplereader/cubit/theme_cubit.dart';
 import 'package:simplereader/model/pdfmodel.dart';
 import 'package:simplereader/model/thememodel.dart';
 import 'package:simplereader/navigation/navbar.dart';
-import 'package:simplereader/pdfbloc_observer.dart';
 import 'package:simplereader/screens/readingpdf.dart';
 import 'package:simplereader/screens/search.dart';
 import 'package:simplereader/screens/splashscreen.dart';
@@ -27,7 +26,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(ThememodelAdapter());
-  Bloc.observer = PdfBlocObserver();
   runApp(const MainApp());
 }
 

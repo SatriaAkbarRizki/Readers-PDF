@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -115,7 +114,6 @@ class CompressScreen extends StatelessWidget {
                                   label: '${_value.valueQuality.round()}',
                                   divisions: 20,
                                   onChanged: (value) {
-                                    log('Value Slider: ${value.round()}');
                                     _value.changeValueQuality(value);
                                   },
                                 ),

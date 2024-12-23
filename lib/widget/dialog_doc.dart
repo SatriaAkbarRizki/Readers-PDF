@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
@@ -138,7 +137,6 @@ class DialogDoc extends StatelessWidget {
                               },
                               child: TextButton(
                                   onPressed: () {
-                                    log(renameController.text);
 
                                     context.read<PdfBloc>().add(OnPdfRename(
                                         newName: renameController.text,

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:simplereader/widget/scaffold_messeger.dart';
 import 'package:bloc/bloc.dart';
@@ -51,7 +50,6 @@ class PdfBloc extends Bloc<PdfEvent, PdfState> {
               event.context.push(ReadPDFScreens.routeName, extra: results);
             } else {
               ShowSnackBar(event.context, 'This not documents').showSnackBar();
-              log('Not Pdf');
             }
           }
         },
@@ -68,7 +66,6 @@ class PdfBloc extends Bloc<PdfEvent, PdfState> {
               event.context.push(ReadPDFScreens.routeName, extra: results);
             } else {
               ShowSnackBar(event.context, 'This not documents').showSnackBar();
-              log('Not Pdf');
             }
           }
         },
@@ -103,11 +100,7 @@ class PdfBloc extends Bloc<PdfEvent, PdfState> {
   void _fetchAllPdfs() async {
     await serviceFile.findPDFAll().then(
       (value) {
-        for (var element in value) {
-          log('PDF found: $element');
-        }
         listPdf = value;
-        log('Value: ${listPdf.length}');
         add(OnPdfShowingAll());
       },
     );

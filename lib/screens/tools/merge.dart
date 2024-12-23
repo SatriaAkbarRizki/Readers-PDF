@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -175,7 +174,6 @@ class MergeScreen extends StatelessWidget {
                 child: BlocConsumer<ToolsPdfBloc, ToolsPdfState>(
                   listener: (context, state) {
                     if (state is ToolsSucces) {
-                      log('length pdf: ${pdfs.length}');
                       pdfs.clear();
                       context.read<ChannelMergeCubit>().changeStatus(true);
                       ShowSnackBar(context, 'Succes Merge PDF')
