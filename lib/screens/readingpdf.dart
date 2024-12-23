@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -100,11 +102,25 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
             colorFilter: ColorFilter.mode(Colors.grey,
                 state is ReaderMode ? BlendMode.saturation : BlendMode.dst),
             child: PdfViewer.file(
-              widget.pdf.path,
+
+              File(widget.pdf.path).path,
               controller: pdfViewerController,
               params: PdfViewerParams(
                   enableTextSelection: true,
                   backgroundColor: const Color.fromARGB(255, 253, 252, 250),
+                  errorBannerBuilder:
+                      (context, error, stackTrace, documentRef) =>
+                          Center(child: Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Sorry Unexpected Error: ${error.toString()}"),
+                                Text("Path PDF: ${widget.pdf.path}")
+                              ],
+                            ),
+                          )),
                   viewerOverlayBuilder: (context, size) => [
                         PdfViewerScrollThumb(
                           controller: pdfViewerController,

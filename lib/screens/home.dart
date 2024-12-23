@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,13 +29,19 @@ class _HomeScreensState extends State<HomeScreens> {
   Future<void> getSharedData() async {
     try {
       final sharedData = await _methodChannel.invokeMethod('getSharedText');
-
-      if (sharedData is String) {
+      if (sharedData != null && mounted) {
         final results = Uri.parse(sharedData);
-        if (mounted) {
+        if (results.scheme == 'file') {
+          final filePath = results.path;
           context
               .read<PdfBloc>()
-              .add(OnPdfOpenFileIntent(path: results.path, context: context));
+              .add(OnPdfOpenFileIntent(path: filePath, context: context));
+        } else {
+          final file = File.fromUri(results);
+
+          context
+              .read<PdfBloc>()
+              .add(OnPdfOpenFileIntent(path: file.path, context: context));
         }
       }
     } catch (e) {
@@ -46,6 +53,12 @@ class _HomeScreensState extends State<HomeScreens> {
   void initState() {
     super.initState();
     getSharedData();
+  }
+
+  @override
+  void dispose() {
+    getSharedData();
+    super.dispose();
   }
 
   @override

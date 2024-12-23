@@ -31,7 +31,7 @@ class ProfileScreen extends StatelessWidget {
                     builder: (context, state) {
                       context.read<StatusDate>().checkStatus();
                       return TitleProfile(
-                        title: 'Hi, Bro $state',
+                        title: 'Hello, $state',
                       );
                     },
                   ),

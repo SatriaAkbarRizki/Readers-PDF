@@ -18,6 +18,8 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
+import android.database.Cursor
+
 
 class MainActivity : FlutterActivity() {
     private var sharedText: String? = null
@@ -41,9 +43,38 @@ class MainActivity : FlutterActivity() {
     private fun handleViewPdf(intent: Intent) {
         val pdfUri: Uri? = intent.data
         if (pdfUri != null) {
-            sharedText = pdfUri.toString()
+            val filePath = getRealPathFromURI(pdfUri)
+            sharedText = filePath
         }
     }
+
+    private fun getRealPathFromURI(uri: Uri): String? {
+        var cursor: Cursor? = null
+        try {
+            cursor = contentResolver.query(uri, null, null, null, null)
+            if (cursor != null && cursor.moveToFirst()) {
+                val columnIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                val fileName = cursor.getString(columnIndex)
+                if (uri.scheme == "content") {
+                    val inputStream: InputStream? = contentResolver.openInputStream(uri)
+                    val file = File(filesDir, fileName)
+                    val outputStream = FileOutputStream(file)
+                    inputStream?.copyTo(outputStream)
+                    outputStream.close()
+                    inputStream?.close()
+                    return file.absolutePath
+                } else if (uri.scheme == "file") {
+                    return uri.path
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            cursor?.close()
+        }
+        return null
+    }
+    
 
     override fun configureFlutterEngine(@NonNull flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
