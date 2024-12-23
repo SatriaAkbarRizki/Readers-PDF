@@ -63,7 +63,7 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
                 : true,
             child: Text(
               widget.pdf.name,
-              style: TextStyle(color: themes.text),
+              style: TextStyle(color: themes.text, fontSize: 18),
             )),
         leading: Visibility(
             visible:
@@ -102,25 +102,19 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
             colorFilter: ColorFilter.mode(Colors.grey,
                 state is ReaderMode ? BlendMode.saturation : BlendMode.dst),
             child: PdfViewer.file(
-
               File(widget.pdf.path).path,
               controller: pdfViewerController,
               params: PdfViewerParams(
                   enableTextSelection: true,
                   backgroundColor: const Color.fromARGB(255, 253, 252, 250),
-                  errorBannerBuilder:
-                      (context, error, stackTrace, documentRef) =>
-                          Center(child: Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text("Sorry Unexpected Error: ${error.toString()}"),
-                                Text("Path PDF: ${widget.pdf.path}")
-                              ],
-                            ),
-                          )),
+                  errorBannerBuilder: (context, error, stackTrace,
+                          documentRef) =>
+                      Center(
+                          child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child:
+                            Text("Sorry Unexpected Error: ${error.toString()}"),
+                      )),
                   viewerOverlayBuilder: (context, size) => [
                         PdfViewerScrollThumb(
                           controller: pdfViewerController,
@@ -150,21 +144,3 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
     );
   }
 }
-
-
-
-
-
-// PdfDocumentViewBuilder.file(
-//               widget.pdf.path,
-//               builder: (context, document) => ListView.builder(
-//                 itemCount: 1,
-//                 itemBuilder: (context, index) {
-//                   return PdfPageView(
-//                     document: document,
-//                     pageNumber: index + 1,
-//                     alignment: Alignment.center,
-//                   );
-//                 },
-//               ),
-//             )
