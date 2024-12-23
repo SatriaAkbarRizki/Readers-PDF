@@ -115,7 +115,7 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
                         child:
                             Text("Sorry Unexpected Error: ${error.toString()}"),
                       )),
-                  viewerOverlayBuilder: (context, size) => [
+                  viewerOverlayBuilder: (context, size, handleLinkTap) => [
                         PdfViewerScrollThumb(
                           controller: pdfViewerController,
                           thumbBuilder:
@@ -125,7 +125,7 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.black54),
                           ),
-                        ),
+                        )
                       ],
                   loadingBannerBuilder:
                       (context, bytesDownloaded, totalBytes) => const Center(
