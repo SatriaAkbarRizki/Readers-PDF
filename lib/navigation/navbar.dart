@@ -6,14 +6,11 @@ import 'package:simplereader/cubit/navbar_cubit.dart';
 import 'package:simplereader/cubit/theme_cubit.dart';
 import 'package:simplereader/model/thememodel.dart';
 import 'package:simplereader/screens/home.dart';
-import 'package:simplereader/screens/profile.dart';
+import 'package:simplereader/screens/landscape/controller/profile_controller.dart';
 import 'package:simplereader/widget/floating_pdf.dart';
 
 class Navbar extends StatelessWidget {
-  final List listtNavBar = [
-    const HomeScreens(),
-    const ProfileScreen()
-  ];
+  final List listtNavBar = [const HomeScreens(), const ProfileController()];
   Navbar({super.key});
 
   @override
@@ -57,7 +54,6 @@ class Navbar extends StatelessWidget {
                             colorFilter: ColorFilter.mode(
                                 themes.widget, BlendMode.srcIn),
                           )),
-
                       BottomNavigationBarItem(
                           label: 'Profile',
                           icon: SvgPicture.asset(

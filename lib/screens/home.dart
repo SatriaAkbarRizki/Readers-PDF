@@ -10,6 +10,7 @@ import 'package:simplereader/cubit/status_permission.dart';
 import 'package:simplereader/screens/empty.dart';
 import 'package:simplereader/screens/search.dart';
 import 'package:simplereader/type/empty_type.dart';
+import 'package:simplereader/screens/landscape/widget/listpdf.dart';
 import 'package:simplereader/widget/listpdf.dart';
 import 'package:simplereader/widget/bottomsheet.dart';
 
@@ -98,7 +99,13 @@ class _HomeScreensState extends State<HomeScreens> {
         },
         builder: (context, state) {
           if (state == true) {
-            return const ListPDF();
+            return LayoutBuilder(builder: (context, constraints) {
+              if (constraints.maxWidth > 600) {
+                return const ListPDFLandScape();
+              } else {
+                return const ListPDF();
+              }
+            });
           } else {
             return const EmptyScreens(
               type: TypeEmpty.noPermission,

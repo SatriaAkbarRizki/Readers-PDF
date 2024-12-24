@@ -1,0 +1,178 @@
+import 'dart:developer';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:simplereader/cubit/status_date.dart';
+import 'package:simplereader/screens/tools/compress.dart';
+import 'package:simplereader/screens/tools/delete.dart';
+import 'package:simplereader/screens/tools/merge.dart';
+import 'package:simplereader/screens/tools/watermark.dart';
+import 'package:simplereader/widget/title_profile.dart';
+import 'package:simplereader/widget/title_tools.dart';
+
+import '../../cubit/theme_cubit.dart';
+
+class ProfileScreenLandScape extends StatelessWidget {
+  const ProfileScreenLandScape({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final themes = context.watch<ThemeCubit>();
+    return BlocProvider(
+      create: (context) => StatusDate(),
+      child: SafeArea(
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  BlocBuilder<StatusDate, String>(
+                    builder: (context, state) {
+                      context.read<StatusDate>().checkStatus();
+                      return TitleProfile(
+                        title: 'Hello , $state',
+                      );
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: Container(
+                      height: 100,
+                      width: MediaQuery.of(context).size.width / 2,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(22),
+                          border:
+                              Border.all(color: themes.state.widget, width: 2)),
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.only(left: 10, right: 10, top: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Welcome',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelMedium!
+                                  .copyWith(
+                                      color: themes.state.text,
+                                      fontWeight: FontWeight.w900),
+                            ),
+                            Text(
+                                "let's view, delete,split, watermark or compress for your pdf  ",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium!
+                                    .copyWith(
+                                      color: themes.state.text,
+                                    ))
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 15),
+                    child: TitleProfile(
+                      title: 'Color themes',
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: Container(
+                      height: 80,
+                      width: MediaQuery.of(context).size.width / 2,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border:
+                              Border.all(color: themes.state.widget, width: 2)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: themes.listColorTheme.length,
+                          itemBuilder: (context, index) => Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              InkWell(
+                                onTap: () => themes
+                                    .chanetTheme(themes.listColorTheme[index]),
+                                overlayColor: const WidgetStatePropertyAll(
+                                    Colors.transparent),
+                                child: Container(
+                                  height: 40,
+                                  width: 40,
+                                  margin: const EdgeInsets.only(right: 25),
+                                  decoration: BoxDecoration(
+                                      color: themes
+                                          .listColorTheme[index].background,
+                                      borderRadius: BorderRadius.circular(50)),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 15, bottom: 15),
+                    child: TitleProfile(
+                      title: 'Tools PDF',
+                    ),
+                  ),
+                  GridView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                      mainAxisSpacing: 2,
+                      crossAxisSpacing: 12.0,
+                    ),
+                    children: [
+                      InkWell(
+                        overlayColor:
+                            const WidgetStatePropertyAll(Colors.transparent),
+                        onTap: () => context.push(MergeScreen.routeName),
+                        child: TitleTools(
+                            'Merging', 'assets/icons/merge.png', themes.state),
+                      ),
+                      InkWell(
+                        onTap: () => context.push(DeleteScreen.routeName),
+                        overlayColor:
+                            const WidgetStatePropertyAll(Colors.transparent),
+                        child: TitleTools('Deleting Page ',
+                            'assets/icons/delete_page.png', themes.state),
+                      ),
+                      InkWell(
+                        onTap: () => context.push(CompressScreen.routeName),
+                        overlayColor:
+                            const WidgetStatePropertyAll(Colors.transparent),
+                        child: TitleTools('Compressing',
+                            'assets/icons/sort-down.png', themes.state),
+                      ),
+                      InkWell(
+                        onTap: () => context.push(WatermarkScreen.routeName),
+                        overlayColor:
+                            const WidgetStatePropertyAll(Colors.transparent),
+                        child: TitleTools('Watermark',
+                            'assets/icons/face-mask.png', themes.state),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
