@@ -11,6 +11,7 @@ import 'package:simplereader/cubit/status_permission.dart';
 import 'package:simplereader/cubit/theme_cubit.dart';
 import 'package:simplereader/model/pdfmodel.dart';
 import 'package:simplereader/model/thememodel.dart';
+import 'package:simplereader/navigation/nav_observer.dart';
 import 'package:simplereader/navigation/navbar.dart';
 import 'package:simplereader/screens/landscape/tools/compress.dart';
 import 'package:simplereader/screens/landscape/tools/delete.dart';
@@ -81,7 +82,7 @@ class MainApp extends StatelessWidget {
   }
 }
 
-final _route = GoRouter(initialLocation: '/', routes: [
+final _route = GoRouter(initialLocation: '/',observers: [LoggerNavigatorObserver()], routes: [
   GoRoute(
     path: "/",
     builder: (context, state) => Navbar(),

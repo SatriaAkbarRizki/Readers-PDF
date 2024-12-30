@@ -8,6 +8,7 @@ import 'package:simplereader/service/permission.dart';
 class ServiceFile {
   List<FileSystemEntity> rootDirectory = [];
   List<Pdfmodel> listPDF = [];
+  static String pathPdfUri = "";
 
   Future<Pdfmodel?> getFileDoc() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -26,6 +27,7 @@ class ServiceFile {
     String pdfPath = Uri.decodeFull(value);
     String namePdf = pdfPath.split("/").last;
 
+    pathPdfUri = pdfPath;
     final modelPDF = Pdfmodel(name: namePdf, path: pdfPath);
     return modelPDF;
   }
