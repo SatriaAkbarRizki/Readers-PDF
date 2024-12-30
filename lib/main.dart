@@ -12,6 +12,10 @@ import 'package:simplereader/cubit/theme_cubit.dart';
 import 'package:simplereader/model/pdfmodel.dart';
 import 'package:simplereader/model/thememodel.dart';
 import 'package:simplereader/navigation/navbar.dart';
+import 'package:simplereader/screens/landscape/tools/compress.dart';
+import 'package:simplereader/screens/landscape/tools/delete.dart';
+import 'package:simplereader/screens/landscape/tools/merge.dart';
+import 'package:simplereader/screens/landscape/tools/watermark.dart';
 import 'package:simplereader/screens/readingpdf.dart';
 import 'package:simplereader/screens/search.dart';
 import 'package:simplereader/screens/splashscreen.dart';
@@ -90,19 +94,51 @@ final _route = GoRouter(initialLocation: '/', routes: [
   ),
   GoRoute(
     path: MergeScreen.routeName,
-    builder: (context, state) => MergeScreen(),
+    builder: (context, state) => LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth > 600) {
+          return MergeScreenLandScape();
+        } else {
+          return MergeScreen();
+        }
+      },
+    ),
   ),
   GoRoute(
     path: DeleteScreen.routeName,
-    builder: (context, state) => DeleteScreen(),
+    builder: (context, state) => LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth > 600) {
+          return DeleteScreenLandScape();
+        } else {
+          return DeleteScreen();
+        }
+      },
+    ),
   ),
   GoRoute(
     path: CompressScreen.routeName,
-    builder: (context, state) => CompressScreen(),
+    builder: (context, state) => LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth > 600) {
+          return CompressScreenLandScape();
+        } else {
+          return CompressScreen();
+        }
+      },
+    ),
   ),
   GoRoute(
     path: WatermarkScreen.routeName,
-    builder: (context, state) => WatermarkScreen(),
+    builder: (context, state) => LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth > 600) {
+          return WatermarkScreenLandScape();
+        } else {
+          return WatermarkScreen();
+        }
+      },
+    ),
   ),
   GoRoute(
     path: SearchScreen.routeName,
