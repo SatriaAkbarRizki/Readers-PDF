@@ -17,10 +17,13 @@ class _SplashscreenState extends State<Splashscreen> {
   void initState() {
     super.initState();
 
-    Timer(const Duration(seconds: 3), () {
-      context.read<SplashDatabaseCubit>().changeStatus(true);
-      context.pushReplacement("/");
-    });
+    if (mounted) {
+      Timer(const Duration(seconds: 3), () {
+        context.read<SplashDatabaseCubit>().changeStatus(true);
+        context.pushReplacement("/");
+      });
+    }
+    ;
   }
 
   @override

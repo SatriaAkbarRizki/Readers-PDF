@@ -24,7 +24,7 @@ class HomeScreens extends StatefulWidget {
 }
 
 class _HomeScreensState extends State<HomeScreens> {
-  static const _methodChannel = MethodChannel("com.example.simplereader");
+  static const _methodChannel = MethodChannel("com.satriadevz.simplereader");
   String? dataShared;
 
   Future<void> getSharedData() async {
@@ -53,18 +53,15 @@ class _HomeScreensState extends State<HomeScreens> {
   @override
   void initState() {
     super.initState();
-    getSharedData();
-  }
-
-  @override
-  void dispose() {
-    getSharedData();
-    super.dispose();
+    if (context.mounted) {
+      getSharedData();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final themes = context.watch<ThemeCubit>().state;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: themes.background,

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:simplereader/widget/scaffold_messeger.dart';
 import 'package:bloc/bloc.dart';
@@ -61,12 +62,12 @@ class PdfBloc extends Bloc<PdfEvent, PdfState> {
         (results) {
           if (results != null && event.context.mounted) {
             final isPdf = results.path.contains('.pdf');
-            
-            if (isPdf) {
-              event.context.push(ReadPDFScreens.routeName, extra: results);
-            } else {
-              ShowSnackBar(event.context, 'This not documents').showSnackBar();
-            }
+            event.context.go(ReadPDFScreens.routeName, extra: results);
+            // if (isPdf) {
+
+            // } else {
+            //   ShowSnackBar(event.context, 'This not documents').showSnackBar();
+            // }
           }
         },
       );

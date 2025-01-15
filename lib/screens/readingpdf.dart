@@ -70,7 +70,7 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
                 context.watch<PdfBloc>().state is PdfCloseSearch ? true : false,
             child: IconButton(
               onPressed: () async {
-                context.pop();
+                GoRouter.of(context).go("/");;
               },
               icon: Image.asset(
                 'assets/icons/left-arrow.png',
