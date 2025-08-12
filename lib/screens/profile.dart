@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:simplereader/cubit/status_date.dart';
-import 'package:simplereader/screens/tools/compress.dart';
-import 'package:simplereader/screens/tools/delete.dart';
-import 'package:simplereader/screens/tools/merge.dart';
-import 'package:simplereader/screens/tools/watermark.dart';
 import 'package:simplereader/widget/title_profile.dart';
 import 'package:simplereader/widget/title_tools.dart';
 
@@ -121,46 +117,6 @@ class ProfileScreen extends StatelessWidget {
                     child: TitleProfile(
                       title: 'Tools PDF',
                     ),
-                  ),
-                  GridView(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 12.0,
-                      crossAxisSpacing: 12.0,
-                    ),
-                    children: [
-                      InkWell(
-                        overlayColor:
-                            const WidgetStatePropertyAll(Colors.transparent),
-                        onTap: () => context.push(MergeScreen.routeName),
-                        child: TitleTools(
-                            'Merging', 'assets/icons/merge.png', themes.state),
-                      ),
-                      InkWell(
-                        onTap: () => context.push(DeleteScreen.routeName),
-                        overlayColor:
-                            const WidgetStatePropertyAll(Colors.transparent),
-                        child: TitleTools('Deleting Page ',
-                            'assets/icons/delete_page.png', themes.state),
-                      ),
-                      InkWell(
-                        onTap: () => context.push(CompressScreen.routeName),
-                        overlayColor:
-                            const WidgetStatePropertyAll(Colors.transparent),
-                        child: TitleTools('Compressing',
-                            'assets/icons/sort-down.png', themes.state),
-                      ),
-                      InkWell(
-                        onTap: () => context.push(WatermarkScreen.routeName),
-                        overlayColor:
-                            const WidgetStatePropertyAll(Colors.transparent),
-                        child: TitleTools('Watermark',
-                            'assets/icons/face-mask.png', themes.state),
-                      )
-                    ],
                   ),
                   const SizedBox(
                     height: 10,

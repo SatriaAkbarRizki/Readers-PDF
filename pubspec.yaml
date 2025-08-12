@@ -9,29 +9,28 @@ environment:
 dependencies:
   build_runner: ^2.4.13
   file_manager: ^1.0.2
-  file_picker: ^8.0.6
+  file_picker: ^10.2.1
   flutter:
     sdk: flutter
-  flutter_bloc: ^8.1.5
+  flutter_bloc: ^9.1.1
   flutter_colorpicker: ^1.1.0
   flutter_launcher_icons: ^0.14.2
   flutter_svg: ^2.0.10+1
-  go_router: ^14.2.0
+  go_router: ^16.1.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   hive_generator: ^2.0.1
   path: ^1.9.0
   path_provider: ^2.1.3
-  pdf_manipulator: ^0.5.9
-  pdfrx: ^1.0.67
-  permission_handler: ^11.3.1
-  share_plus: ^9.0.0
+  pdfrx: ^2.1.3
+  permission_handler: ^12.0.1
+  share_plus: ^11.0.0
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^6.0.0
 
 
 flutter_launcher_icons:

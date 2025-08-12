@@ -19,17 +19,9 @@ import 'package:simplereader/navigation/nav_observer.dart';
 import 'package:simplereader/navigation/navbar.dart';
 import 'package:simplereader/screens/error.dart';
 import 'package:simplereader/screens/home.dart';
-import 'package:simplereader/screens/landscape/tools/compress.dart';
-import 'package:simplereader/screens/landscape/tools/delete.dart';
-import 'package:simplereader/screens/landscape/tools/merge.dart';
-import 'package:simplereader/screens/landscape/tools/watermark.dart';
 import 'package:simplereader/screens/readingpdf.dart';
 import 'package:simplereader/screens/search.dart';
 import 'package:simplereader/screens/splashscreen.dart';
-import 'package:simplereader/screens/tools/compress.dart';
-import 'package:simplereader/screens/tools/delete.dart';
-import 'package:simplereader/screens/tools/merge.dart';
-import 'package:simplereader/screens/tools/watermark.dart';
 import 'package:simplereader/theme/mytheme.dart';
 import 'cubit/navbar_cubit.dart';
 
@@ -92,14 +84,13 @@ class MainApp extends StatelessWidget {
 final _route = GoRouter(
     initialLocation: '/',
     observers: [LoggerNavigatorObserver()],
-
     errorBuilder: (context, state) {
       if (state.uri.scheme == 'content') {
         final path = state.uri.path.toString();
         context
             .read<PdfBloc>()
             .add(OnPdfOpenFileIntent(path: path, context: context));
-        return Navbar(); 
+        return Navbar();
       }
       log(state.error?.message ?? "");
       return ErrorScreen(state.error?.message ?? "Unknown error", state.uri);
@@ -113,54 +104,6 @@ final _route = GoRouter(
         path: ReadPDFScreens.routeName,
         builder: (context, state) => ReadPDFScreens(
           pdf: state.extra as Pdfmodel,
-        ),
-      ),
-      GoRoute(
-        path: MergeScreen.routeName,
-        builder: (context, state) => LayoutBuilder(
-          builder: (context, constraints) {
-            if (constraints.maxWidth > 600) {
-              return MergeScreenLandScape();
-            } else {
-              return MergeScreen();
-            }
-          },
-        ),
-      ),
-      GoRoute(
-        path: DeleteScreen.routeName,
-        builder: (context, state) => LayoutBuilder(
-          builder: (context, constraints) {
-            if (constraints.maxWidth > 600) {
-              return DeleteScreenLandScape();
-            } else {
-              return DeleteScreen();
-            }
-          },
-        ),
-      ),
-      GoRoute(
-        path: CompressScreen.routeName,
-        builder: (context, state) => LayoutBuilder(
-          builder: (context, constraints) {
-            if (constraints.maxWidth > 600) {
-              return CompressScreenLandScape();
-            } else {
-              return CompressScreen();
-            }
-          },
-        ),
-      ),
-      GoRoute(
-        path: WatermarkScreen.routeName,
-        builder: (context, state) => LayoutBuilder(
-          builder: (context, constraints) {
-            if (constraints.maxWidth > 600) {
-              return WatermarkScreenLandScape();
-            } else {
-              return WatermarkScreen();
-            }
-          },
         ),
       ),
       GoRoute(

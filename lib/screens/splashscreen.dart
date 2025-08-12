@@ -23,7 +23,7 @@ class _SplashscreenState extends State<Splashscreen> {
         context.pushReplacement("/");
       });
     }
-    ;
+    
   }
 
   @override

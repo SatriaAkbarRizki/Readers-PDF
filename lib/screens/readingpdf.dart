@@ -70,7 +70,8 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
                 context.watch<PdfBloc>().state is PdfCloseSearch ? true : false,
             child: IconButton(
               onPressed: () async {
-                GoRouter.of(context).go("/");;
+                GoRouter.of(context).go("/");
+                ;
               },
               icon: Image.asset(
                 'assets/icons/left-arrow.png',
@@ -105,7 +106,7 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
               File(widget.pdf.path).path,
               controller: pdfViewerController,
               params: PdfViewerParams(
-                  enableTextSelection: true,
+                  textSelectionParams: PdfTextSelectionParams(enabled: true),
                   backgroundColor: const Color.fromARGB(255, 253, 252, 250),
                   errorBannerBuilder: (context, error, stackTrace,
                           documentRef) =>

@@ -25,10 +25,13 @@ class MyTheme {
             fontFamily: 'PublicSans',
           )),
       popupMenuTheme: const PopupMenuThemeData(color: Color(0xffFDFCFA)),
-      dialogTheme: const DialogTheme(
-          backgroundColor: Color(0xffFDFCFA),
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20)))),
+
+// I dont know why,maybe have differenet version Flutter
+
+      // dialogTheme: const DialogTheme(
+      //     backgroundColor: Color(0xffFDFCFA),
+      //     shape: RoundedRectangleBorder(
+      //         borderRadius: BorderRadius.all(Radius.circular(20)))),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
           foregroundColor: Colors.white, backgroundColor: Color(0xff1b5ed1)),
       snackBarTheme: const SnackBarThemeData(
