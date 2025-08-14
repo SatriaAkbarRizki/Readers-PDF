@@ -1,4 +1,4 @@
-# Simple Reader
+# Readers PDF
 
 Application android for reading pdf and manipulate pdf with simple and minimalist
 
