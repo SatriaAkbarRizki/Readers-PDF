@@ -17,13 +17,13 @@ class _SplashscreenState extends State<Splashscreen> {
   void initState() {
     super.initState();
 
-    if (mounted) {
-      Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () {
+      if (mounted) {
+        // Check mounted here, not in initState
         context.read<SplashDatabaseCubit>().changeStatus(true);
-        context.pushReplacement("/");
-      });
-    }
-    
+        Navigator.of(context).pushReplacementNamed('/');
+      }
+    });
   }
 
   @override

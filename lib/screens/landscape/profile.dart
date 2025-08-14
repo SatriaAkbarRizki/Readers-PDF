@@ -28,52 +28,36 @@ class ProfileScreenLandScape extends StatelessWidget {
                   BlocBuilder<StatusDate, String>(
                     builder: (context, state) {
                       context.read<StatusDate>().checkStatus();
-                      return TitleProfile(
-                        title: 'Hello , $state',
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          TitleProfile(
+                            title: 'Hello',
+                            sizeFont: 40,
+                          ),
+                          TitleProfile(
+                            title: state,
+                            sizeFont: 40,
+                          ),
+                        ],
                       );
                     },
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 15),
-                    child: Container(
-                      height: 100,
-                      width: MediaQuery.of(context).size.width / 2,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(22),
-                          border:
-                              Border.all(color: themes.state.widget, width: 2)),
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.only(left: 10, right: 10, top: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Welcome',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .copyWith(
-                                      color: themes.state.text,
-                                      fontWeight: FontWeight.w900),
-                            ),
-                            Text(
-                                "let's view, delete,split, watermark or compress for your pdf  ",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium!
-                                    .copyWith(
-                                      color: themes.state.text,
-                                    ))
-                          ],
-                        ),
-                      ),
+                    child: Text(
+                      "Welcome let's view your pdf with simple, minimalist and customization",
+                      style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                          color: themes.state.text,
+                          fontWeight: FontWeight.w900),
                     ),
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.only(top: 15),
                     child: TitleProfile(
                       title: 'Color themes',
+                      sizeFont: null,
                     ),
                   ),
                   Padding(
@@ -89,6 +73,7 @@ class ProfileScreenLandScape extends StatelessWidget {
                         padding: const EdgeInsets.all(10),
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
                           itemCount: themes.listColorTheme.length,
                           itemBuilder: (context, index) => Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -114,16 +99,6 @@ class ProfileScreenLandScape extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 15, bottom: 15),
-                    child: TitleProfile(
-                      title: 'Tools PDF',
-                    ),
-                  ),
-                  
-                  const SizedBox(
-                    height: 10,
-                  )
                 ],
               ),
             ),

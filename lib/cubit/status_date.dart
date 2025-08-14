@@ -5,7 +5,7 @@ class StatusDate extends Cubit<String> {
 
   void checkStatus() {
     final String message =
-        DateTime.now().hour < 12 ? "Good Morning 🌅" : "Good Afternoon 🌃";
+        DateTime.now().hour < 12 ? "Good Morning" : "Good Afternoon";
     emit(message);
   }
 }

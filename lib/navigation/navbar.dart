@@ -10,7 +10,10 @@ import 'package:simplereader/screens/landscape/controller/profile_controller.dar
 import 'package:simplereader/widget/floating_pdf.dart';
 
 class Navbar extends StatelessWidget {
-  final List listtNavBar = [const HomeScreens(), const ProfileController()];
+  final List<Widget> listtNavBar = [
+    const HomeScreens(key: ValueKey('Home')), // Unique Key
+    const ProfileController(key: ValueKey('Profile')), // Unique Key
+  ];
   Navbar({super.key});
 
   @override
@@ -21,7 +24,10 @@ class Navbar extends StatelessWidget {
       child: Scaffold(
         body: BlocBuilder<NavbarCubit, int>(
           builder: (context, state) {
-            return listtNavBar[state];
+            return IndexedStack(
+              index: state,
+              children: listtNavBar,
+            );
           },
         ),
         bottomNavigationBar: ClipRRect(
@@ -37,9 +43,12 @@ class Navbar extends StatelessWidget {
                 child: BottomNavigationBar(
                     currentIndex: navCubit.state,
                     onTap: (value) {
-                      context
-                          .read<ChannelHome>()
-                          .isHome(value == 0 ? true : false);
+                      int valueState = navCubit.state;
+                      if (value != valueState) {
+                        context
+                            .read<ChannelHome>()
+                            .isHome(value == 0 ? true : false);
+                      }
 
                       navCubit.switchNavBar(value);
                     },
@@ -48,6 +57,11 @@ class Navbar extends StatelessWidget {
                     unselectedItemColor: themes.widget,
                     items: [
                       BottomNavigationBarItem(
+                          activeIcon: SvgPicture.asset(
+                            'assets/icons/open-book.svg',
+                            colorFilter:
+                                ColorFilter.mode(themes.text, BlendMode.srcIn),
+                          ),
                           label: 'Home',
                           icon: SvgPicture.asset(
                             'assets/icons/open-book.svg',
@@ -56,6 +70,11 @@ class Navbar extends StatelessWidget {
                           )),
                       BottomNavigationBarItem(
                           label: 'Profile',
+                          activeIcon: SvgPicture.asset(
+                            'assets/icons/account.svg',
+                            colorFilter:
+                                ColorFilter.mode(themes.text, BlendMode.srcIn),
+                          ),
                           icon: SvgPicture.asset(
                             'assets/icons/account.svg',
                             colorFilter: ColorFilter.mode(

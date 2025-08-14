@@ -5,7 +5,9 @@ import 'package:simplereader/model/thememodel.dart';
 
 class TitleProfile extends StatelessWidget {
   final String title;
-  const TitleProfile({super.key, required this.title});
+
+  double? sizeFont;
+  TitleProfile({super.key, required this.title, this.sizeFont});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class TitleProfile extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .titleMedium
-              ?.copyWith(color: state.text),
+              ?.copyWith(fontSize: sizeFont ?? 18, color: state.text),
         );
       },
     );

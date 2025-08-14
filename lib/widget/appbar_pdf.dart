@@ -6,6 +6,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:simplereader/bloc/pdf/pdf_bloc.dart';
 import 'package:simplereader/bloc/switch_mode/switch_mode_bloc.dart';
 import 'package:simplereader/model/thememodel.dart';
+import 'package:simplereader/widget/scaffold_messeger.dart';
 
 import '../cubit/theme_cubit.dart';
 import '../model/pdfmodel.dart';
@@ -106,8 +107,8 @@ class AppBarPDF extends StatelessWidget {
                       pdfViewerController.goToPage(
                           pageNumber: int.parse(_textEditingController.text));
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Number page not found")));
+                      ShowSnackBar(context, "Number page not found")
+                          .showSnackBar();
                     }
 
                     Navigator.pop(context);

@@ -23,7 +23,8 @@ class HomeScreens extends StatefulWidget {
   State<HomeScreens> createState() => _HomeScreensState();
 }
 
-class _HomeScreensState extends State<HomeScreens> {
+class _HomeScreensState extends State<HomeScreens>
+    with AutomaticKeepAliveClientMixin {
   static const _methodChannel = MethodChannel("com.satriadevz.simplereader");
   String? dataShared;
 
@@ -114,4 +115,8 @@ class _HomeScreensState extends State<HomeScreens> {
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

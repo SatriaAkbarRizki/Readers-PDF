@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 
 class MyTheme {
   var lightTheme = ThemeData(
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
       scaffoldBackgroundColor: const Color(0xffFDFCFA),
       textTheme: const TextTheme(
           titleMedium: TextStyle(
               fontSize: 18,
               color: Color(0xff1b5ed1),
               fontWeight: FontWeight.bold),
-          titleLarge: TextStyle(
+          titleLarge: TextStyle(  
               fontSize: 26,
               fontFamily: 'GideonRoman',
               color: Color(0xffFDFCFA),
