@@ -61,23 +61,27 @@ class ListPDF extends StatelessWidget {
                             bottom: 10,
                           ),
                           clipBehavior: Clip.hardEdge,
-                          height: 200,
+                          height: 160,
                           decoration: BoxDecoration(boxShadow: const [
                             BoxShadow(
-                              color: Colors.black38,
+                              color: Colors.black12,
                               blurRadius: 10,
-                              offset: Offset(0, 5),
+                              offset: Offset(5, 0),
                             ),
                           ], borderRadius: BorderRadius.circular(12)),
                           child: PdfDocumentViewBuilder.file(
+                            autoDispose: true,
                             listPdf[index].path,
+                            useProgressiveLoading: true,
                             builder: (context, document) => ListView.builder(
+                              shrinkWrap: true,
                               itemCount: 1,
                               physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
                                 return ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
                                   child: PdfPageView(
+                                    maximumDpi: 150,
                                     document: document,
                                     pageNumber: index + 1,
                                     alignment: Alignment.center,
@@ -87,7 +91,7 @@ class ListPDF extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Expanded(
+                        Flexible(
                           child: Padding(
                             padding: const EdgeInsets.only(
                               left: 15,

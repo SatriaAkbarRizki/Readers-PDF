@@ -53,130 +53,103 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
 
   @override
   Widget build(BuildContext context) {
-    log(widget.pdf.toString());
     final themes = context.read<ThemeCubit>().state;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: themes.background,
-        title: Visibility(
-            visible: context.watch<PdfBloc>().state is PdfOpenSearch ||
-                    context.watch<PdfBloc>().state is PdfSearchingText
-                ? false
-                : true,
-            child: Text(
-              widget.pdf.name,
-              style: TextStyle(color: themes.text, fontSize: 18),
-            )),
-        leading: Visibility(
-            visible:
-                context.watch<PdfBloc>().state is PdfCloseSearch ? true : false,
-            child: IconButton(
-              onPressed: () async {
-                GoRouter.of(context).go("/");
-                ;
-              },
-              icon: Image.asset(
-                'assets/icons/left-arrow.png',
-                color: themes.widget,
+      body: SafeArea(
+        child: NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                  SliverAppBar(
+                      backgroundColor: themes.background,
+                      title: Visibility(
+                          visible:
+                              context.watch<PdfBloc>().state is PdfOpenSearch ||
+                                      context.watch<PdfBloc>().state
+                                          is PdfSearchingText
+                                  ? false
+                                  : true,
+                          child: Text(
+                            widget.pdf.name,
+                            style: TextStyle(color: themes.text, fontSize: 18),
+                          )),
+                      leading: Visibility(
+                          visible:
+                              context.watch<PdfBloc>().state is PdfCloseSearch
+                                  ? true
+                                  : false,
+                          child: IconButton(
+                            onPressed: () async {
+                              GoRouter.of(context).go("/");
+                              ;
+                            },
+                            icon: Image.asset(
+                              'assets/icons/left-arrow.png',
+                              color: themes.widget,
+                            ),
+                          )),
+                      actions: [
+                        Builder(
+                          builder: (context) {
+                            final status = context.watch<PdfBloc>();
+                            if (!status.isOpen) {
+                              return AppBarPDF(
+                                pdf: widget.pdf,
+                                pdfViewerController: pdfViewerController,
+                              );
+                            } else if (status.isOpen) {
+                              return AppBarSearch(
+                                  pdfTextSearcher: pdfTextSearcher,
+                                  textEditingController: textEditingController);
+                            }
+                            return const SizedBox();
+                          },
+                        )
+                      ])
+                ],
+            body: BlocBuilder<SwitchModeBloc, SwitchModeState>(
+              builder: (context, state) => ColorFiltered(
+                colorFilter: ColorFilter.mode(Colors.grey,
+                    state is ReaderMode ? BlendMode.saturation : BlendMode.dst),
+                child: PdfViewer.file(
+                  File(widget.pdf.path).path,
+                  controller: pdfViewerController,
+                  params: PdfViewerParams(
+                      textSelectionParams:
+                          PdfTextSelectionParams(enabled: true),
+                      backgroundColor: const Color.fromARGB(255, 253, 252, 250),
+                      errorBannerBuilder:
+                          (context, error, stackTrace, documentRef) => Center(
+                                  child: Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Text(
+                                    "Sorry Unexpected Error: ${error.toString()}"),
+                              )),
+                      viewerOverlayBuilder: (context, size, handleLinkTap) => [
+                            PdfViewerScrollThumb(
+                              controller: pdfViewerController,
+                              thumbBuilder: (context, thumbSize, pageNumber,
+                                      controller) =>
+                                  Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.black54),
+                              ),
+                            )
+                          ],
+                      loadingBannerBuilder:
+                          (context, bytesDownloaded, totalBytes) =>
+                              const Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                      onPageChanged: (pageNumber) => Center(
+                            child: Text(pageNumber.toString()),
+                          ),
+                      pagePaintCallbacks: [
+                        pdfTextSearcher.pageTextMatchPaintCallback
+                      ]),
+                ),
               ),
             )),
-        actions: [
-          Builder(
-            builder: (context) {
-              final status = context.watch<PdfBloc>();
-              if (!status.isOpen) {
-                return AppBarPDF(
-                  pdf: widget.pdf,
-                  pdfViewerController: pdfViewerController,
-                );
-              } else if (status.isOpen) {
-                return AppBarSearch(
-                    pdfTextSearcher: pdfTextSearcher,
-                    textEditingController: textEditingController);
-              }
-              return const SizedBox();
-            },
-          )
-        ],
       ),
-      body: PdfViewer.file(
-        File(widget.pdf.path).path,
-        controller: pdfViewerController,
-        params: PdfViewerParams(
-            textSelectionParams: PdfTextSelectionParams(enabled: true),
-            backgroundColor: const Color.fromARGB(255, 253, 252, 250),
-            errorBannerBuilder: (context, error, stackTrace, documentRef) =>
-                Center(
-                    child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Text("Sorry Unexpected Error: ${error.toString()}"),
-                )),
-            viewerOverlayBuilder: (context, size, handleLinkTap) => [
-                  PdfViewerScrollThumb(
-                    controller: pdfViewerController,
-                    thumbBuilder:
-                        (context, thumbSize, pageNumber, controller) =>
-                            Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.black54),
-                    ),
-                  )
-                ],
-            loadingBannerBuilder: (context, bytesDownloaded, totalBytes) =>
-                const Center(
-                  child: CircularProgressIndicator(),
-                ),
-            onPageChanged: (pageNumber) => Center(
-                  child: Text(pageNumber.toString()),
-                ),
-            pagePaintCallbacks: [pdfTextSearcher.pageTextMatchPaintCallback]),
-      ),
-      // body: BlocBuilder<SwitchModeBloc, SwitchModeState>(
-      //   builder: (context, state) {
-      //     return ColorFiltered(
-      //       colorFilter: ColorFilter.mode(Colors.grey,
-      //           state is ReaderMode ? BlendMode.saturation : BlendMode.dst),
-      //       child: PdfViewer.file(
-      //         File(widget.pdf.path).path,
-      //         controller: pdfViewerController,
-      //         params: PdfViewerParams(
-      //             textSelectionParams: PdfTextSelectionParams(enabled: true),
-      //             backgroundColor: const Color.fromARGB(255, 253, 252, 250),
-      //             errorBannerBuilder: (context, error, stackTrace,
-      //                     documentRef) =>
-      //                 Center(
-      //                     child: Padding(
-      //                   padding: const EdgeInsets.all(20),
-      //                   child:
-      //                       Text("Sorry Unexpected Error: ${error.toString()}"),
-      //                 )),
-      //             viewerOverlayBuilder: (context, size, handleLinkTap) => [
-      //                   PdfViewerScrollThumb(
-      //                     controller: pdfViewerController,
-      //                     thumbBuilder:
-      //                         (context, thumbSize, pageNumber, controller) =>
-      //                             Container(
-      //                       decoration: BoxDecoration(
-      //                           borderRadius: BorderRadius.circular(10),
-      //                           color: Colors.black54),
-      //                     ),
-      //                   )
-      //                 ],
-      //             loadingBannerBuilder:
-      //                 (context, bytesDownloaded, totalBytes) => const Center(
-      //                       child: CircularProgressIndicator(),
-      //                     ),
-      //             onPageChanged: (pageNumber) => Center(
-      //                   child: Text(pageNumber.toString()),
-      //                 ),
-      //             pagePaintCallbacks: [
-      //               pdfTextSearcher.pageTextMatchPaintCallback
-      //             ]),
-      //       ),
-      //     );
-      //   },
-      // ),
     );
   }
 }

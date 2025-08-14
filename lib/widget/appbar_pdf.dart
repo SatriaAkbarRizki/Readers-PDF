@@ -64,9 +64,12 @@ class AppBarPDF extends StatelessWidget {
           ),
         ),
         onTap: () {
-          Share.shareXFiles(
-            [XFile(pdf.path)],
-          );
+          final params = ShareParams(text: pdf.name, files: [XFile(pdf.path)]);
+          // Share.shareXFiles(
+          //   [XFile(pdf.path)],
+          // );
+
+          SharePlus.instance.share(params);
         },
       );
 
@@ -102,6 +105,9 @@ class AppBarPDF extends StatelessWidget {
                         pdfViewerController.pages.length) {
                       pdfViewerController.goToPage(
                           pageNumber: int.parse(_textEditingController.text));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Number page not found")));
                     }
 
                     Navigator.pop(context);

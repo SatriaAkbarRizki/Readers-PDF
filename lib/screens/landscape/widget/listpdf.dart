@@ -59,9 +59,9 @@ class ListPDFLandScape extends StatelessWidget {
                           width: 150,
                           decoration: BoxDecoration(boxShadow: const [
                             BoxShadow(
-                              color: Colors.black38,
+                              color: Colors.black12,
                               blurRadius: 10,
-                              offset: Offset(0, 5),
+                              offset: Offset(5, 0),
                             ),
                           ], borderRadius: BorderRadius.circular(12)),
                           child: PdfDocumentViewBuilder.file(
@@ -73,6 +73,7 @@ class ListPDFLandScape extends StatelessWidget {
                                 return ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
                                   child: PdfPageView(
+                                    maximumDpi: 150,
                                     document: document,
                                     pageNumber: index + 1,
                                     alignment: Alignment.center,
