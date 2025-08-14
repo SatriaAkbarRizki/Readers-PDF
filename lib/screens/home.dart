@@ -52,10 +52,11 @@ class _HomeScreensState extends State<HomeScreens> {
 
   @override
   void initState() {
-    super.initState();
     if (context.mounted) {
       getSharedData();
     }
+    context.read<StatusPermissionCubit>().listenStatusPermission();
+    super.initState();
   }
 
   @override
@@ -84,15 +85,16 @@ class _HomeScreensState extends State<HomeScreens> {
       ),
       body: BlocConsumer<StatusPermissionCubit, bool>(
         listener: (context, state) {
-          if (state == false) {
-            Future.delayed(
-              Duration.zero,
-              () => {
-                if (context.mounted)
-                  {showBottomSheetPermission(context, themes)}
-              },
-            );
-          }
+          // log("here");
+          // if (state == false) {
+          //   // Future.delayed(
+          //   //   Duration(seconds: 10),
+          //   //   () => {
+          //   //     if (context.mounted)
+          //   //       {showBottomSheetPermission(context, themes)}
+          //   //   },
+          //   // );
+          // }
         },
         builder: (context, state) {
           if (state == true) {

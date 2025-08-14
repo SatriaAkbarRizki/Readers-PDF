@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -45,13 +46,14 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
   @override
   void dispose() {
     textEditingController.dispose();
-    pdfViewerController;
+    // pdfViewerController.;
     pdfTextSearcher.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    log(widget.pdf.toString());
     final themes = context.read<ThemeCubit>().state;
     return Scaffold(
       appBar: AppBar(
@@ -97,51 +99,84 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
           )
         ],
       ),
-      body: BlocBuilder<SwitchModeBloc, SwitchModeState>(
-        builder: (context, state) {
-          return ColorFiltered(
-            colorFilter: ColorFilter.mode(Colors.grey,
-                state is ReaderMode ? BlendMode.saturation : BlendMode.dst),
-            child: PdfViewer.file(
-              File(widget.pdf.path).path,
-              controller: pdfViewerController,
-              params: PdfViewerParams(
-                  textSelectionParams: PdfTextSelectionParams(enabled: true),
-                  backgroundColor: const Color.fromARGB(255, 253, 252, 250),
-                  errorBannerBuilder: (context, error, stackTrace,
-                          documentRef) =>
-                      Center(
-                          child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child:
-                            Text("Sorry Unexpected Error: ${error.toString()}"),
-                      )),
-                  viewerOverlayBuilder: (context, size, handleLinkTap) => [
-                        PdfViewerScrollThumb(
-                          controller: pdfViewerController,
-                          thumbBuilder:
-                              (context, thumbSize, pageNumber, controller) =>
-                                  Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.black54),
-                          ),
-                        )
-                      ],
-                  loadingBannerBuilder:
-                      (context, bytesDownloaded, totalBytes) => const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                  onPageChanged: (pageNumber) => Center(
-                        child: Text(pageNumber.toString()),
-                      ),
-                  pagePaintCallbacks: [
-                    pdfTextSearcher.pageTextMatchPaintCallback
-                  ]),
-            ),
-          );
-        },
+      body: PdfViewer.file(
+        File(widget.pdf.path).path,
+        controller: pdfViewerController,
+        params: PdfViewerParams(
+            textSelectionParams: PdfTextSelectionParams(enabled: true),
+            backgroundColor: const Color.fromARGB(255, 253, 252, 250),
+            errorBannerBuilder: (context, error, stackTrace, documentRef) =>
+                Center(
+                    child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Text("Sorry Unexpected Error: ${error.toString()}"),
+                )),
+            viewerOverlayBuilder: (context, size, handleLinkTap) => [
+                  PdfViewerScrollThumb(
+                    controller: pdfViewerController,
+                    thumbBuilder:
+                        (context, thumbSize, pageNumber, controller) =>
+                            Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.black54),
+                    ),
+                  )
+                ],
+            loadingBannerBuilder: (context, bytesDownloaded, totalBytes) =>
+                const Center(
+                  child: CircularProgressIndicator(),
+                ),
+            onPageChanged: (pageNumber) => Center(
+                  child: Text(pageNumber.toString()),
+                ),
+            pagePaintCallbacks: [pdfTextSearcher.pageTextMatchPaintCallback]),
       ),
+      // body: BlocBuilder<SwitchModeBloc, SwitchModeState>(
+      //   builder: (context, state) {
+      //     return ColorFiltered(
+      //       colorFilter: ColorFilter.mode(Colors.grey,
+      //           state is ReaderMode ? BlendMode.saturation : BlendMode.dst),
+      //       child: PdfViewer.file(
+      //         File(widget.pdf.path).path,
+      //         controller: pdfViewerController,
+      //         params: PdfViewerParams(
+      //             textSelectionParams: PdfTextSelectionParams(enabled: true),
+      //             backgroundColor: const Color.fromARGB(255, 253, 252, 250),
+      //             errorBannerBuilder: (context, error, stackTrace,
+      //                     documentRef) =>
+      //                 Center(
+      //                     child: Padding(
+      //                   padding: const EdgeInsets.all(20),
+      //                   child:
+      //                       Text("Sorry Unexpected Error: ${error.toString()}"),
+      //                 )),
+      //             viewerOverlayBuilder: (context, size, handleLinkTap) => [
+      //                   PdfViewerScrollThumb(
+      //                     controller: pdfViewerController,
+      //                     thumbBuilder:
+      //                         (context, thumbSize, pageNumber, controller) =>
+      //                             Container(
+      //                       decoration: BoxDecoration(
+      //                           borderRadius: BorderRadius.circular(10),
+      //                           color: Colors.black54),
+      //                     ),
+      //                   )
+      //                 ],
+      //             loadingBannerBuilder:
+      //                 (context, bytesDownloaded, totalBytes) => const Center(
+      //                       child: CircularProgressIndicator(),
+      //                     ),
+      //             onPageChanged: (pageNumber) => Center(
+      //                   child: Text(pageNumber.toString()),
+      //                 ),
+      //             pagePaintCallbacks: [
+      //               pdfTextSearcher.pageTextMatchPaintCallback
+      //             ]),
+      //       ),
+      //     );
+      //   },
+      // ),
     );
   }
 }

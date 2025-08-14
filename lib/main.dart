@@ -48,9 +48,7 @@ class MainApp extends StatelessWidget {
         BlocProvider(
             create: (context) => SplashDatabaseCubit()..getStatusSplash()),
         BlocProvider(create: (context) => ThemeCubit()..getCurretTheme()),
-        BlocProvider(
-            create: (context) =>
-                StatusPermissionCubit()..listenStatusPermission()),
+        BlocProvider(create: (context) => StatusPermissionCubit()),
       ],
       child: BlocConsumer<SplashDatabaseCubit, bool>(
         listener: (context, state) {},

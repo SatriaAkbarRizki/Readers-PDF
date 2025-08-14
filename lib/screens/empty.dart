@@ -56,6 +56,7 @@ class EmptyScreens extends StatelessWidget {
           height: 20,
         ),
         BlocBuilder<ThemeCubit, Thememodel>(
+          
             builder: (context, state) => type == TypeEmpty.noPermission
                 ? ElevatedButton(
                     onPressed: () => showBottomSheetPermission(context, state),

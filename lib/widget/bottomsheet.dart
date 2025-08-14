@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -49,10 +51,11 @@ Future showBottomSheetPermission(BuildContext context, themes) async =>
               Align(
                 alignment: Alignment.bottomCenter,
                 child: ElevatedButton(
-                  onPressed: () async {
+                  onPressed: () {
                     context
                         .read<StatusPermissionCubit>()
-                        .listenStatusPermission();
+                        .requestStatusPermission();
+                    Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
                       fixedSize: Size(MediaQuery.of(context).size.width, 50)),
