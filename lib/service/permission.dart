@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -39,14 +38,3 @@ Future statusPermission() async {
   }
   return false;
 }
-
-// Future<bool> requestStorage() async {
-//   final statusPermission = await Permission.storage.request().isGranted;
-//   return statusPermission;
-// }
-
-// Future<bool> requestExternalStorage() async {
-//   final statusPermission =
-//       await Permission.manageExternalStorage.request().isGranted;
-//   return statusPermission;
-// }

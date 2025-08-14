@@ -1,5 +1,5 @@
 name: simplereader
-description: "A new Flutter project."
+description: "Reading pdf simple"
 publish_to: 'none'
 version: 1.23.12+24
 
@@ -24,7 +24,6 @@ dependencies:
   path: ^1.9.0
   path_provider: ^2.1.3
   pdfrx: ^2.1.3
-  pdfx: ^2.9.2
   permission_handler: ^12.0.1
   share_plus: ^11.0.0
 

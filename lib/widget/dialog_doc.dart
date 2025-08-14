@@ -75,9 +75,9 @@ class DialogDoc extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () async {
-                      Share.shareXFiles(
-                        [XFile(pdf.path)],
-                      );
+                      final params =
+                          ShareParams(text: pdf.name, files: [XFile(pdf.path)]);
+                      SharePlus.instance.share(params);
                     },
                     child: Container(
                       margin: const EdgeInsets.only(top: 20),
@@ -137,7 +137,6 @@ class DialogDoc extends StatelessWidget {
                               },
                               child: TextButton(
                                   onPressed: () {
-
                                     context.read<PdfBloc>().add(OnPdfRename(
                                         newName: renameController.text,
                                         filePdf: dir));

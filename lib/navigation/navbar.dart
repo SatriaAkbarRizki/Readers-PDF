@@ -11,8 +11,8 @@ import 'package:simplereader/widget/floating_pdf.dart';
 
 class Navbar extends StatelessWidget {
   final List<Widget> listtNavBar = [
-    const HomeScreens(key: ValueKey('Home')), // Unique Key
-    const ProfileController(key: ValueKey('Profile')), // Unique Key
+    const HomeScreens(key: ValueKey('Home')),
+    const ProfileController(key: ValueKey('Profile')),
   ];
   Navbar({super.key});
 

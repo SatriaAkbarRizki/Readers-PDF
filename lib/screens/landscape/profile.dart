@@ -1,11 +1,8 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:simplereader/cubit/status_date.dart';
 import 'package:simplereader/widget/title_profile.dart';
-import 'package:simplereader/widget/title_tools.dart';
 
 import '../../cubit/theme_cubit.dart';
 

@@ -55,7 +55,8 @@ class AppBarPDF extends StatelessWidget {
     );
   }
 
-  PopupMenuItem _dialogSharePDF(contex, Thememodel themes) => PopupMenuItem(
+  PopupMenuItem _dialogSharePDF(BuildContext context, Thememodel themes) =>
+      PopupMenuItem(
         child: SizedBox(
           width: 100,
           height: 20,
@@ -74,7 +75,8 @@ class AppBarPDF extends StatelessWidget {
         },
       );
 
-  PopupMenuItem _dialogGotoPage(context, Thememodel themes) => PopupMenuItem(
+  PopupMenuItem _dialogGotoPage(BuildContext context, Thememodel themes) =>
+      PopupMenuItem(
         child: Text(
           'Go To Page',
           style: TextStyle(color: themes.text),

@@ -34,7 +34,7 @@ class _SplashscreenState extends State<Splashscreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Simple Reader',
+            Text('Readers PDF ',
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     fontSize: 34,
                     fontStyle: FontStyle.italic,

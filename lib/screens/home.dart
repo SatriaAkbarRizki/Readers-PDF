@@ -12,7 +12,6 @@ import 'package:simplereader/screens/search.dart';
 import 'package:simplereader/type/empty_type.dart';
 import 'package:simplereader/screens/landscape/widget/listpdf.dart';
 import 'package:simplereader/widget/listpdf.dart';
-import 'package:simplereader/widget/bottomsheet.dart';
 
 import '../cubit/theme_cubit.dart';
 
@@ -25,7 +24,7 @@ class HomeScreens extends StatefulWidget {
 
 class _HomeScreensState extends State<HomeScreens>
     with AutomaticKeepAliveClientMixin {
-  static const _methodChannel = MethodChannel("com.satriadevz.simplereader");
+  static const _methodChannel = MethodChannel("com.satriadevz.readerspdf");
   String? dataShared;
 
   Future<void> getSharedData() async {
@@ -69,7 +68,7 @@ class _HomeScreensState extends State<HomeScreens>
         backgroundColor: themes.background,
         forceMaterialTransparency: true,
         title: Text(
-          'Simple Reader',
+          'Readers PDF',
           style: Theme.of(context)
               .textTheme
               .titleLarge!
@@ -85,18 +84,7 @@ class _HomeScreensState extends State<HomeScreens>
         ],
       ),
       body: BlocConsumer<StatusPermissionCubit, bool>(
-        listener: (context, state) {
-          // log("here");
-          // if (state == false) {
-          //   // Future.delayed(
-          //   //   Duration(seconds: 10),
-          //   //   () => {
-          //   //     if (context.mounted)
-          //   //       {showBottomSheetPermission(context, themes)}
-          //   //   },
-          //   // );
-          // }
-        },
+        listener: (context, state) {},
         builder: (context, state) {
           if (state == true) {
             return LayoutBuilder(builder: (context, constraints) {
@@ -117,6 +105,5 @@ class _HomeScreensState extends State<HomeScreens>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

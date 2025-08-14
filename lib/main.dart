@@ -1,8 +1,6 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -18,7 +16,6 @@ import 'package:simplereader/model/thememodel.dart';
 import 'package:simplereader/navigation/nav_observer.dart';
 import 'package:simplereader/navigation/navbar.dart';
 import 'package:simplereader/screens/error.dart';
-import 'package:simplereader/screens/home.dart';
 import 'package:simplereader/screens/readingpdf.dart';
 import 'package:simplereader/screens/search.dart';
 import 'package:simplereader/screens/splashscreen.dart';

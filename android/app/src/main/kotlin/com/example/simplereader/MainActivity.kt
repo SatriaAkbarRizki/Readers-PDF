@@ -23,7 +23,7 @@ import android.database.Cursor
 
 class MainActivity : FlutterActivity() {
     private var sharedText: String? = null
-    private val CHANNEL = "com.satriadevz.simplereader"
+    private val CHANNEL = "com.satriadevz.readerspdf"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
