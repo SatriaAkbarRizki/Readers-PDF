@@ -14,6 +14,7 @@ import 'package:simplereader/cubit/theme_cubit.dart';
 import 'package:simplereader/model/pdfmodel.dart';
 import 'package:simplereader/widget/appbar_pdf.dart';
 import 'package:simplereader/widget/appbar_search.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ReadPDFScreens extends StatefulWidget {
   final Pdfmodel pdf;
@@ -28,9 +29,12 @@ class ReadPDFScreens extends StatefulWidget {
 }
 
 class _ReadPDFScreensState extends State<ReadPDFScreens> {
+  final ScrollController _primaryScrollController = ScrollController();
   TextEditingController textEditingController = TextEditingController();
   PdfViewerController pdfViewerController = PdfViewerController();
   int nextSearch = 0;
+
+  double _initialZoomLevel = 1.0;
 
   late final PdfTextSearcher pdfTextSearcher;
 
@@ -54,12 +58,17 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
   @override
   Widget build(BuildContext context) {
     final themes = context.read<ThemeCubit>().state;
+
     return Scaffold(
       body: SafeArea(
         child: NestedScrollView(
+            controller: _primaryScrollController,
             headerSliverBuilder: (context, innerBoxIsScrolled) => [
                   SliverAppBar(
                       backgroundColor: themes.background,
+                      floating: true,
+                      snap: true,
+                      pinned: true,
                       title: Visibility(
                           visible:
                               context.watch<PdfBloc>().state is PdfOpenSearch ||
@@ -113,39 +122,66 @@ class _ReadPDFScreensState extends State<ReadPDFScreens> {
                   File(widget.pdf.path).path,
                   controller: pdfViewerController,
                   params: PdfViewerParams(
-                      textSelectionParams:
-                          PdfTextSelectionParams(enabled: true),
-                      backgroundColor: const Color.fromARGB(255, 253, 252, 250),
-                      errorBannerBuilder:
-                          (context, error, stackTrace, documentRef) => Center(
-                                  child: Padding(
-                                padding: const EdgeInsets.all(20),
-                                child: Text(
-                                    "Sorry Unexpected Error: ${error.toString()}"),
-                              )),
-                      viewerOverlayBuilder: (context, size, handleLinkTap) => [
-                            PdfViewerScrollThumb(
-                              controller: pdfViewerController,
-                              thumbBuilder: (context, thumbSize, pageNumber,
-                                      controller) =>
-                                  Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.black54),
-                              ),
-                            )
-                          ],
-                      loadingBannerBuilder:
-                          (context, bytesDownloaded, totalBytes) =>
-                              const Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                      onPageChanged: (pageNumber) => Center(
-                            child: Text(pageNumber.toString()),
-                          ),
-                      pagePaintCallbacks: [
-                        pdfTextSearcher.pageTextMatchPaintCallback
-                      ]),
+                    textSelectionParams: PdfTextSelectionParams(
+                      enabled: true,
+                    ),
+                    backgroundColor: const Color.fromARGB(255, 253, 252, 250),
+                    errorBannerBuilder:
+                        (context, error, stackTrace, documentRef) => Center(
+                            child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child:
+                          Text("Sorry Unexpected Error: ${error.toString()}"),
+                    )),
+                    viewerOverlayBuilder: (context, size, handleLinkTap) => [
+                      PdfViewerScrollThumb(
+                        controller: pdfViewerController,
+                        thumbBuilder:
+                            (context, thumbSize, pageNumber, controller) =>
+                                Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.black54),
+                        ),
+                      ),
+                      GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                  
+                        onDoubleTap: () {
+                          pdfViewerController.zoomUp(loop: true);
+                        },
+
+                        onTapUp: (details) {
+                          handleLinkTap(details.localPosition);
+                        },
+
+          
+                        child: IgnorePointer(
+                          child:
+                              SizedBox(width: size.width, height: size.height),
+                        ),
+                      ),
+                    ],
+                    loadingBannerBuilder:
+                        (context, bytesDownloaded, totalBytes) => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    onPageChanged: (pageNumber) => Center(
+                      child: Text(pageNumber.toString()),
+                    ),
+                    pagePaintCallbacks: [
+                      pdfTextSearcher.pageTextMatchPaintCallback
+                    ],
+                    linkHandlerParams: PdfLinkHandlerParams(
+                      onLinkTap: (link) {
+                        if (link.url != null) {
+                          launchUrl(link.url!);
+                        } else if (link.dest != null) {
+                          pdfViewerController.goToDest(link.dest);
+                        }
+                      },
+                    ),
+                  ),
                 ),
               ),
             )),
